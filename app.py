@@ -1,12 +1,14 @@
 # Author: Bayu Aditya
 import os
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 # STATICS_DIR = os.path.abspath("statics")
 # TEMPLATES_DIR = os.path.abspath("templates")
 
 # app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATICS_DIR)
 app = Flask(__name__)
+CORS(app)
 
 items = [
     {
