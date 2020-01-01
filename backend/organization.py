@@ -29,6 +29,26 @@ class Organizations(Resource):
         return {"organizations": lists}
 
 
+class Data_organization:
+    def __init__(self, user, name, description):
+        self.user = user
+        self.name = name
+        self.description = description
+
+    @classmethod
+    def find_by_name(cls, name):
+        connection = sqlite3.connect(LOC_DATABASE)
+        cursor = connection.cursor()
+
+        result = cursor.execute("SELECT * FROM organizations WHERE name=?", (name,))
+        row = result.fetchone()
+        connection.close()
+        if row:
+            return cls(*row)    # cls(row[0], row[1], row[2])
+        else:
+            return None
+
+
 class Organization(Resource):
     # user and argument cannot be blank
     parser = reqparse.RequestParser()
@@ -45,29 +65,29 @@ class Organization(Resource):
     
     # get an organization information
     def get(self, name):
-        connection = sqlite3.connect(LOC_DATABASE)
-        cursor = connection.cursor()
-
-        result = cursor.execute("SELECT * FROM organizations WHERE name=?", (name,))
-        row = result.fetchone()
-
-        connection.close()
-        return {"user": row[0], "name": row[1], "description": row[2]}
+        Data = Data_organization.find_by_name(name)
+        if Data:
+            return {"user": Data.user, "name": Data.name, "description": Data.description}
+        else:
+            return {"message": "organization not found."}
 
 
     # create an organization (must be unique)
     def post(self, name):
-        # TO DO: NAME MUST BE UNIQUE
-        data = Organization.parser.parse_args()
-
+        input_data = Organization.parser.parse_args()
         connection = sqlite3.connect(LOC_DATABASE)
         cursor = connection.cursor()
-        
-        cursor.execute("CREATE TABLE IF NOT EXISTS organizations (user text, name text, description text)")
 
+        # check if organization name already exists
+        Data = Data_organization.find_by_name(name)
+        if Data:
+            return {"message": "organization name already exists."}
+
+        cursor.execute("CREATE TABLE IF NOT EXISTS organizations (user text, name text, description text)")
+        
         cursor.execute(
             "INSERT INTO organizations VALUES (?, ?, ?)", 
-            (data["user"], name, data["description"])
+            (input_data["user"], name, input_data["description"])
         )
         
         connection.commit()
@@ -77,14 +97,18 @@ class Organization(Resource):
 
     # Update an organization
     def put(self, name):
-        # TO DO: NAME MUST BE EXISTS
-        data = Organization.parser.parse_args()
+        input_data = Organization.parser.parse_args()
         connection = sqlite3.connect(LOC_DATABASE)
         cursor = connection.cursor()
 
+        # check name organization must be exists
+        Data = Data_organization.find_by_name(name)
+        if Data is None:
+            return {"message": "organization not found."}
+
         cursor.execute(
             "UPDATE organizations SET user=?, description=? WHERE name=?", 
-            (data["user"], data["description"], name)
+            (input_data["user"], input_data["description"], name)
         )
 
         connection.commit()
@@ -94,9 +118,13 @@ class Organization(Resource):
 
     # delete an organization
     def delete(self, name):
-        # TO DO: NAME MUST BE EXISTS
         connection = sqlite3.connect(LOC_DATABASE)
         cursor = connection.cursor()
+
+        # check name organization must be exists
+        Data = Data_organization.find_by_name(name)
+        if Data is None:
+            return {"message": "organization not found."}
 
         cursor.execute("DELETE FROM organizations WHERE name=?", (name,))
 
