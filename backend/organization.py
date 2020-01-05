@@ -131,3 +131,27 @@ class Organization(Resource):
         connection.commit()
         connection.close()
         return {"message": "organization has been deleted."}
+
+
+class Inventories(Resource):
+    # list of all item in a organization
+    def get(self, name):
+        pass
+
+
+class Item(Resource):
+    # get information of an item
+    def get(self, name, item):
+        pass
+
+    # adding an item
+    def post(self, name, item):
+        pass
+
+    # update an item
+    def put(self, name, item):
+        pass
+
+    # delete an item
+    def delete(self, name, item):
+        pass
