@@ -14,9 +14,9 @@ api = Api(app)
 
 # ------------------- FOR ORGANIZATION -----------------------------------------
 api.add_resource(Organizations, "/api/organization")
-api.add_resource(Organization, "/api/organization/<string:name>")
-api.add_resource(Inventories, "/api/organization/<string:name>/inventory")
-api.add_resource(Item, "/api/organization/<string:name>/inventory/<string:item>")
+api.add_resource(Organization, "/api/<string:user>")
+# api.add_resource(Inventories, "/api/organization/<string:name>/inventory")
+# api.add_resource(Item, "/api/organization/<string:name>/inventory/<string:item>")
 # api.add_resource(Summary_org, "/api/organization/<string:name>/summary")
 
 # ------------------- FOR PERSONAL USER ----------------------------------------

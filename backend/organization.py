@@ -18,7 +18,7 @@ class Organizations(Resource):
         connection = sqlite3.connect(LOC_DATABASE)
         cursor = connection.cursor()
 
-        result = cursor.execute("SELECT * FROM organizations")
+        result = cursor.execute("SELECT * FROM organizations ORDER BY user, name")
         lists = list()
         for row in result:
             lists.append(
@@ -29,104 +29,114 @@ class Organizations(Resource):
         return {"organizations": lists}
 
 
-class Data_organization:
-    def __init__(self, user, name, description):
-        self.user = user
-        self.name = name
-        self.description = description
-
-    @classmethod
-    def find_by_name(cls, name):
+class Tools_user:
+    @staticmethod
+    def find_by_user(user):
         connection = sqlite3.connect(LOC_DATABASE)
         cursor = connection.cursor()
-
-        result = cursor.execute("SELECT * FROM organizations WHERE name=?", (name,))
-        row = result.fetchone()
+        result = cursor.execute("SELECT * FROM organizations WHERE user=?", (user,))
+        list_org = result.fetchall()
+        
         connection.close()
-        if row:
-            return cls(*row)    # cls(row[0], row[1], row[2])
+        if list_org:
+            return list_org
+        else:
+            return None
+
+    @staticmethod
+    def find_by_name(user, name):
+        connection = sqlite3.connect(LOC_DATABASE)
+        cursor = connection.cursor()
+        result = cursor.execute("SELECT * FROM organizations WHERE user=? AND name=?", (user,name))
+        list_org = result.fetchall()
+        
+        connection.close()
+        if list_org:
+            return list_org
         else:
             return None
 
 
 class Organization(Resource):
-    # user and argument cannot be blank
+    # name and description keys must be exist,
     parser = reqparse.RequestParser()
-    parser.add_argument(name = "user",
-        type = str,
-        required = True,
-        help = "user cannot be blank"
+    parser.add_argument(name = "name", 
+        type = str, required = True, help = "name cannot be blank"
     )
     parser.add_argument(name = "description",
-        type = str, 
-        required = True,
-        help = "describe cannot be blank"
+        type = str, required = True, help = "describe cannot be blank"
     )
-    
-    # get an organization information
-    def get(self, name):
-        Data = Data_organization.find_by_name(name)
+    # name key must be exist,
+    parser_name = reqparse.RequestParser()
+    parser_name.add_argument(name = "name",
+        type = str, required = True, help = "name cannot be blank"
+    )
+
+    def get(self, user):
+        Data = Tools_user.find_by_user(user)
         if Data:
-            return {"user": Data.user, "name": Data.name, "description": Data.description}
+            rows = []
+            for i in Data:
+                row = {"user": i[0], "name": i[1], "description": i[2]}
+                rows.append(row)
+            return rows
         else:
-            return {"message": "organization not found."}
+            return {"message": "user not found."}
 
-
-    # create an organization (must be unique)
-    def post(self, name):
+    def post(self, user):
         input_data = Organization.parser.parse_args()
-        connection = sqlite3.connect(LOC_DATABASE)
-        cursor = connection.cursor()
+        name = input_data["name"]
+        desc = input_data["description"]
 
-        # check if organization name already exists
-        Data = Data_organization.find_by_name(name)
+        # check if organization name in user already exists
+        Data = Tools_user.find_by_name(user, name)
         if Data:
             return {"message": "organization name already exists."}
-
+        
+        connection = sqlite3.connect(LOC_DATABASE)
+        cursor = connection.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS organizations (user text, name text, description text)")
         
         cursor.execute(
-            "INSERT INTO organizations VALUES (?, ?, ?)", 
-            (input_data["user"], name, input_data["description"])
+            "INSERT INTO organizations VALUES (?, ?, ?)", (user, name, desc)
         )
-        
         connection.commit()
         connection.close()
         return {"message": "organization has been created."}
 
-
-    # Update an organization
-    def put(self, name):
+    def put(self, user):
         input_data = Organization.parser.parse_args()
-        connection = sqlite3.connect(LOC_DATABASE)
-        cursor = connection.cursor()
+        name = input_data["name"]
+        desc = input_data["description"]
 
-        # check name organization must be exists
-        Data = Data_organization.find_by_name(name)
+        # check if organization name in user must be exists
+        Data = Tools_user.find_by_user(user)
         if Data is None:
             return {"message": "organization not found."}
 
+        connection = sqlite3.connect(LOC_DATABASE)
+        cursor = connection.cursor()
         cursor.execute(
-            "UPDATE organizations SET user=?, description=? WHERE name=?", 
-            (input_data["user"], input_data["description"], name)
+            "UPDATE organizations SET name=?, description=? WHERE user=?", 
+            (name, desc, user)
         )
 
         connection.commit()
         connection.close()
         return {"message": "organization has been updated."}
 
-
-    # delete an organization
-    def delete(self, name):
-        connection = sqlite3.connect(LOC_DATABASE)
-        cursor = connection.cursor()
+    def delete(self, user):
+        input_data = Organization.parser_name.parse_args()
+        name = input_data["name"]
 
         # check name organization must be exists
-        Data = Data_organization.find_by_name(name)
+        Data = Tools_user.find_by_name(user, name)
         if Data is None:
             return {"message": "organization not found."}
-
-        cursor.execute("DELETE FROM organizations WHERE name=?", (name,))
+        
+        connection = sqlite3.connect(LOC_DATABASE)
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM organizations WHERE user=? AND name=?", (user, name))
 
         connection.commit()
         connection.close()
