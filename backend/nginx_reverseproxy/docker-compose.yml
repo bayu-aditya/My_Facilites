@@ -1,0 +1,42 @@
+version: '3'
+services: 
+    nginx:
+        image: nginx:1.13.7
+        container_name: nginx
+        volumes: 
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on: 
+            - flask
+            - weeber
+        networks:
+            - my-network
+        ports: 
+            - 80:80
+
+    flask:
+        build: 
+            context: ./flask
+            dockerfile: dockerfile
+        image: flask:0.0.1
+        container_name: flask
+        networks:
+            my-network:
+                aliases: 
+                    - reverseproxy
+        ports: 
+            - 8000:5000
+
+    weeber:
+        build: 
+            context: ./weeber
+            dockerfile: dockerfile
+        image: weeber:0.0.1
+        container_name: weeber
+        networks:
+            my-network:
+                aliases: 
+                    - reverseproxy
+        ports: 
+            - 8001:5001
+networks: 
+    my-network:

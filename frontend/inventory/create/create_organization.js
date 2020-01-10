@@ -26,9 +26,9 @@ function process() {
     var USER = document.getElementById("user_inp").value;
     var NAME = document.getElementById("name_inp").value;
     var DESC = document.getElementById("desc_inp").value;
-    var url = api + "/organization/" + NAME;
+    var url = api + "/" + USER;
     var data = {
-        "user": USER, 
+        "name": NAME, 
         "description": DESC};
     console.log(data, url);
 
