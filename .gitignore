@@ -1,5 +1,8 @@
 .vscode/
-.tutorial/
+*tutorial/
+
+*build/
+*node_modules/
 
 *.db
 *__pycache__/
