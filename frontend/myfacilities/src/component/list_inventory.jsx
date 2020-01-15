@@ -1,28 +1,47 @@
 import React from 'react';
-import {hide_table, show_table} from './action.js';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import Adding_org from './adding_organization';
+import {data} from '../action/get_organization.js';
+import { IconButton } from '@material-ui/core';
 
 export class Table_list_organization extends React.Component {
-    row(user, name) {
+    constructor(props) {
+        super(props)
+        this.data = data["organization"]
+    }
+    selectHandler = (e) => {
+        let idx = e.target.id;
+        console.log("clicked ID: " + this.data[idx]["id"] + " Name: " + this.data[idx]["name"])
+    }
+    row(name, idx) {
         return (
-            <tr>
-                <td>{user}</td><td>{name}</td>
+            <tr key={idx}>
+                <td id={idx} onClick={this.selectHandler}>
+                    {name}
+                </td>
+                <td>
+                    <IconButton aria-label="edit" color="primary">
+                        <EditIcon fontSize="small"/>
+                    </IconButton>
+                    <IconButton aria-label="delete" color="secondary">
+                        <DeleteIcon fontSize="small" />
+                    </IconButton>
+                </td>
             </tr>
         )
-    }
-    button1() {
-        return <button type="button" onClick={hide_table} className="btn btn-outline-danger">Hide</button>
-    }
-    button2() {
-        return <button type="button" onClick={show_table} className="btn btn-outline-primary">Show</button>
     }
     render() {
         return (
             <div>
+                <Adding_org />
                 <table id="tb_org" className="table table-hover">
-                    <thead><tr><th>User</th><th>Name</th></tr></thead>
-                    <tbody>{this.row("bayu_aditya", "Fakultas Ilmu Komputer")}</tbody>
+                    <thead><tr><th>ID</th><th>Name</th><th></th></tr></thead>
+                    <tbody>{this.data.map(
+                        (org, index) => this.row(org["name"], index)
+                        )}
+                    </tbody>
                 </table>
-                {this.button2()}{this.button1()}
             </div>
         )
     }

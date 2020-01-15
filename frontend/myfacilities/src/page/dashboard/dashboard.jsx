@@ -8,7 +8,7 @@ export class Dashboard extends React.Component{
             <div>
                 <Navigation />
                 <div className="row">
-                    <div className="container-sm pt-3 mt-3 border col-sm-7">
+                    <div className="container-sm pt-3 mt-3 border col-sm-5">
                         <h3>List of Organizations</h3>
                         <Table_list_organization />
                     </div>
