@@ -36,7 +36,7 @@ export class Table_list_organization extends React.Component {
             <div>
                 <Adding_org />
                 <table id="tb_org" className="table table-hover">
-                    <thead><tr><th>ID</th><th>Name</th><th></th></tr></thead>
+                    <thead><tr><th>Name</th><th></th></tr></thead>
                     <tbody>{this.data.map(
                         (org, index) => this.row(org["name"], index)
                         )}
