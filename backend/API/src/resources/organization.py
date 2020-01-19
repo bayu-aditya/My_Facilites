@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from bson.objectid import ObjectId
-from src.unique_id import get_id
+from src.resources.unique_id import get_id
 import pymongo
 
 
@@ -42,15 +43,12 @@ class Org:
 
 
 class Organizations(Resource):
-    parser_a = reqparse.RequestParser()
-    parser_a.add_argument(
-        name="admin", type=str, required=True, help="admin cannot be blank")
-
+    @jwt_required
     def get(self):
-        inpt = Organizations.parser_a.parse_args()
+        admin = get_jwt_identity()
         mycol = Tools.get_collection()
         result = list()
-        for row in mycol.find({"admin": inpt["admin"]}):
+        for row in mycol.find({"admin": admin}):
             row = Org(row)
             result.append({
                 "_id": row._id, 
