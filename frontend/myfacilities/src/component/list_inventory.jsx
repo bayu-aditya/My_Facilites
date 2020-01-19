@@ -20,6 +20,7 @@ export class Table_list_organization extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            access_token: this.props.access_token,
             error: null,
             isLoaded: false,
             data: []
@@ -27,7 +28,11 @@ export class Table_list_organization extends React.Component {
     }
 
     componentDidMount() {
-        fetch(urls)
+        var urls = "http://0.0.0.0:8888/organizations";
+        fetch(urls, {
+            method: "GET",
+            headers: {"Authorization": "Bearer "+this.state.access_token},
+        })
         .then(res => res.json())
         .then(
             (result) => {
