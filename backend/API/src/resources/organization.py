@@ -60,32 +60,27 @@ class Organizations(Resource):
 
 
 class Organization(Resource):
-    parser_ai = reqparse.RequestParser()
-    parser_ai.add_argument(
-        name="admin", type=str, required=True, help="admin cannot be blank")
-    parser_ai.add_argument(
+    parser_i = reqparse.RequestParser()
+    parser_i.add_argument(
         name="_id", type=str, required=True, help="_id cannot be blank")
 
-    parser_iand = reqparse.RequestParser()
-    parser_iand.add_argument(
+    parser_ind = reqparse.RequestParser()
+    parser_ind.add_argument(
         name="_id", type=str, required=True, help="_id cannot be blank")
-    parser_iand.add_argument(
-        name="admin", type=str, required=True, help="admin cannot be blank")
-    parser_iand.add_argument(
+    parser_ind.add_argument(
         name="name", type=str, required=True, help="name cannot be blank")
-    parser_iand.add_argument(
+    parser_ind.add_argument(
         name="desc", type=str, required=True, help="desc cannot be blank")
 
-    parser_and = reqparse.RequestParser()
-    parser_and.add_argument(
-        name="admin", type=str, required=True, help="admin cannot be blank")
-    parser_and.add_argument(
+    parser_nd = reqparse.RequestParser()
+    parser_nd.add_argument(
         name="name", type=str, required=True, help="name cannot be blank")
-    parser_and.add_argument(
+    parser_nd.add_argument(
         name="desc", type=str, required=True, help="desc cannot be blank")
 
+    @jwt_required
     def get(self):
-        inpt = Organization.parser_ai.parse_args()
+        inpt = self.parser_i.parse_args()
         mycol = Tools.get_collection()
         row = mycol.find_one({"_id": ObjectId(inpt["_id"])})
         row = Org(row)
@@ -97,18 +92,20 @@ class Organization(Resource):
         }
         return {"organization": result}, 200
 
+    @jwt_required
     def post(self):
-        inpt = Organization.parser_and.parse_args()
+        inpt = self.parser_nd.parse_args()
         mycol = Tools.get_collection()
         mycol.insert_one({
-            "admin": inpt["admin"], 
+            "admin": get_jwt_identity(), 
             "name": inpt["name"],
             "desc": inpt["desc"]
         })
         return {"message": "Organization {} has been created.".format(inpt["name"])}, 200
 
+    @jwt_required
     def put(self):
-        inpt = Organization.parser_iand.parse_args()
+        inpt = Organization.parser_ind.parse_args()
         mycol = Tools.get_collection()
         mycol.update_one(
             {"_id": ObjectId(inpt["_id"])}, 
@@ -116,8 +113,9 @@ class Organization(Resource):
         )
         return {"message": "Organization has been updated."}, 200   
 
+    @jwt_required
     def delete(self):
-        inpt = Organization.parser_ai.parse_args()
+        inpt = self.parser_i.parse_args()
         mycol = Tools.get_collection()
         mycol.delete_one({"_id": ObjectId(inpt["_id"])})
         return {"message": "Organization has been deleted."}, 200
