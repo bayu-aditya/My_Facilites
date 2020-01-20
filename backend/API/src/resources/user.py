@@ -39,6 +39,6 @@ class Login(Resource):
                 return {
                     "access_token": access_token,
                     "refresh_token": refresh_token
-                }, 200
+                }, 202
             return {"message": "invalid credentials"}, 401
         return {"message": "username not found"}, 404
