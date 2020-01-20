@@ -1,7 +1,42 @@
-form {
-    margin: 10px;
+#screen {
+    padding-top: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
-// Button {
-//     color: secondary;
-// }
+.login {
+    border: {
+        color: black;
+        style: solid;
+        radius: 10px;
+    }
+    max-width: 500px;
+}
+
+.header {
+    text-align: center;
+    margin-top: 2%;
+}
+
+.centered {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+    margin-bottom: 2%;
+}
+
+input {
+    margin: {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+    width: 100%;
+}
+
+button {
+    width: 30%;
+}
