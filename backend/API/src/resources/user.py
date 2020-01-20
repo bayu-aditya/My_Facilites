@@ -32,12 +32,13 @@ class Login(Resource):
         inpt = parser.parse_args()
         user = UserModels.find_by_username(inpt["username"])        
 
-        if user and safe_str_cmp(user.password, inpt["password"]):
-            access_token = create_access_token(identity=user.username, fresh=True)
-            refresh_token = create_refresh_token(user.username)
-            return {
-                "access_token": access_token,
-                "refresh_token": refresh_token
-            }, 200
-            
-        return {"message": "invalid credentials"}, 401
+        if user:
+            if safe_str_cmp(user.password, inpt["password"]):
+                access_token = create_access_token(identity=user.username, fresh=True)
+                refresh_token = create_refresh_token(user.username)
+                return {
+                    "access_token": access_token,
+                    "refresh_token": refresh_token
+                }, 200
+            return {"message": "invalid credentials"}, 401
+        return {"message": "username not found"}, 404
