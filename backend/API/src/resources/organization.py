@@ -122,18 +122,19 @@ class Organization(Resource):
 
 
 class Inventories(Resource):
-    parser_ai = reqparse.RequestParser()
-    parser_ai.add_argument(
-        name="admin", type=str, required=True, help="admin cannot be blank")
-    parser_ai.add_argument(
+    parser = reqparse.RequestParser()
+    parser.add_argument(
         name="_id", type=str, required=True, help="id organization cannot be blank")
         
+    @jwt_required
     def get(self):
-        inpt = Inventories.parser_ai.parse_args()
+        inpt = self.parser.parse_args()
         mycol = Tools.get_collection()
         result = mycol.find_one(
             {"_id": ObjectId(inpt["_id"])}
         )
+        if result is None:
+            return {"message": "organization with id {} not found.".format(inpt["_id"])}, 404
         result = Org(result)
         return {"inventory": result.inventory}, 200
 
