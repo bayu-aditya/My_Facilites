@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
-import './login.scss';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
+import './login.scss';
+import {get_access_token} from '../../action/cookie.js';
 
 export class Login extends React.Component {
     constructor(props) {
@@ -33,8 +34,8 @@ export class Login extends React.Component {
             if (this.readyState === 4) {
                 // success
                 if (this.status === 202) {
-                    console.log(this.responseText);
-                    // get cookies
+                    let resp = JSON.parse(this.responseText);
+                    document.cookie = 'access_token='+resp["access_token"]
                     self.authHandler();
                 }
                 // wrong username
@@ -58,9 +59,9 @@ export class Login extends React.Component {
         xhttp.send(JSON.stringify(values));
     }
     toDashboard = () => {
-        if (this.state.authenticate) {
+        if (this.state.authenticate || get_access_token()) {
             console.log("login successful, to dashboard")
-            return <Redirect to="/dashboard_dummy" />
+            return <Redirect to="/dashboard" />
         }
     }
     authHandler = () => {
@@ -75,7 +76,7 @@ export class Login extends React.Component {
     dialogHandle = () => {
         return (
         <Dialog open={this.state.dialogOpen} onClose={this.closeDialog}>
-            <DialogTitle>Authorization</DialogTitle>
+            <DialogTitle>Authorization Failed!</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     {this.state.responseError}
@@ -85,11 +86,11 @@ export class Login extends React.Component {
     }
     render() {
         return (
-            <div id="screen">
+            <div className="bg">
                 {this.toDashboard()}
                 {this.dialogHandle()}
                 <div className="container-xl login">
-                    <h3 className="header">Myfacilities Login</h3>
+                    <h4 className="header">Myfacilities Login</h4>
                     <div className="dropdown-divider"></div>
                     <form autoComplete="off" onSubmit={this.loginHandle}>
                         <div>
@@ -99,7 +100,7 @@ export class Login extends React.Component {
                             <input id="password" required type="password" className="form-control" placeholder="password" onChange={this.changeHandle}></input>
                         </div>
                         <div className="right">
-                            <button type="submit" className="btn btn-outline-primary">Login</button>
+                            <button type="submit" className="btn btn-primary">Login</button>
                         </div>
                     </form>
                 </div>

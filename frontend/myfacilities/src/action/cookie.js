@@ -16,4 +16,9 @@ function get_access_token() {
     return result
 }
 
+function delete_access_token() {
+    document.cookie = "access_token=";
+}
+
 export {get_access_token};
+export {delete_access_token};

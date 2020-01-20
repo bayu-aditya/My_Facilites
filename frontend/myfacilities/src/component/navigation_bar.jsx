@@ -15,6 +15,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {delete_access_token} from '../action/cookie.js';
 
 
 const useStyles = makeStyles(theme => ({
@@ -54,6 +55,11 @@ export default function Navigation() {
 
     const handleOpenDraw = () => {setOpenDraw(true)}
     const handleCloseDraw = () => {setOpenDraw(false)}
+    const handleLogout = () => {
+        console.log("logout handler");
+        delete_access_token();
+        window.location.reload(); // ganti redirect to login aja
+    }
 
     const sideList = () => (
         <div 
@@ -111,6 +117,8 @@ export default function Navigation() {
                     >
                     <MenuItem onClick={handleClose}>Profile</MenuItem>
                     <MenuItem onClick={handleClose}>My account</MenuItem>
+                    <div className="dropdown-divider"></div>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>
                 </Toolbar>

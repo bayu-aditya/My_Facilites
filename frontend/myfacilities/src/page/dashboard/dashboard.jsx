@@ -13,8 +13,10 @@ export class Dashboard extends React.Component{
     }
     componentWillMount() {
         this.access_token = get_access_token();
-        if (this.access_token != null) {
+        if (get_access_token()) {
             this.setState({auth: true})
+        } else {
+            this.setState({auth: false})
         }
     }
     goLogin() {
@@ -27,7 +29,7 @@ export class Dashboard extends React.Component{
                 <Navigation />
                 <div className="row">
                     <div className="container-sm pt-3 mt-3 border col-sm-5">
-                        <h3>List of Organizations</h3>
+                        <h3>My Organizations</h3>
                         <Table_list_organization access_token={this.access_token}/>
                     </div>
                 </div>
