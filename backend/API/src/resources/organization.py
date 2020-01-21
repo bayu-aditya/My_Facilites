@@ -56,7 +56,7 @@ class Organizations(Resource):
                 "admin": row.admin,
                 "num_inv": row.num_inventory
             })
-        return {"organization": result}, 200
+        return {"organization": result}, 202
 
 
 class Organization(Resource):
@@ -90,7 +90,7 @@ class Organization(Resource):
             "name": row.name,
             "desc": row.desc
         }
-        return {"organization": result}, 200
+        return {"organization": result}, 202
 
     @jwt_required
     def post(self):
@@ -101,7 +101,7 @@ class Organization(Resource):
             "name": inpt["name"],
             "desc": inpt["desc"]
         })
-        return {"message": "Organization {} has been created.".format(inpt["name"])}, 200
+        return {"message": "Organization {} has been created.".format(inpt["name"])}, 202
 
     @jwt_required
     def put(self):
@@ -111,14 +111,14 @@ class Organization(Resource):
             {"_id": ObjectId(inpt["_id"])}, 
             {"$set": {"name": inpt["name"], "desc": inpt["desc"]}}
         )
-        return {"message": "Organization has been updated."}, 200   
+        return {"message": "Organization has been updated."}, 202   
 
     @jwt_required
     def delete(self):
         inpt = self.parser_i.parse_args()
         mycol = Tools.get_collection()
         mycol.delete_one({"_id": ObjectId(inpt["_id"])})
-        return {"message": "Organization has been deleted."}, 200
+        return {"message": "Organization has been deleted."}, 202
 
 
 class Inventories(Resource):
@@ -136,7 +136,7 @@ class Inventories(Resource):
         if result is None:
             return {"message": "organization with id {} not found.".format(inpt["_id"])}, 404
         result = Org(result)
-        return {"inventory": result.inventory}, 200
+        return {"inventory": result.inventory}, 202
 
 
 class Inventory(Resource):
@@ -177,7 +177,7 @@ class Inventory(Resource):
                         }
                     }}
             )
-            return {"message": "Inventory has been created."}, 200
+            return {"message": "Inventory has been created."}, 202
         except:
             return {"message": "Something wrong in server."}, 500
 
@@ -190,7 +190,7 @@ class Inventory(Resource):
                 {"_id": ObjectId(inpt["_id_org"]), "inventory._id": inpt["_id"]},
                 {"$set": {"inventory.$.name": inpt["name"]}}
             )
-            return {"message": "inventory has been updated to {}".format(inpt["name"])}, 200
+            return {"message": "inventory has been updated to {}".format(inpt["name"])}, 202
         except:
             return {"message": "Something wrong in server."}, 500
 
@@ -205,6 +205,6 @@ class Inventory(Resource):
                     }
                 }}
             )
-            return {"message": "Inventory has been deleted."}, 200
+            return {"message": "Inventory has been deleted."}, 202
         except:
             return {"message": "Something wrong in server."}, 500
