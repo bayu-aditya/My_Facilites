@@ -39,7 +39,7 @@ class Org:
 
     @property
     def num_inventory(self):
-        return self.data.get("num_inventory", None)
+        return len(self.inventory)
 
 
 class Organizations(Resource):
@@ -160,40 +160,51 @@ class Inventory(Resource):
     parser_ion.add_argument(
         name="_id", type=str, required=True, help="id inventory cannot be blank.")
 
-    def get(self):
-        pass
+    # def get(self):
+    #     pass
 
+    @jwt_required
     def post(self):
-        inpt = Inventory.parser_io_n.parse_args()
+        inpt = self.parser_io_n.parse_args()
         mycol = Tools.get_collection()
-        mycol.update(
-            {"_id": ObjectId(inpt["_id_org"])},
-            {"$push": {
-                "inventory": {
-                    "_id": get_id(),
-                    "name": inpt["name"]
-                    }
-                }}
-        )
-        return {"message": "Inventory has been created"}, 200
+        try:
+            mycol.update(
+                {"_id": ObjectId(inpt["_id_org"])},
+                {"$push": {
+                    "inventory": {
+                        "_id": get_id(),
+                        "name": inpt["name"]
+                        }
+                    }}
+            )
+            return {"message": "Inventory has been created."}, 200
+        except:
+            return {"message": "Something wrong in server."}, 500
 
+    @jwt_required
     def put(self):
         inpt = Inventory.parser_ion_n.parse_args()
         mycol = Tools.get_collection()
-        mycol.update_one(
-            {"_id": ObjectId(inpt["_id_org"]), "inventory._id": inpt["_id"]},
-            {"$set": {"inventory.$.name": inpt["name"]}}
-        )
-        return {"message": "inventory has been updated to {}".format(inpt["name"])}, 200
+        try:
+            mycol.update_one(
+                {"_id": ObjectId(inpt["_id_org"]), "inventory._id": inpt["_id"]},
+                {"$set": {"inventory.$.name": inpt["name"]}}
+            )
+            return {"message": "inventory has been updated to {}".format(inpt["name"])}, 200
+        except:
+            return {"message": "Something wrong in server."}, 500
 
     def delete(self):
         inpt = Inventory.parser_ion.parse_args()
         mycol = Tools.get_collection()
-        mycol.update(
-            {"_id": ObjectId(inpt["_id_org"])},
-            {"$pull": {"inventory": {
-                "_id": inpt["_id"]
-                }
-            }}
-        )
-        return {"message": "Inventory has been deleted."}, 200
+        try:
+            mycol.update(
+                {"_id": ObjectId(inpt["_id_org"])},
+                {"$pull": {"inventory": {
+                    "_id": inpt["_id"]
+                    }
+                }}
+            )
+            return {"message": "Inventory has been deleted."}, 200
+        except:
+            return {"message": "Something wrong in server."}, 500
