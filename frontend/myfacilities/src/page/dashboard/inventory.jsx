@@ -1,10 +1,9 @@
 import React from 'react';
-import Navigation from '../../component/navigation_bar';
-import {Table_list_organization} from '../../component/list_organization';
-import {get_access_token} from '../../action/cookie.js';
 import { Redirect } from 'react-router-dom';
+import Navigation from '../../component/navigation_bar';
+import { get_access_token } from '../../action/cookie.js';
 
-export class Dashboard extends React.Component{
+export class Inventory extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
@@ -29,8 +28,21 @@ export class Dashboard extends React.Component{
                 <Navigation />
                 <div className="row">
                     <div className="container-sm pt-3 mt-3 border col-sm-5">
-                        <h3>My Organizations</h3>
-                        <Table_list_organization access_token={this.access_token}/>
+                        <table className='table table-hover'>
+                            <thead>
+                                <tr>
+                                    <th>Name Inventory</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Inventory1</td>
+                                </tr>
+                                <tr>
+                                    <td>Inventory2</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

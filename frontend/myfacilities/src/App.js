@@ -5,6 +5,7 @@ import {
     Route} from 'react-router-dom';
 
 import { Dashboard } from './page/dashboard/dashboard';
+import { Inventory } from './page/dashboard/inventory';
 import { Login } from './page/login/login'
 
 class App extends React.Component {
@@ -13,7 +14,8 @@ class App extends React.Component {
             <Router>
                 <Switch>
                     <Route exact path="/" component={Login} />
-                    <Route path="/dashboard" component={Dashboard}/>
+                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/dashboard/inventory" component={Inventory} />
                 </Switch>
             </Router>
         )

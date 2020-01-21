@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import './login.scss';
-import {get_access_token} from '../../action/cookie.js';
+import { create_access_token, get_access_token } from '../../action/cookie.js';
 
 export class Login extends React.Component {
     constructor(props) {
@@ -35,7 +35,7 @@ export class Login extends React.Component {
                 // success
                 if (this.status === 202) {
                     let resp = JSON.parse(this.responseText);
-                    document.cookie = 'access_token='+resp["access_token"]
+                    create_access_token(resp);
                     self.authHandler();
                 }
                 // wrong username

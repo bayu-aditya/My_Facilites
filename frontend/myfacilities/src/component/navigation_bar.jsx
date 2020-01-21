@@ -13,9 +13,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import {delete_access_token} from '../action/cookie.js';
+import { Redirect } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +38,23 @@ const useStyles = makeStyles(theme => ({
 
 export default function Navigation() {
     const classes = useStyles();
-    // const [auth, setAuth] = React.useState(true);
+
+    function redirect(inpt) {
+        console.log(inpt);
+        window.location = inpt;
+    }
+
+    const list_drawer = [
+        {
+            "name": "My Organization",
+            "link": "/dashboard"
+        },
+        // {
+        //     "name": "Inventory",
+        //     "link": "/dashboard/inventory"
+        // }
+    ];
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -67,12 +82,17 @@ export default function Navigation() {
             role="presentation"
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} onClick={handleCloseDraw} />
-                </ListItem>
-                ))}
+                <h5>Header Drawer</h5>
+                {list_drawer.map((data) => {
+                    let text = data.name;
+                    let link = data.link;
+                    return (
+                        <ListItem button key={text}>
+                            <ListItemText primary={text} 
+                            onClick={() => redirect(link)} />
+                        </ListItem>
+                    )
+                })}
             </List>
         </div>
     );

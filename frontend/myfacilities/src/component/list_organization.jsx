@@ -9,12 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-var admin = "bayu_aditya";
-var APIs = "http://0.0.0.0:8888/organizations";
-var urls = APIs + "?admin=" + admin;
-
-var url = "http://0.0.0.0:8888/organization";
+import { create_cookie } from '../action/cookie.js';
 
 export class Table_list_organization extends React.Component {
     constructor(props) {
@@ -72,15 +67,20 @@ class List_organization extends React.Component {
         super(props)
         this.data = this.props.data["organization"]
         this.state = {
-            admin: admin,
+            admin: null,
             del_state: false,
             del_id: null,
             del_name: null
         }
     }
+    // ====================== SELECT SECTION ================================
     selectHandler = (e) => {
         let idx = e.target.id;
-        console.log("clicked ID: " + this.data[idx]["_id"] + " Name: " + this.data[idx]["name"])
+        let _id = this.data[idx]["_id"];
+        let name = this.data[idx]["name"];
+        // console.log("clicked ID: " + _id + " Name: " + name)
+        create_cookie("_id_org", _id);
+        window.location = "/dashboard/inventory"
     }
     // ====================== EDIT SECTION ==================================
     editHandler = (e) => {
@@ -103,6 +103,7 @@ class List_organization extends React.Component {
         this.setState({del_state: false})
     }
     deleteProcess = () => {
+        var url = "http://0.0.0.0:8888/organization";
         console.log("deleted ID: " + this.state.del_id + " Name: " + this.state.del_name);
         let values = {
             "admin": this.state.admin,

@@ -35,7 +35,7 @@ class Org:
 
     @property
     def inventory(self):
-        return self.data.get("inventory", None)
+        return self.data.get("inventory", [])
 
     @property
     def num_inventory(self):

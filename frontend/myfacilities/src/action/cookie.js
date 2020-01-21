@@ -1,3 +1,8 @@
+// ========================= USER account =============================
+function create_access_token(responseJSON) {
+    document.cookie = 'access_token='+responseJSON["access_token"]+"; path=/";
+}
+
 function get_access_token() {
     var x = document.cookie.split(";");
     var result = null
@@ -17,8 +22,16 @@ function get_access_token() {
 }
 
 function delete_access_token() {
-    document.cookie = "access_token=";
+    document.cookie = "access_token=; path=/";
+}
+// ===================================================================
+
+function create_cookie(key, value) {
+    document.cookie = key+"="+value+"; path=/";
 }
 
+export {create_access_token};
 export {get_access_token};
 export {delete_access_token};
+
+export {create_cookie};
