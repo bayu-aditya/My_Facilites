@@ -168,7 +168,7 @@ class Inventory(Resource):
         inpt = self.parser_io_n.parse_args()
         mycol = Tools.get_collection()
         try:
-            mycol.update(
+            x = mycol.update(
                 {"_id": ObjectId(inpt["_id_org"])},
                 {"$push": {
                     "inventory": {
@@ -177,7 +177,10 @@ class Inventory(Resource):
                         }
                     }}
             )
-            return {"message": "Inventory has been created."}, 202
+            if x["nModified"]:
+                return {"message": "Inventory has been created."}, 202
+            else:
+                return {"message": "Failed create inventory"}, 404
         except:
             return {"message": "Something wrong in server."}, 500
 
@@ -186,11 +189,14 @@ class Inventory(Resource):
         inpt = Inventory.parser_ion_n.parse_args()
         mycol = Tools.get_collection()
         try:
-            mycol.update_one(
+            x = mycol.update_one(
                 {"_id": ObjectId(inpt["_id_org"]), "inventory._id": inpt["_id"]},
                 {"$set": {"inventory.$.name": inpt["name"]}}
             )
-            return {"message": "inventory has been updated to {}".format(inpt["name"])}, 202
+            if x.matched_count:
+                return {"message": "inventory has been updated to {}".format(inpt["name"])}, 202
+            else:
+                return {"message": "Failed update inventory."}, 404 
         except:
             return {"message": "Something wrong in server."}, 500
 
@@ -198,13 +204,16 @@ class Inventory(Resource):
         inpt = Inventory.parser_ion.parse_args()
         mycol = Tools.get_collection()
         try:
-            mycol.update(
+            x = mycol.update(
                 {"_id": ObjectId(inpt["_id_org"])},
                 {"$pull": {"inventory": {
                     "_id": inpt["_id"]
                     }
                 }}
             )
-            return {"message": "Inventory has been deleted."}, 202
+            if x["nModified"]:
+                return {"message": "Inventory has been deleted."}, 202
+            else:
+                return {"message": "Failed delete inventory."}, 404 
         except:
             return {"message": "Something wrong in server."}, 500
