@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
@@ -8,12 +8,22 @@ from src.resources.organization import Organizations, Organization
 from src.resources.organization import Inventories, Inventory
 
 app = Flask(__name__)
+app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config["JWT_SECRET_KEY"] = "apimyfacilties"
 
 CORS(app)
 api = Api(app)
 jwt = JWTManager(app)
 
+
+@jwt.expired_token_loader
+def my_expired_token_callback(expired_token):
+    token_type = expired_token['type']
+    return jsonify({
+        'status': 401,
+        'sub_status': 42,
+        'msg': 'The {} token has expired'.format(token_type)
+    }), 401
 
 api.add_resource(Login, "/login")
 api.add_resource(Register, "/register")
