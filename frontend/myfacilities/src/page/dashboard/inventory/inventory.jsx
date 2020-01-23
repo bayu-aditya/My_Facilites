@@ -6,6 +6,7 @@ import { List_Inventory } from './list_inventory';
 
 import { auth_check } from '../../../action/auth.js';
 import { get_access_token } from '../../../action/cookie.js';
+import { List_Member } from './list_member';
 
 export class Inventory extends React.Component{
     constructor(props) {
@@ -27,10 +28,14 @@ export class Inventory extends React.Component{
                 {this.checkAuth()}
                 <Navigation />
                 <div className="row">
-                    <div className="container-sm pt-3 mt-3 border col-sm-5">
+                    <div className="container-sm pt-3 mt-3 border col-sm-7">
                         <h3>My Inventory</h3>
                         <Add_inv access_token={this.access_token} />
                         <List_Inventory access_token={this.access_token} />
+                    </div>
+                    <div className="container-sm pt-3 mt-3 border col-sm-4">
+                        <h3>People in this Organization</h3>
+                        <List_Member access_token={this.access_token} />
                     </div>
                 </div>
             </div>

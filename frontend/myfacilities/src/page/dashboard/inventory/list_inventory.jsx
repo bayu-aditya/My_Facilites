@@ -67,12 +67,6 @@ export class List_Inventory extends React.Component {
                                     <tr key={index} id={id}>
                                         <td>{name}</td>
                                         <td className="auto-width">
-                                            {/* <Edit_inventory id_org={self.id_org} id_inv={id} access_token={self.access_token}/> */}
-                                            {/* <Delete_inventory 
-                                            id_org={self.id_org}
-                                            id_inv={id}
-                                            name_inv={name}
-                                            access_token={self.access_token} /> */}
                                             <Menu_row_inv 
                                             id_org={self.id_org}
                                             id_inv={id}

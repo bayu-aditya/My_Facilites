@@ -4,7 +4,7 @@ import {
     Switch,
     Route} from 'react-router-dom';
 
-import { Dashboard } from './page/dashboard/dashboard';
+import { Dashboard } from './page/dashboard/organization';
 import { Inventory } from './page/dashboard/inventory/inventory';
 import { Login } from './page/login/login'
 
