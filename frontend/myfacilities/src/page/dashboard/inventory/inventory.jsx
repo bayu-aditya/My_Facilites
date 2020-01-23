@@ -1,13 +1,13 @@
 import React from 'react';
-import Navigation from '../../component/navigation_bar';
-import {Table_list_organization_new} from './list_organization';
 import { Redirect } from 'react-router-dom';
+import { Add_inv } from '../../../component/adding';
+import Navigation from '../../../component/navigation_bar';
+import { List_Inventory } from './list_inventory';
 
-import { GoToLogin } from '../../component/redirect';
-import { auth_check } from '../../action/auth.js';
-import { get_access_token } from '../../action/cookie.js';
+import { auth_check } from '../../../action/auth.js';
+import { get_access_token } from '../../../action/cookie.js';
 
-export class Dashboard extends React.Component{
+export class Inventory extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
@@ -19,7 +19,7 @@ export class Dashboard extends React.Component{
         this.setState({auth: auth_check()})
     }
     checkAuth() {
-        if (this.state.auth === false) return <GoToLogin />
+        if (this.state.auth === false) return <Redirect to="/" />
     }
     render() {
         return (
@@ -28,8 +28,9 @@ export class Dashboard extends React.Component{
                 <Navigation />
                 <div className="row">
                     <div className="container-sm pt-3 mt-3 border col-sm-5">
-                        <h3>My Organizations</h3>
-                        <Table_list_organization_new access_token={this.access_token}/>
+                        <h3>My Inventory</h3>
+                        <Add_inv access_token={this.access_token} />
+                        <List_Inventory access_token={this.access_token} />
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import {
     Route} from 'react-router-dom';
 
 import { Dashboard } from './page/dashboard/dashboard';
-import { Inventory } from './page/dashboard/inventory';
+import { Inventory } from './page/dashboard/inventory/inventory';
 import { Login } from './page/login/login'
 
 class App extends React.Component {
