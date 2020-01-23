@@ -25,10 +25,13 @@ class UserModels:
     @classmethod
     def find_by_username(cls, username):
         db = Database()
-        result = db.execute(
-            "SELECT username, password FROM user WHERE username=%s", (username,)
-            ).fetchone()
-        if result:
-            return cls(*result)
-        else:
-            return None
+        try:
+            result = db.execute(
+                "SELECT username, password FROM user WHERE username=%s", (username,)
+                ).fetchone()
+            if result:
+                return cls(*result)
+            else:
+                return None
+        except:
+            return {"message": "Something wrong in server."}, 500

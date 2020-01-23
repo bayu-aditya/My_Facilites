@@ -5,7 +5,8 @@ from flask_jwt_extended import JWTManager
 
 from src.resources.user import Login, Register
 from src.resources.organization import Organizations, Organization
-from src.resources.organization import Inventories, Inventory
+from src.resources.inventory import Inventories, Inventory
+from src.resources.member import Members
 
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -31,6 +32,7 @@ api.add_resource(Organizations, "/organizations")
 api.add_resource(Organization, "/organization")
 api.add_resource(Inventories, "/organization/inventories")
 api.add_resource(Inventory, "/organization/inventory")
+api.add_resource(Members, "/organization/members")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8888)
