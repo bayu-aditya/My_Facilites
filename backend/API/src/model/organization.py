@@ -39,3 +39,7 @@ class Org:
     @property
     def members(self):
         return self.data.get("members", [])
+
+    @property
+    def num_members(self):
+        return len(self.members)

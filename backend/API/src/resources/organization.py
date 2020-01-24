@@ -17,7 +17,8 @@ class Organizations(Resource):
                 "_id": row._id, 
                 "name": row.name, 
                 "admin": row.admin,
-                "num_inv": row.num_inventory
+                "num_inv": row.num_inventory,
+                "num_mem": row.num_members
             })
         return {"organization": result}, 202
 
