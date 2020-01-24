@@ -40,6 +40,7 @@ class Delete_organization extends React.Component {
         xhr.send(JSON.stringify(body))
         console.log(body)
         console.log(this.access_token)
+        window.location.reload();
     }
     closeDeleteDialog = () => {
         this.setState({dialog: false})
@@ -118,6 +119,7 @@ class Delete_inventory extends React.Component {
         xhr.send(JSON.stringify(body))
         console.log(body)
         console.log(this.access_token)
+        window.location.reload();
     }
     closeDeleteDialog = () => {
         this.setState({dialog: false})

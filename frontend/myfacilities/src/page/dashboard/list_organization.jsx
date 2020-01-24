@@ -4,7 +4,8 @@ import Loading from '../../component/loading';
 import { GoToLogin, GoToInventory } from '../../component/redirect';
 import { Add_org } from '../../component/adding';
 import Menu_row_org from '../../component/menu_list/menu_organization';
-import { create_cookie, delete_access_token } from '../../action/cookie.js';
+import { create_cookie } from '../../action/cookie.js';
+import { refresh_token } from '../../action/auth.js';
 
 import './table.scss';
 
@@ -36,8 +37,7 @@ export class Table_list_organization_new extends React.Component {
                 } else if (this.status === 401) {
                     let resp = JSON.parse(this.responseText);
                     console.log(resp);
-                    delete_access_token();
-                    self.setState({auth: false})
+                    refresh_token();
                 }
             }
         }
@@ -68,10 +68,12 @@ export class Table_list_organization_new extends React.Component {
                             let id = data["_id"];
                             let name = data["name"];
                             let num_inv = data["num_inv"];
+                            let num_mem = data["num_mem"];
                             return (
                                 <tr key={index} id={id}>
                                     <td onClick={self.selectHandler}>{name}</td>
                                     <td onClick={self.selectHandler}>{num_inv}</td>
+                                    <td onClick={self.selectHandler}>{num_mem}</td>
                                     <td className='auto-width'>
                                         <Menu_row_org 
                                         id_org={id} 
@@ -89,14 +91,15 @@ export class Table_list_organization_new extends React.Component {
     render() {
         return (
             <div>
-                {this.checkAuth()}
+                {/* {this.checkAuth()} */}
                 {this.selectRender()}
                 <Add_org access_token={this.access_token}/>
                 <table id="tb_org" className="table table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Inventory Count</th>
+                            <th>Inventory</th>
+                            <th>Member</th>
                             <th></th>
                         </tr>
                     </thead>

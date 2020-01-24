@@ -13,7 +13,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {delete_access_token} from '../action/cookie.js';
+import {delete_access_token, delete_refresh_token} from '../action/cookie.js';
 import { Redirect } from 'react-router-dom';
 
 
@@ -73,6 +73,7 @@ export default function Navigation() {
     const handleLogout = () => {
         console.log("logout handler");
         delete_access_token();
+        delete_refresh_token();
         window.location.reload(); // ganti redirect to login aja
     }
 

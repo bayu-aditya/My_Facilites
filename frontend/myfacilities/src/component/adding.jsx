@@ -58,6 +58,7 @@ class Adding_org extends React.Component {
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
         this.handleClose();
+        window.location.reload();
     }
 
     render() {
@@ -129,6 +130,7 @@ class Adding_inv extends React.Component {
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
         this.handleClose();
+        window.location.reload();
     }
 
     render() {
