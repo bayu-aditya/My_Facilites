@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
-from src.resources.user import Login, Register
+from src.resources.user import Login, Register, TokenRefresh
 from src.resources.organization import Organizations, Organization
 from src.resources.inventory import Inventories, Inventory
 from src.resources.member import Members
@@ -28,6 +28,7 @@ def my_expired_token_callback(expired_token):
 
 api.add_resource(Login, "/login")
 api.add_resource(Register, "/register")
+api.add_resource(TokenRefresh, "/refresh")
 api.add_resource(Organizations, "/organizations")
 api.add_resource(Organization, "/organization")
 api.add_resource(Inventories, "/organization/inventories")
