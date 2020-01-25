@@ -1,7 +1,7 @@
 // ========================= USER account =============================
 function create_access_token(responseJSON) {
     document.cookie = 'access_token='+responseJSON["access_token"]+"; path=/";
-    window.location.reload();
+    // window.location.reload();
 }
 
 function create_refresh_token(responseJSON) {

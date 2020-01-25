@@ -5,48 +5,49 @@ import { GoToLogin, GoToInventory } from '../../component/redirect';
 import { Add_org } from '../../component/adding';
 import Menu_row_org from '../../component/menu_list/menu_organization';
 import { create_cookie } from '../../action/cookie.js';
-import { refresh_token } from '../../action/auth.js';
 
 import './table.scss';
+
+function retrieveAPI(self) {
+    let url = self.url;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 202) {
+                let resp = JSON.parse(this.responseText);
+                console.log(resp);
+                self.setState({
+                    organization: resp["organization"],
+                    isLoad: false
+                })
+            }
+        }
+    xhr.open("GET", url);
+    xhr.setRequestHeader('Authorization', 'Bearer '+self.state.access_token);
+    xhr.send();
+}
 
 export class Table_list_organization_new extends React.Component {
     constructor(props) {
         super(props);
-        this.access_token = this.props.access_token;
         this.url = "http://0.0.0.0:8888/organizations";
         this.state = {
+            access_token: this.props.access_token,
             auth: true,
             isLoad: true,
             select: false,
             organization: []
         }
     }
-    componentDidMount() {
-        let url = this.url;
+    componentDidUpdate() {
         let self = this;
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 202) {
-                    let resp = JSON.parse(this.responseText);
-                    console.log(resp);
-                    self.setState({
-                        organization: resp["organization"],
-                        isLoad: false
-                    })
-                } else if (this.status === 401) {
-                    let resp = JSON.parse(this.responseText);
-                    console.log(resp);
-                    refresh_token();
-                }
+        if (this.state.isLoad === true) {
+            let update_access_token = this.props.access_token;
+            if (update_access_token !== this.state.access_token) {
+                this.setState({access_token: update_access_token});
+            } else {
+                retrieveAPI(self);
             }
         }
-        xhr.open("GET", url);
-        xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
-        xhr.send()
-    }
-    checkAuth() {
-        if (this.state.auth === false) return <GoToLogin />
     }
     selectHandler = (e) => {
         console.log(e.target.parentNode.id);
@@ -78,7 +79,7 @@ export class Table_list_organization_new extends React.Component {
                                         <Menu_row_org 
                                         id_org={id} 
                                         name_org={name} 
-                                        access_token={self.access_token} />
+                                        access_token={self.state.access_token} />
                                     </td>
                                 </tr>    
                             )
@@ -91,9 +92,8 @@ export class Table_list_organization_new extends React.Component {
     render() {
         return (
             <div>
-                {/* {this.checkAuth()} */}
                 {this.selectRender()}
-                <Add_org access_token={this.access_token}/>
+                <Add_org access_token={this.state.access_token}/>
                 <table id="tb_org" className="table table-hover">
                     <thead>
                         <tr>

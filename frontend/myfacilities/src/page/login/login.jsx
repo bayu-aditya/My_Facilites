@@ -60,7 +60,8 @@ export class Login extends React.Component {
         xhttp.send(JSON.stringify(values));
     }
     toDashboard = () => {
-        if (this.state.authenticate || get_access_token()) {
+        // if (this.state.authenticate || get_access_token()) {
+        if (this.state.authenticate) {
             console.log("login successful, to dashboard")
             return <Redirect to="/dashboard" />
         }

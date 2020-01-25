@@ -7,7 +7,6 @@ import { Delete_organization } from '../deleting';
 
 export default function Menu_row_org(params) {
     // params : {id_org, name_org, access_token}
-
     const ITEM_HEIGHT = 100;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);

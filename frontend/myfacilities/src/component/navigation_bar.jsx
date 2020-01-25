@@ -11,10 +11,8 @@ import Menu from '@material-ui/core/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {delete_access_token, delete_refresh_token} from '../action/cookie.js';
-import { Redirect } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Navigation() {
+export default function Navigation(props) {
     const classes = useStyles();
 
     function redirect(inpt) {
@@ -72,8 +70,8 @@ export default function Navigation() {
     const handleCloseDraw = () => {setOpenDraw(false)}
     const handleLogout = () => {
         console.log("logout handler");
-        delete_access_token();
         delete_refresh_token();
+        delete_access_token();
         window.location.reload(); // ganti redirect to login aja
     }
 
@@ -111,6 +109,11 @@ export default function Navigation() {
                 <Typography variant="h6" className={classes.title}>
                     Dashboard
                 </Typography>
+                <div>
+                    <Typography>
+                        {props.name}
+                    </Typography>
+                </div>
                 <div>
                     <IconButton
                     aria-label="account of current user"
