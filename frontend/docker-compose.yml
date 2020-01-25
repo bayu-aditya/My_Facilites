@@ -10,7 +10,7 @@ services:
             default:
                 ipv4_address: 192.168.0.4
         ports: 
-            - 8002:80
+            - 8002:5002
 networks: 
     default:
         external:
