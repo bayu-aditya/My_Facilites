@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Loading from '../../component/loading';
-import { GoToLogin, GoToInventory } from '../../component/redirect';
+import { GoToInventory } from '../../component/redirect';
 import { Add_org } from '../../component/adding';
 import Menu_row_org from '../../component/menu_list/menu_organization';
 import { create_cookie } from '../../action/cookie.js';
