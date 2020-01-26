@@ -1,0 +1,30 @@
+version: '3'
+services:
+    myfacilities_web:
+        build: 
+            context: ./frontend
+            dockerfile: Dockerfile
+        image: myfacilities_web:0.0.1
+        container_name: myfacilities_web
+        networks:
+            default:
+                ipv4_address: 192.168.0.4
+        ports: 
+            - 8002:5002
+            
+    myfacilities_api:
+        build: 
+            context: ./backend/API/
+            dockerfile: Dockerfile
+        image: myfacilities_api:0.0.1
+        container_name: myfacilities_api
+        networks:
+            default:
+                ipv4_address: 192.168.0.5
+        ports: 
+            - 8888:8888
+
+networks: 
+    default:
+        external:
+            name: reverseproxy_nginx
