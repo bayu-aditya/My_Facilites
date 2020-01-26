@@ -3,7 +3,8 @@ import mysql.connector
 class Database:
     def __init__(self):
         self.mydb = mysql.connector.connect(
-            host="35.240.223.151",
+            # host="35.240.223.151",
+            host = "192.168.0.6",
             user="api",
             passwd="apimyfacilities",
             database="myfacilities"
