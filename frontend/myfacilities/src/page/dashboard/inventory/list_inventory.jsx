@@ -2,7 +2,7 @@ import React from 'react';
 import Menu_row_inv from '../../../component/menu_list/menu_inventory';
 import Loading from '../../../component/loading';
 
-import { get_cookie } from '../../../action/cookie';
+import { get_cookie, create_cookie } from '../../../action/cookie';
 import { inventories_api } from '../../../api/link.js';
 import '../table.scss';
 
@@ -49,6 +49,10 @@ export class List_Inventory extends React.Component {
             }
         }
     }
+    selectHandler = (e) => {
+        console.log(e.target.parentNode.id)
+        create_cookie("_id_inv", e.target.parentNode.id)
+    }
     tabBody = () => {
         let self = this;
         if (this.state.isLoad === true) {
@@ -65,7 +69,7 @@ export class List_Inventory extends React.Component {
                                 let name = data["name"];
                                 return (
                                     <tr key={index} id={id}>
-                                        <td>{name}</td>
+                                        <td onClick={self.selectHandler}>{name}</td>
                                         <td className="auto-width">
                                             <Menu_row_inv 
                                             id_org={self.id_org}

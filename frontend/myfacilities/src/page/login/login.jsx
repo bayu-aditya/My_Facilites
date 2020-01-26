@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
-import { create_access_token, create_refresh_token } from '../../action/cookie.js';
+import { create_access_token, create_refresh_token, get_access_token } from '../../action/cookie.js';
 import { login_api } from '../../api/link.js'
 import './login.scss';
 
@@ -61,8 +61,7 @@ export class Login extends React.Component {
         xhttp.send(JSON.stringify(values));
     }
     toDashboard = () => {
-        // if (this.state.authenticate || get_access_token()) {
-        if (this.state.authenticate) {
+        if (this.state.authenticate || get_access_token()) {
             console.log("login successful, to dashboard")
             return <Redirect to="/dashboard" />
         }

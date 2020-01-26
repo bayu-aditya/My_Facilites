@@ -10,8 +10,8 @@ import { organization_api, inventory_api } from '../api/link.js';
 const useStyles = theme => ({
     root: {
         '& .MuiTextField-root': {
-            margin: theme.spacing(1),
-            width: 500
+            marginRight: theme.spacing(1),
+            marginBottom: theme.spacing(1)
         }
     }
 });
@@ -74,11 +74,9 @@ class Adding_org extends React.Component {
                     <DialogTitle>Adding an Organization</DialogTitle>
                     <DialogContent>
                         <form className={classes.root} autoComplete="off" onSubmit={this.submitHandler}>
-                            <div>
-                                <TextField id="name" label="name" variant="outlined" onChange={this.changeHandler} required/>
-                            </div>
-                            <div>
-                                <TextField id="desc" label="desc" onChange={this.changeHandler}
+                            <div className={classes.root}>
+                                <TextField fullWidth id="name" label="name" variant="outlined" onChange={this.changeHandler} required/>
+                                <TextField fullWidth id="desc" label="desc" onChange={this.changeHandler}
                                 multiline rows="5" variant="outlined" />
                             </div>
                             <Button type="submit">create</Button>
@@ -149,11 +147,9 @@ class Adding_inv extends React.Component {
                     <DialogTitle>Adding an Organization</DialogTitle>
                     <DialogContent>
                         <form className={classes.root} autoComplete="off" onSubmit={this.submitHandler}>
-                            <div>
-                                <TextField id="name" label="name" variant="outlined" onChange={this.changeHandler} required/>
-                            </div>
-                            <div>
-                                <TextField id="desc" label="desc" onChange={this.changeHandler}
+                            <div className={classes.root}>
+                                <TextField fullWidth id="name" label="name" variant="outlined" onChange={this.changeHandler} required/>
+                                <TextField fullWidth id="desc" label="desc" onChange={this.changeHandler}
                                 multiline rows="5" variant="outlined" />
                             </div>
                             <Button type="submit">create</Button>
