@@ -1,31 +1,31 @@
-var domain = "http://35.240.223.151:8888/"
+var domain = "http://35.240.223.151:8888"
 
 function login_api() {
-    return domain+"login/"
+    return domain+"/login"
 }
 
 function user_api() {
-    return domain+"user/"
+    return domain+"/user"
 }
 
 function organizations_api() {
-    return domain+"organizations/"
+    return domain+"/organizations"
 }
 
 function organization_api() {
-    return domain+"organization/"
+    return domain+"/organization"
 }
 
 function inventories_api() {
-    return organization_api() + "inventories/"
+    return organization_api() + "/inventories"
 }
 
 function inventory_api() {
-    return organization_api() + "inventory/"
+    return organization_api() + "/inventory"
 }
 
 function members_api() {
-    return organization_api() + "members/"
+    return organization_api() + "/members"
 }
 
 export {login_api};
