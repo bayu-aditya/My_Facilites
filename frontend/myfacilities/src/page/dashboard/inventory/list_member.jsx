@@ -2,6 +2,8 @@ import React from 'react';
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar, ListSubheader } from '@material-ui/core';
 import { get_cookie } from '../../../action/cookie';
 import Loading from '../../../component/loading';
+import { members_api } from '../../../api/link.js';
+
 
 function retrieveAPI(that) {
     let url = that.url+"?_id="+that.id_org;
@@ -36,7 +38,7 @@ export class List_Member extends React.Component {
         this.id_org = get_cookie("_id_org");
         this.admin = "admin123";
         this.image = "https://www.w3schools.com/howto/img_avatar.png";
-        this.url = "http://0.0.0.0:8888/organization/members";
+        this.url = members_api();
     }
     componentDidUpdate() {
         if (this.state.isLoad === true) {

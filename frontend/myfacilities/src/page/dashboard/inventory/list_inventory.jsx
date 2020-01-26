@@ -3,6 +3,7 @@ import Menu_row_inv from '../../../component/menu_list/menu_inventory';
 import Loading from '../../../component/loading';
 
 import { get_cookie } from '../../../action/cookie';
+import { inventories_api } from '../../../api/link.js';
 import '../table.scss';
 
 function retrieveAPI(that) {
@@ -29,7 +30,7 @@ export class List_Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.id_org = get_cookie("_id_org");
-        this.url = "http://0.0.0.0:8888/organization/inventories";
+        this.url = inventories_api();
         this.state = {
             access_token: this.props.access_token,
             auth: true,

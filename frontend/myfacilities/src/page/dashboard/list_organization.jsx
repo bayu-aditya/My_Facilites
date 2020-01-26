@@ -5,7 +5,7 @@ import { GoToInventory } from '../../component/redirect';
 import { Add_org } from '../../component/adding';
 import Menu_row_org from '../../component/menu_list/menu_organization';
 import { create_cookie } from '../../action/cookie.js';
-
+import { organizations_api } from '../../api/link.js'
 import './table.scss';
 
 function retrieveAPI(self) {
@@ -29,7 +29,7 @@ function retrieveAPI(self) {
 export class Table_list_organization_new extends React.Component {
     constructor(props) {
         super(props);
-        this.url = "http://0.0.0.0:8888/organizations";
+        this.url = organizations_api();
         this.state = {
             access_token: this.props.access_token,
             auth: true,

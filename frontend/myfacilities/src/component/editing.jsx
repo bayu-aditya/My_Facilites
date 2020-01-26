@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { IconButton, MenuItem } from '@material-ui/core';
 import { DialogTitle, DialogContent, TextField, withStyles } from '@material-ui/core';
 
-var url = "http://0.0.0.0:8888/organization";
+import { organization_api, inventory_api } from '../api/link.js';
 
 const useStyles = theme => ({
     root: {
@@ -27,7 +27,7 @@ class Editing_org extends React.Component {
         };
         this.id_org = this.props.id_org;
         this.access_token = this.props.access_token;
-        this.url = "http://0.0.0.0:8888/organization";
+        this.url = organization_api();
     }
 
     handleOpen = () => {
@@ -106,7 +106,7 @@ class Editing_inv extends React.Component {
         this.id_org = this.props.id_org;
         this.id_inv = this.props.id_inv;
         this.access_token = this.props.access_token;
-        this.url = "http://0.0.0.0:8888/organization/inventory";
+        this.url = inventory_api();
     }
 
     handleOpen = () => {

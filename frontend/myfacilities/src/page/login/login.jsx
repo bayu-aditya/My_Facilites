@@ -2,8 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
+import { create_access_token, create_refresh_token } from '../../action/cookie.js';
+import { login_api } from '../../api/link.js'
 import './login.scss';
-import { create_access_token, create_refresh_token, get_access_token } from '../../action/cookie.js';
 
 export class Login extends React.Component {
     constructor(props) {
@@ -55,7 +56,7 @@ export class Login extends React.Component {
                     console.log("server error")
                 }
             }}
-        xhttp.open("POST", "http://0.0.0.0:8888/login");
+        xhttp.open("POST", login_api());
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify(values));
     }
