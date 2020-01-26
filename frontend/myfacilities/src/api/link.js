@@ -8,6 +8,10 @@ function user_api() {
     return domain+"/user"
 }
 
+function refresh_api() {
+    return domain+"/refresh"
+}
+
 function organizations_api() {
     return domain+"/organizations"
 }
@@ -30,6 +34,7 @@ function members_api() {
 
 export {login_api};
 export {user_api};
+export {refresh_api};
 export {organizations_api};
 export {organization_api};
 export {inventories_api};

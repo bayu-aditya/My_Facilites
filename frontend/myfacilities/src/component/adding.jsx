@@ -41,23 +41,26 @@ class Adding_org extends React.Component {
         event.preventDefault();
         console.log("submitted Form:");
         let url = this.url;
+        let self = this;
         let body = {
             "name": this.state.name,
             "desc": this.state.desc
         }
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
+            if (this.readyState === 4) {
+                if (this.status === 202) {
+                    let resp = JSON.parse(this.responseText);
+                    console.log(resp);
+                    self.handleClose();
+                    window.location.reload();
+                }
             }
         }
         xhr.open("POST", url);
         xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
-        this.handleClose();
-        window.location.reload();
     }
 
     render() {
@@ -112,6 +115,7 @@ class Adding_inv extends React.Component {
     submitHandler = (event) => {
         event.preventDefault();
         let url = this.url;
+        let self = this;
         let body = {
             "_id_org": this.state._id_org,
             "name": this.state.name
@@ -119,17 +123,19 @@ class Adding_inv extends React.Component {
         console.log(body);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
+            if (this.readyState === 4) {
+                if (this.status === 202) {
+                    let resp = JSON.parse(this.responseText);
+                    console.log(resp);
+                    self.handleClose();
+                    window.location.reload();
+                }
             }
         }
         xhr.open("POST", url);
         xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
-        this.handleClose();
-        window.location.reload();
     }
 
     render() {

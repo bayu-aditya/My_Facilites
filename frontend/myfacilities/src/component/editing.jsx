@@ -43,6 +43,7 @@ class Editing_org extends React.Component {
         e.preventDefault();
         console.log("submitted Form:");
         let url = this.url;
+        let self = this;
         let body = {
             "_id": this.id_org,
             "name": this.state.name,
@@ -50,17 +51,19 @@ class Editing_org extends React.Component {
         }
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
+            if (this.readyState === 4) {
+                if (this.status === 202) {
+                    let resp = JSON.parse(this.responseText);
+                    console.log(resp);
+                    self.handleClose();
+                    window.location.reload();
+                }
             }
         }
         xhr.open("PUT", url);
         xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
-        this.handleClose();
-        window.location.reload();
     }
     dialogEdit() {
         const { classes } = this.props;
@@ -122,6 +125,7 @@ class Editing_inv extends React.Component {
         e.preventDefault();
         console.log("submitted Form:");
         let url = this.url;
+        let self = this;
         let body = {
             "_id_org": this.id_org,
             "_id": this.id_inv,
@@ -130,17 +134,19 @@ class Editing_inv extends React.Component {
         console.log(body);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
+            if (this.readyState === 4) {
+                if (this.status === 202) {
+                    let resp = JSON.parse(this.responseText);
+                    console.log(resp);
+                    self.handleClose();
+                    window.location.reload();
+                }
             }
         }
         xhr.open("PUT", url);
         xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
-        this.handleClose();
-        window.location.reload();
     }
     dialogEdit() {
         const { classes } = this.props;

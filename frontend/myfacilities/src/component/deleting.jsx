@@ -30,19 +30,19 @@ class Delete_organization extends React.Component {
         let body = {"_id": this.id};
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
-                self.closeDeleteDialog();
+            if (this.readyState === 4) {
+                if (this.status === 202) {
+                    let resp = JSON.parse(this.responseText);
+                    console.log(resp);
+                    self.closeDeleteDialog();
+                    window.location.reload();
+                }
             }
         }
         xhr.open("DELETE", url);
         xhr.setRequestHeader("Authorization", "Bearer "+this.access_token);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(body))
-        console.log(body)
-        console.log(this.access_token)
-        window.location.reload();
     }
     closeDeleteDialog = () => {
         this.setState({dialog: false})
@@ -109,10 +109,13 @@ class Delete_inventory extends React.Component {
         };
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
-                self.closeDeleteDialog();
+            if (this.readyState === 4) {
+                if (this.status === 202) {
+                    let resp = JSON.parse(this.responseText);
+                    console.log(resp);
+                    self.closeDeleteDialog();
+                    window.location.reload();
+                }
             }
         }
         xhr.open("DELETE", url);
@@ -121,7 +124,6 @@ class Delete_inventory extends React.Component {
         xhr.send(JSON.stringify(body))
         console.log(body)
         console.log(this.access_token)
-        window.location.reload();
     }
     closeDeleteDialog = () => {
         this.setState({dialog: false})

@@ -2,6 +2,7 @@ import {
     create_access_token, 
     get_access_token, 
     get_refresh_token } from './cookie';
+import { refresh_api } from '../api/link.js';
 
 function auth_check() {
     if (get_access_token() && get_refresh_token()) {
@@ -14,7 +15,7 @@ function auth_check() {
 function refresh_token(self) {
     const request = async() => {
         let refresh = get_refresh_token();
-        const response = await fetch("http://0.0.0.0:8888/refresh", {
+        const response = await fetch(refresh_api(), {
             method: 'POST',
             headers: {"Authorization": 'Bearer '+refresh}
         });
@@ -24,7 +25,7 @@ function refresh_token(self) {
         return json["access_token"]
     }
     let a = request();
-    setTimeout(() => {self.setState({access_token: get_access_token()})}, 100)
+    setTimeout(() => {self.setState({access_token: get_access_token()})}, 1000)
     console.log(a);
     console.log("refreshing token");
 }
