@@ -5,8 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { DialogTitle, DialogContent, TextField, withStyles } from '@material-ui/core';
 
 import { get_cookie } from '../action/cookie';
-
-var url = "http://0.0.0.0:8888/organization";
+import { organization_api, inventory_api } from '../api/link.js';
 
 const useStyles = theme => ({
     root: {
@@ -26,7 +25,7 @@ class Adding_org extends React.Component {
             desc: null
         };
         this.access_token = this.props.access_token;
-        this.url = "http://0.0.0.0:8888/organization";
+        this.url = organization_api();
     }
 
     handleOpen = () => {
@@ -98,7 +97,7 @@ class Adding_inv extends React.Component {
             desc: null
         };
         this.access_token = this.props.access_token;
-        this.url = "http://0.0.0.0:8888/organization/inventory";
+        this.url = inventory_api();
     }
 
     handleOpen = () => {

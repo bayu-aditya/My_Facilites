@@ -5,6 +5,7 @@ import {Table_list_organization_new} from './list_organization';
 import { GoToLogin } from '../../component/redirect';
 import { auth_check, refresh_token } from '../../action/auth.js';
 import { get_access_token } from '../../action/cookie.js';
+import { user_api } from '../../api/link.js';
 
 export class Dashboard extends React.Component{
     constructor(props) {
@@ -17,7 +18,7 @@ export class Dashboard extends React.Component{
     }
     retrieveAPI = () => {
         let self = this;
-        fetch("http://0.0.0.0:8888/user", {
+        fetch(user_api(), {
             method: 'GET',
             headers: {"Authorization": "Bearer "+this.state.access_token}
         })

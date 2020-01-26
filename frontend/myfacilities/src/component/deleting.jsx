@@ -8,6 +8,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import { organization_api, inventory_api } from '../api/link.js';
+
 class Delete_organization extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ class Delete_organization extends React.Component {
         this.id = this.props.id_org;
         this.name = this.props.name_org;
         this.access_token = this.props.access_token;
-        this.url = "http://0.0.0.0:8888/organization";
+        this.url = organization_api();
     }
     openDeleteDialog = (e) => {
         this.setState({dialog: true})
@@ -93,7 +95,7 @@ class Delete_inventory extends React.Component {
         this.id_inv = this.props.id_inv;
         this.name_inv = this.props.name_inv;
         this.access_token = this.props.access_token;
-        this.url = "http://0.0.0.0:8888/organization/inventory";
+        this.url = inventory_api();
     }
     openDeleteDialog = (e) => {
         this.setState({dialog: true})

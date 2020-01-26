@@ -7,12 +7,13 @@ import { auth_check, refresh_token } from '../../../action/auth.js';
 import { get_access_token } from '../../../action/cookie.js';
 import { List_Member } from './list_member';
 import { GoToLogin } from '../../../component/redirect';
+import { user_api } from '../../../api/link.js';
 
 function retrieveAPI(self) {
     // self state exist:
     //      - access_token
     //      - user (optional)
-    fetch("http://0.0.0.0:8888/user", {
+    fetch(user_api(), {
         method: "GET",
         headers: {"Authorization": "Bearer "+self.state.access_token}
     })
