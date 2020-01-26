@@ -3,39 +3,50 @@ import { List, ListItem, ListItemText, ListItemAvatar, Avatar, ListSubheader } f
 import { get_cookie } from '../../../action/cookie';
 import Loading from '../../../component/loading';
 
+function retrieveAPI(that) {
+    let url = that.url+"?_id="+that.id_org;
+    let self = that;
+    console.log(url);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status === 202) {
+                let resp = JSON.parse(this.responseText);
+                console.log(resp);
+                self.setState({
+                    isLoad: false,
+                    members: resp["members"]
+                })
+            }
+        }
+    }
+    xhr.open("GET", url);
+    xhr.setRequestHeader('Authorization', 'Bearer '+self.state.access_token);
+    xhr.send();
+}
+
 export class List_Member extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            access_token: this.props.access_token,
             isLoad: true,
             members: []
         };
-        this.access_token = this.props.access_token;
         this.id_org = get_cookie("_id_org");
         this.admin = "admin123";
         this.image = "https://www.w3schools.com/howto/img_avatar.png";
         this.url = "http://0.0.0.0:8888/organization/members";
     }
-    componentDidMount() {
-        let url = this.url+"?_id="+this.id_org;
-        let self = this;
-        console.log(url);
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 202) {
-                    let resp = JSON.parse(this.responseText);
-                    console.log(resp);
-                    self.setState({
-                        isLoad: false,
-                        members: resp["members"]
-                    })
-                }
+    componentDidUpdate() {
+        if (this.state.isLoad === true) {
+            let update_access_token = this.props.access_token;
+            if (update_access_token !== this.state.access_token) {
+                this.setState({access_token: update_access_token});
+            } else {
+                retrieveAPI(this);
             }
         }
-        xhr.open("GET", url);
-        xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
-        xhr.send();
     }
     bodyList() {
         if (this.state.isLoad === true) {
