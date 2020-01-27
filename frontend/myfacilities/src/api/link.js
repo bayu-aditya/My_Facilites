@@ -1,4 +1,4 @@
-var domain = "http://35.240.223.151:8888"
+var domain = "https://api.myfacilities.online"
 
 function login_api() {
     return domain+"/login"
