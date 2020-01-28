@@ -4,6 +4,7 @@ import Loading from '../../../component/loading';
 
 import { get_cookie, create_cookie } from '../../../action/cookie';
 import { inventories_api } from '../../../api/link.js';
+import { GoToTimeline } from '../../../component/redirect';
 import '../table.scss';
 
 function retrieveAPI(that) {
@@ -35,6 +36,7 @@ export class List_Inventory extends React.Component {
             access_token: this.props.access_token,
             auth: true,
             isLoad: true,
+            select: false,
             inventory: []
         }
     }
@@ -50,8 +52,12 @@ export class List_Inventory extends React.Component {
         }
     }
     selectHandler = (e) => {
-        console.log(e.target.parentNode.id)
-        create_cookie("_id_inv", e.target.parentNode.id)
+        console.log(e.target.parentNode.id);
+        create_cookie("_id_inv", e.target.parentNode.id);
+        this.setState({select: true});
+    }
+    selectRender() {
+        if (this.state.select === true) return <GoToTimeline />
     }
     tabBody = () => {
         let self = this;
@@ -88,7 +94,8 @@ export class List_Inventory extends React.Component {
     }
     render() {
         return (
-                <div>                    
+                <div>
+                    {this.selectRender()}                    
                     <table className='table table-hover'>
                         <thead>
                             <tr>

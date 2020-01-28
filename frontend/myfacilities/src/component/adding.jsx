@@ -3,6 +3,11 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import { DialogTitle, DialogContent, TextField, withStyles } from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns';
+import { 
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+    KeyboardTimePicker } from '@material-ui/pickers';
 
 import { get_cookie } from '../action/cookie';
 import { organization_api, inventory_api } from '../api/link.js';
@@ -161,7 +166,115 @@ class Adding_inv extends React.Component {
     }
 }
 
+class Adding_task extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            _id_org: get_cookie("_id_org"),
+            date_start: new Date(),
+            date_finish: new Date(),
+            notes: null
+        };
+        this.access_token = this.props.access_token;
+        this.url = inventory_api();
+    }
+
+    handleOpen = () => {
+        this.setState({open: true})
+    }
+    handleClose = () => {
+        this.setState({open: false})
+    }
+    changeNotesHandler = (e) => {
+        this.setState({notes: e.target.value})
+    }
+    submitHandler = (event) => {
+        event.preventDefault();
+        console.log(this.state.date_start);
+        console.log(this.state.date_finish);
+        console.log(this.state.notes)
+    }
+    handleDateStartChange = (date) => {
+        this.setState({date_start: date})
+    }
+    handleDateFinishChange = (date) => {
+        this.setState({date_finish: date})
+    }
+    render() {
+        const { classes } = this.props;
+        return (
+            <div>
+                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen} disableElevation>
+                    <AddIcon />Adding
+                </Button>
+                <Dialog open={this.state.open} onClose={this.handleClose} className={classes.root}>
+                    <DialogTitle>Add Your Task</DialogTitle>
+                    <DialogContent>
+                        <form className={classes.root} autoComplete="off" onSubmit={this.submitHandler}>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <div className="row">
+                                    <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label="Choose Start Date"
+                                        format="dd/MM/yyyy"
+                                        value={this.state.date_start}
+                                        onChange={this.handleDateStartChange}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                    />
+                                    <KeyboardTimePicker
+                                        margin="normal"
+                                        id="time-picker"
+                                        label="Choose Start Time"
+                                        value={this.state.date_start}
+                                        onChange={this.handleDateStartChange}
+                                        KeyboardButtonProps={{
+                                        'aria-label': 'change time',
+                                        }}
+                                    />
+                                </div>
+                                <div className="row">
+                                    <KeyboardDatePicker
+                                        margin="normal"
+                                        id="date-picker-dialog"
+                                        label="Choose Finish Date"
+                                        format="dd/MM/yyyy"
+                                        value={this.state.date_finish}
+                                        onChange={this.handleDateFinishChange}
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                    />
+                                    <KeyboardTimePicker
+                                        margin="normal"
+                                        id="time-picker"
+                                        label="Choose Finish Time"
+                                        value={this.state.date_finish}
+                                        onChange={this.handleDateFinishChange}
+                                        KeyboardButtonProps={{
+                                        'aria-label': 'change time',
+                                        }}
+                                    />
+                                </div>
+                                <div className="row">
+                                    <TextField fullWidth id="desc" label="desc" onChange={this.changeNotesHandler}
+                                    multiline rows="5" variant="outlined" />
+                                </div>
+                                </MuiPickersUtilsProvider>
+                            <Button type="submit">submit</Button>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        )
+    }
+}
+
 const Add_org = withStyles(useStyles)(Adding_org);
 const Add_inv = withStyles(useStyles)(Adding_inv);
+const Add_task = withStyles(useStyles)(Adding_task);
 
-export {Add_org, Add_inv};
+export {Add_org, Add_inv, Add_task};

@@ -13,5 +13,12 @@ function GoToInventory() {
     )
 }
 
+function GoToTimeline() {
+    return (
+        <Redirect to='/dashboard/inventory/timeline' />
+    )
+}
+
 export {GoToLogin};
 export {GoToInventory};
+export {GoToTimeline};
