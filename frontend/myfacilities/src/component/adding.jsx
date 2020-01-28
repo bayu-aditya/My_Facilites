@@ -9,6 +9,7 @@ import {
     KeyboardDatePicker,
     KeyboardTimePicker } from '@material-ui/pickers';
 
+import { get_datetime } from '../tools/datetime_format.js';
 import { get_cookie } from '../action/cookie';
 import { organization_api, inventory_api } from '../api/link.js';
 
@@ -191,8 +192,8 @@ class Adding_task extends React.Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(this.state.date_start);
-        console.log(this.state.date_finish);
+        console.log(get_datetime(this.state.date_start));
+        console.log(get_datetime(this.state.date_finish));
         console.log(this.state.notes)
     }
     handleDateStartChange = (date) => {

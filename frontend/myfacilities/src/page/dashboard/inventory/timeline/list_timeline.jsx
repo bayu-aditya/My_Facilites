@@ -8,9 +8,9 @@ export class List_timeline extends React.Component {
                 <tr>
                     <td>bayu_aditya</td>
                     <td>12 Januari 2019</td>
-                    <td>10:20:00</td>
+                    <td>10:20</td>
                     <td>13 Januari 2019</td>
-                    <td>00:20:00</td>
+                    <td>00:20</td>
                     <td>Some Notes</td>
                 </tr>
             </tbody>
