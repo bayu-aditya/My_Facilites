@@ -65,7 +65,11 @@ export class Timeline extends React.Component {
                 </div>
                 <div className="container-sm pt-3 mt-3 border col-sm-7">
                     <h3>Tasks</h3>
-                    <List_timeline />
+                    <List_timeline 
+                        id_org={this.state.id_org}
+                        id_inv={this.state.id_inv}
+                        username={this.state.user}
+                    />
                     {/* <h6>Hallo {} Timeline Inventory ke- {this.state.id_inv}</h6> */}
                 </div>
             </div>

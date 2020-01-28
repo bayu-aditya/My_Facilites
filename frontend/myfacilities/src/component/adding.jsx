@@ -172,7 +172,9 @@ class Adding_task extends React.Component {
         super(props);
         this.state = {
             open: false,
-            _id_org: get_cookie("_id_org"),
+            id_org: this.props.id_org,
+            id_inv: this.props.id_inv,
+            username: this.props.username,
             date_start: new Date(),
             date_finish: new Date(),
             notes: null
@@ -192,9 +194,15 @@ class Adding_task extends React.Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(get_datetime(this.state.date_start));
-        console.log(get_datetime(this.state.date_finish));
-        console.log(this.state.notes)
+        let body = {
+            "_id_org": this.state.id_org,
+            "_id_inv": this.state.id_inv,
+            "username": this.state.username,
+            "start": get_datetime(this.state.date_start),
+            "finish": get_datetime(this.state.date_finish),
+            "notes": this.state.notes
+        }
+        console.log(body)
     }
     handleDateStartChange = (date) => {
         this.setState({date_start: date})

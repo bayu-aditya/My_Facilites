@@ -1,7 +1,22 @@
 import React from 'react';
 import { Add_task, Add_inv } from '../../../../component/adding';
 
+function retrieveAPI(that) {
+
+}
+
 export class List_timeline extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            id_org: this.props.id_org,
+            id_inv: this.props.id_inv,
+            username: this.props.username
+        }
+    }
+    componentDidUpdate() {
+        console.log(this.state.username)
+    }
     tabBody() {
         return (
             <tbody>
@@ -19,7 +34,11 @@ export class List_timeline extends React.Component {
     render() {
         return (
             <div>
-                <Add_task />
+                <Add_task 
+                    id_org={this.state.id_org}
+                    id_inv={this.state.id_inv}
+                    username={this.state.username}
+                />
                 <div className="table-responsive">
                     <table className="table table-hover">
                         <thead>
