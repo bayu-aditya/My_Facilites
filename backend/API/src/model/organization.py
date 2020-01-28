@@ -3,8 +3,8 @@ import pymongo
 class Tools:
     @staticmethod
     def get_collection():
-        myclient = pymongo.MongoClient("mongodb://192.168.0.7:27017/")
-        # myclient = pymongo.MongoClient("mongodb://35.240.223.151:27017/")
+        # myclient = pymongo.MongoClient("mongodb://192.168.0.7:27017/")
+        myclient = pymongo.MongoClient("mongodb://35.240.223.151:27017/")
         mydb = myclient["myfacilities"]
         return mydb["organization"]
 

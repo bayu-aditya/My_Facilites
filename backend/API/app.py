@@ -7,6 +7,7 @@ from src.resources.user import Login, Register, User, TokenRefresh
 from src.resources.organization import Organizations, Organization
 from src.resources.inventory import Inventories, Inventory
 from src.resources.member import Members
+from src.resources.tasks import Tasks, Task
 
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -35,6 +36,8 @@ api.add_resource(Organization, "/organization")
 api.add_resource(Inventories, "/organization/inventories")
 api.add_resource(Inventory, "/organization/inventory")
 api.add_resource(Members, "/organization/members")
+api.add_resource(Tasks, "/organization/inventory/tasks")
+api.add_resource(Task, "/organization/inventory/task")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8888)
