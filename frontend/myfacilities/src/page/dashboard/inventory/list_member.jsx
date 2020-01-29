@@ -3,7 +3,7 @@ import { List, ListItem, ListItemText, ListItemAvatar, Avatar, ListSubheader } f
 import { get_cookie } from '../../../action/cookie';
 import Loading from '../../../component/loading';
 import { members_api } from '../../../api/link.js';
-
+import { connect } from 'react-redux';
 
 function retrieveAPI(that) {
     let url = that.url+"?_id="+that.id_org;
@@ -27,7 +27,14 @@ function retrieveAPI(that) {
     xhr.send();
 }
 
-export class List_Member extends React.Component {
+function mapStateToProps(state) {
+    return {
+        access_token: state.access_token,
+        id_org: state.id_org,
+    }
+}
+
+class List_Member extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -35,20 +42,21 @@ export class List_Member extends React.Component {
             isLoad: true,
             members: []
         };
-        this.id_org = get_cookie("_id_org");
+        this.id_org = this.props.id_org;
         this.admin = "admin123";
         this.image = "https://www.w3schools.com/howto/img_avatar.png";
         this.url = members_api();
     }
-    componentDidUpdate() {
-        if (this.state.isLoad === true) {
-            let update_access_token = this.props.access_token;
-            if (update_access_token !== this.state.access_token) {
-                this.setState({access_token: update_access_token});
-            } else {
-                retrieveAPI(this);
-            }
-        }
+    componentDidMount() {
+        // if (this.state.isLoad === true) {
+        //     let update_access_token = this.props.access_token;
+        //     if (update_access_token !== this.state.access_token) {
+        //         this.setState({access_token: update_access_token});
+        //     } else {
+        //         retrieveAPI(this);
+        //     }
+        // }
+        retrieveAPI(this);
     }
     bodyList() {
         if (this.state.isLoad === true) {
@@ -97,3 +105,5 @@ export class List_Member extends React.Component {
         )
     }
 }
+
+export default connect(mapStateToProps)(List_Member);

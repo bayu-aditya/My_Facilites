@@ -1,6 +1,7 @@
 import React from 'react';
 import Menu_row_inv from '../../../component/menu_list/menu_inventory';
 import Loading from '../../../component/loading';
+import { connect } from 'react-redux';
 
 import { get_cookie, create_cookie } from '../../../action/cookie';
 import { inventories_api } from '../../../api/link.js';
@@ -27,29 +28,36 @@ function retrieveAPI(that) {
     xhr.send()
 }
 
-export class List_Inventory extends React.Component {
+function mapStateToProp(state) {
+    return {
+        access_token: state.access_token,
+        id_org: state.id_org,
+    }
+}
+
+class List_Inventory extends React.Component {
     constructor(props) {
         super(props);
-        this.id_org = get_cookie("_id_org");
+        this.id_org = this.props.id_org;
         this.url = inventories_api();
         this.state = {
             access_token: this.props.access_token,
-            auth: true,
             isLoad: true,
             select: false,
             inventory: []
         }
     }
-    componentDidUpdate() {
+    componentDidMount() {
         let self = this;
-        if (this.state.isLoad === true) {
-            let update_access_token = this.props.access_token;
-            if (update_access_token !== this.state.access_token) {
-                this.setState({access_token: update_access_token});
-            } else {
-                retrieveAPI(self);
-            }
-        }
+        // if (this.state.isLoad === true) {
+        //     let update_access_token = this.props.access_token;
+        //     if (update_access_token !== this.state.access_token) {
+        //         this.setState({access_token: update_access_token});
+        //     } else {
+        //         retrieveAPI(self);
+        //     }
+        // }
+        retrieveAPI(self);
     }
     selectHandler = (e) => {
         console.log(e.target.parentNode.id);
@@ -109,3 +117,5 @@ export class List_Inventory extends React.Component {
         )
     }
 }
+
+export default connect(mapStateToProp)(List_Inventory);

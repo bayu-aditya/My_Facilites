@@ -4,9 +4,7 @@ import {App} from './App';
 
 class Application extends React.Component {
     render() {
-        return (
-            <App />
-        )
+        return <App />
     }
 }
 

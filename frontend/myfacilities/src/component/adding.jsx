@@ -12,6 +12,7 @@ import {
 import { get_datetime } from '../tools/datetime_format.js';
 import { get_cookie } from '../action/cookie';
 import { organization_api, inventory_api } from '../api/link.js';
+import { connect } from 'react-redux';
 
 const useStyles = theme => ({
     root: {
@@ -21,6 +22,12 @@ const useStyles = theme => ({
         }
     }
 });
+
+function mapStateToProps(state) {
+    return {
+        access_token: state.access_token
+    }
+}
 
 class Adding_org extends React.Component {
     constructor(props) {
@@ -282,8 +289,9 @@ class Adding_task extends React.Component {
     }
 }
 
-const Add_org = withStyles(useStyles)(Adding_org);
+const Add_org = connect(mapStateToProps)(withStyles(useStyles)(Adding_org));
 const Add_inv = withStyles(useStyles)(Adding_inv);
 const Add_task = withStyles(useStyles)(Adding_task);
 
-export {Add_org, Add_inv, Add_task};
+export {Add_org};
+export {Add_inv, Add_task};

@@ -13,7 +13,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {delete_access_token, delete_refresh_token} from '../action/cookie.js';
-
+import {connect} from 'react-redux';
+import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,9 +34,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function mapStateToProps(state) {
+    return {
+        name: state.name
+    }
+}
 
-export default function Navigation(props) {
+function Navigation(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     function redirect(inpt) {
         console.log(inpt);
@@ -72,11 +79,12 @@ export default function Navigation(props) {
         console.log("logout handler");
         delete_refresh_token();
         delete_access_token();
-        window.location.reload(); // ganti redirect to login aja
+        dispatch({type: "LOGOUT"});
+        setTimeout(() => {window.location.reload()}, 1000);
     }
 
     const sideList = () => (
-        <div 
+        <div
             className={classes.list}
             role="presentation"
         >
@@ -87,7 +95,7 @@ export default function Navigation(props) {
                     let link = data.link;
                     return (
                         <ListItem button key={text}>
-                            <ListItemText primary={text} 
+                            <ListItemText primary={text}
                             onClick={() => redirect(link)} />
                         </ListItem>
                     )
@@ -150,3 +158,5 @@ export default function Navigation(props) {
         </div>
     );
 }
+
+export default connect(mapStateToProps)(Navigation);

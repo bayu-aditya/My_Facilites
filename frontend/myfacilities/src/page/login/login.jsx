@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
@@ -6,16 +7,23 @@ import { create_access_token, create_refresh_token, get_access_token } from '../
 import { login_api } from '../../api/link.js'
 import './login.scss';
 
-export class Login extends React.Component {
+function mapStateToProps(state) {
+    return {
+        auth: state.auth,
+    }
+}
+
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            authenticate: false,
+            authenticate: this.props.auth,
             responseError: null,
             dialogOpen: false,
             username: null,
             password: null
         }
+        console.log(this.state)
     }
     changeHandle = (e) => {
         this.setState({[e.target.id]: e.target.value})
@@ -67,7 +75,8 @@ export class Login extends React.Component {
         }
     }
     authHandler = () => {
-        this.setState({authenticate: true})
+        this.props.dispatch({type: "LOGIN"});
+        this.setState({authenticate: this.props.auth})
     }
     openDialog = () => {
         this.setState({dialogOpen: true})
@@ -110,3 +119,5 @@ export class Login extends React.Component {
         )
     }
 }
+
+export default connect(mapStateToProps)(Login);
