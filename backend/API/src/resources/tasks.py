@@ -25,7 +25,7 @@ class Tasks(Resource):
                 "note": i[4]
             }
             data.append(row)
-        return {"tasks": data}
+        return {"tasks": data}, 202
 
 class Task(Resource):
     parser = reqparse.RequestParser()
