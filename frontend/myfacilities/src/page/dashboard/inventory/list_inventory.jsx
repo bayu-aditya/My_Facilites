@@ -3,11 +3,10 @@ import Menu_row_inv from '../../../component/menu_list/menu_inventory';
 import Loading from '../../../component/loading';
 import { connect } from 'react-redux';
 
-import { create_cookie } from '../../../action/cookie';
 import { inventories_api } from '../../../api/link.js';
 import { GoToTimeline } from '../../../component/redirect';
 import '../table.scss';
-import { fetchInventories } from '../../../action';
+import { fetchInventories, setIdInv } from '../../../action';
 
 function mapStateToProp(state) {
     return {
@@ -31,7 +30,7 @@ class List_Inventory extends React.Component {
     }
     selectHandler = (e) => {
         console.log(e.target.parentNode.id);
-        create_cookie("_id_inv", e.target.parentNode.id);
+        this.props.dispatch(setIdInv(e.target.parentNode.id));
         this.setState({select: true});
     }
     selectRender() {

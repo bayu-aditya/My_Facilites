@@ -32,6 +32,10 @@ function members_api() {
     return organization_api() + "/members"
 }
 
+function tasks_api() {
+    return inventory_api() + "/tasks"
+}
+
 export {login_api};
 export {user_api};
 export {refresh_api};
@@ -40,3 +44,4 @@ export {organization_api};
 export {inventories_api};
 export {inventory_api};
 export {members_api}
+export {tasks_api};

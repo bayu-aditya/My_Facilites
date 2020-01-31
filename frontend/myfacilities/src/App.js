@@ -6,7 +6,7 @@ import {
 
 import Dashboard from './page/dashboard/organization';
 import Inventory from './page/dashboard/inventory/inventory';
-import { Timeline } from './page/dashboard/inventory/timeline/timeline';
+import Timeline from './page/dashboard/inventory/timeline/timeline';
 import Login from './page/login/login';
 import {Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
