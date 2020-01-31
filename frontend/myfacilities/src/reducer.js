@@ -6,6 +6,7 @@ const initialState = {
     refresh_token: null,
     name: null,
     id_org: null,
+    id_inv: null,
     error: null,
 }
 
@@ -47,6 +48,8 @@ function reducers(state = initialState, action) {
             return {...state, error: action.error}
         case "SELECT_ORGANIZATION":
             return {...state, id_org: action.id_org}
+        case "SELECT_INVENTORY":
+            return {...state, id_inv: action.id_inv}
         default:
             return state
     }

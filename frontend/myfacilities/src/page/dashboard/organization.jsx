@@ -4,16 +4,11 @@ import Navigation from '../../component/navigation_bar';
 import Table_list_organization_new from './list_organization';
 
 import { GoToLogin } from '../../component/redirect';
-import { auth_check, refresh_token } from '../../action/auth.js';
-import { get_access_token } from '../../action/cookie.js';
-import { settingName, fetchName } from '../../action';
-import { user_api } from '../../api/link.js';
+import { fetchName } from '../../action';
 
 function mapStateToProps(state) {
     return {
         auth: state.auth,
-        access_token: state.access_token,
-        refresh_token: state.refresh_token,
         name: state.name
     }
 }
@@ -24,7 +19,6 @@ class Dashboard extends React.Component{
         this.state = {
             auth: this.props.auth,
             user: this.props.name,
-            access_token: this.props.access_token
         }
     }
     componentDidMount() {

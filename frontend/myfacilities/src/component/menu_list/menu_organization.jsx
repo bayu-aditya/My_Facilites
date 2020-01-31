@@ -41,14 +41,10 @@ export default function Menu_row_org(params) {
             }}
         >
             <Edit_organization 
-            id_org={params.id_org}
-            access_token={params.access_token}/
-            >
+            id_org={params.id_org} />
             <Delete_organization
             id_org={params.id_org}
-            name_org={params.name_org}
-            access_token={params.access_token} /
-            >
+            name_org={params.name_org} />
         </Menu>
         </div>
     );

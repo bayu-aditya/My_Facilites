@@ -1,56 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Navigation from '../../../../component/navigation_bar';
-import { auth_check, refresh_token } from '../../../../action/auth.js';
-import { get_access_token, get_cookie } from '../../../../action/cookie';
 import { GoToLogin } from '../../../../component/redirect';
-import { user_api } from '../../../../api/link.js';
 import { Graph_Timeline } from './graph_timeline';
-import { List_timeline } from './list_timeline';
+import List_timeline from './list_timeline';
+import { fetchTasks } from '../../../../action';
+import { tasks_api } from '../../../../api/link';
 
-function retrieveAPI(self) {
-    // self state exist:
-    //      - access_token
-    //      - user (optional)
-    fetch(user_api(), {
-        method: "GET",
-        headers: {"Authorization": "Bearer "+self.state.access_token}
-    })
-    .then((response) => {
-        if (response.status === 202) {
-            return response.json();
-        } else if (response.status === 401) {
-            refresh_token(self);
-        } else {
-            throw Error(response.statusText);
-        }
-    })
-    .then((jsonresp) => {
-        if (jsonresp) {
-            self.setState({user: jsonresp["name"]})
-        }
-    })
-    .catch((error) => console.log(error))
+function mapStateToProps(state) {
+    return {
+        auth: state.auth,
+        id_org: state.id_org,
+        id_inv: state.id_inv,
+        username: state.name,
+    }
 }
 
-export class Timeline extends React.Component {
+class Timeline extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            access_token: get_access_token(),
-            id_org: get_cookie("_id_org"),
-            id_inv: get_cookie("_id_inv"),
             user: null,
-            auth: true,
+            auth: this.props.auth,
+            data: [],
         }
+        this.id_org = this.props.id_org;
+        this.id_inv = this.props.id_inv;
+        this.url = tasks_api();
     }
     componentDidMount() {
-        this.setState({auth: auth_check()})
-        retrieveAPI(this);
-    }
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.access_token !== this.state.access_token) {
-            retrieveAPI(this);
-        }
+        this.props.dispatch(fetchTasks(this));
     }
     checkAuth() {
         if (this.state.auth === false) return <GoToLogin />
@@ -59,20 +38,17 @@ export class Timeline extends React.Component {
         return (
             <div>
                 {this.checkAuth()}
-                <Navigation name={this.state.user} />
+                <Navigation />
                 <div className="container-sm pt-3 mt-3 border col-sm-7">
-                    <Graph_Timeline />
+                    <Graph_Timeline data={this.state.data} />
                 </div>
                 <div className="container-sm pt-3 mt-3 border col-sm-7">
                     <h3>Tasks</h3>
-                    <List_timeline 
-                        id_org={this.state.id_org}
-                        id_inv={this.state.id_inv}
-                        username={this.state.user}
-                    />
-                    {/* <h6>Hallo {} Timeline Inventory ke- {this.state.id_inv}</h6> */}
+                    <List_timeline data={this.state.data} />
                 </div>
             </div>
         )
     }
 }
+
+export default connect(mapStateToProps)(Timeline);

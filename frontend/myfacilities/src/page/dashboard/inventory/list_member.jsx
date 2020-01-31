@@ -1,35 +1,12 @@
 import React from 'react';
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar, ListSubheader } from '@material-ui/core';
-import { get_cookie } from '../../../action/cookie';
 import Loading from '../../../component/loading';
 import { members_api } from '../../../api/link.js';
 import { connect } from 'react-redux';
-
-function retrieveAPI(that) {
-    let url = that.url+"?_id="+that.id_org;
-    let self = that;
-    console.log(url);
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if (this.status === 202) {
-                let resp = JSON.parse(this.responseText);
-                console.log(resp);
-                self.setState({
-                    isLoad: false,
-                    members: resp["members"]
-                })
-            }
-        }
-    }
-    xhr.open("GET", url);
-    xhr.setRequestHeader('Authorization', 'Bearer '+self.state.access_token);
-    xhr.send();
-}
+import { fetchMemberOrganization } from '../../../action';
 
 function mapStateToProps(state) {
     return {
-        access_token: state.access_token,
         id_org: state.id_org,
     }
 }
@@ -38,7 +15,6 @@ class List_Member extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            access_token: this.props.access_token,
             isLoad: true,
             members: []
         };
@@ -48,15 +24,7 @@ class List_Member extends React.Component {
         this.url = members_api();
     }
     componentDidMount() {
-        // if (this.state.isLoad === true) {
-        //     let update_access_token = this.props.access_token;
-        //     if (update_access_token !== this.state.access_token) {
-        //         this.setState({access_token: update_access_token});
-        //     } else {
-        //         retrieveAPI(this);
-        //     }
-        // }
-        retrieveAPI(this);
+        this.props.dispatch(fetchMemberOrganization(this));
     }
     bodyList() {
         if (this.state.isLoad === true) {
@@ -89,7 +57,7 @@ class List_Member extends React.Component {
         return (
             <div>
                 <List 
-                subheader={<ListSubheader>Admin</ListSubheader>} >
+                subheader={<ListSubheader>Administrator</ListSubheader>} >
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar 

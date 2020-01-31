@@ -9,19 +9,11 @@ import { fetchOrganizations } from '../../action';
 import { setIdOrg } from '../../action';
 import './table.scss';
 
-
-function mapStateToProps(state) {
-    return {
-        access_token: state.access_token
-    }
-}
-
 class Table_list_organization_new extends React.Component {
     constructor(props) {
         super(props);
         this.url = organizations_api();
         this.state = {
-            access_token: this.props.access_token,
             isLoad: true,
             select: false,
             organization: []
@@ -60,8 +52,7 @@ class Table_list_organization_new extends React.Component {
                                     <td className='auto-width'>
                                         <Menu_row_org 
                                         id_org={id} 
-                                        name_org={name} 
-                                        access_token={self.state.access_token} />
+                                        name_org={name} />
                                     </td>
                                 </tr>    
                             )
@@ -92,4 +83,4 @@ class Table_list_organization_new extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(Table_list_organization_new);
+export default connect()(Table_list_organization_new);

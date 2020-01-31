@@ -2,6 +2,7 @@ import { user_api, refresh_api } from './api/link';
 
 const SET_NAME = "SET_NAME";
 const SELECT_ORGANIZATION = "SELECT_ORGANIZATION";
+const SELECT_INVENTORY = "SELECT_INVENTORY";
 const FETCH_NAME_BEGIN = "FETCH_NAME_BEGIN";
 const FETCH_NAME_SUCCESS = "FETCH_NAME_SUCCESS";
 const FETCH_NAME_FAILED = "FETCH_NAME_FAILED";
@@ -17,6 +18,11 @@ export const settingName = (name) => ({
 export const setIdOrg = (id) => ({
     type: SELECT_ORGANIZATION,
     id_org: id
+})
+
+export const setIdInv = (id) => ({
+    type: SELECT_INVENTORY,
+    id_inv: id
 })
 
 export const fetchNameBegin = () => ({
@@ -82,6 +88,80 @@ export function fetchOrganizations(self) {
                 self.setState({
                     organization: json["organization"],
                     isLoad: false
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchInventories(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = self.url + "?_id=" + self.id_org;
+        return fetch(url, {
+            method: "GET",
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchInventories, self));
+                }
+            })
+            .then(json => {
+                self.setState({
+                    isLoad: false,
+                    inventory: json["inventory"]
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchMemberOrganization(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = self.url + "?_id=" + self.id_org;
+        return fetch(url, {
+            method: "GET",
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchMemberOrganization, self))
+                }
+            })
+            .then(json => {
+                self.setState({
+                    isLoad: false,
+                    members: json["members"],
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchTasks(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = self.url + "?id_org=" + self.id_org + "&id_inv=" + self.id_inv;
+        return fetch(url, {
+            method: "GET",
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchTasks, self))
+                }
+            })
+            .then(json => {
+                self.setState({
+                    data: json["tasks"]
                 })
             })
             .catch(error => console.log(error));

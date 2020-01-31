@@ -5,28 +5,14 @@ import {
     Route} from 'react-router-dom';
 
 import Dashboard from './page/dashboard/organization';
-import { Inventory } from './page/dashboard/inventory/inventory';
-import { Timeline } from './page/dashboard/inventory/timeline/timeline';
-import Login from './page/login/login'
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import Inventory from './page/dashboard/inventory/inventory';
+import Timeline from './page/dashboard/inventory/timeline/timeline';
+import Login from './page/login/login';
 import {Provider} from 'react-redux';
-import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react'
-import {reducers} from './reducer';
-import storage from 'redux-persist/lib/storage'
+import storeAndPersistor from './store';
 
-const persistConfig = {
-    key: 'root',
-    storage,
-  }
-
-const persistedReducer = persistReducer(persistConfig, reducers);
-const store = createStore(
-    persistedReducer,
-    applyMiddleware(thunk)
-    );
-const persistor = persistStore(store);
+const { store, persistor } = storeAndPersistor();
 
 class App extends React.Component {
     render() {

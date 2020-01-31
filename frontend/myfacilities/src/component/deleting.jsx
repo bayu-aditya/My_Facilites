@@ -1,5 +1,6 @@
 import React from 'react';
-import { IconButton, MenuItem } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { MenuItem } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,10 +8,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import { organization_api, inventory_api } from '../api/link.js';
 
-class Delete_organization extends React.Component {
+function mapStateToProps(state) {
+    return {
+        access_token: state.access_token,
+    }
+}
+
+class Del_organization extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +24,6 @@ class Delete_organization extends React.Component {
         };
         this.id = this.props.id_org;
         this.name = this.props.name_org;
-        this.access_token = this.props.access_token;
         this.url = organization_api();
     }
     openDeleteDialog = (e) => {
@@ -40,7 +45,7 @@ class Delete_organization extends React.Component {
             }
         }
         xhr.open("DELETE", url);
-        xhr.setRequestHeader("Authorization", "Bearer "+this.access_token);
+        xhr.setRequestHeader("Authorization", "Bearer "+this.props.access_token);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(body))
     }
@@ -85,7 +90,7 @@ class Delete_organization extends React.Component {
     }
 }
 
-class Delete_inventory extends React.Component {
+class Del_inventory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -94,7 +99,6 @@ class Delete_inventory extends React.Component {
         this.id_org = this.props.id_org;
         this.id_inv = this.props.id_inv;
         this.name_inv = this.props.name_inv;
-        this.access_token = this.props.access_token;
         this.url = inventory_api();
     }
     openDeleteDialog = (e) => {
@@ -119,7 +123,7 @@ class Delete_inventory extends React.Component {
             }
         }
         xhr.open("DELETE", url);
-        xhr.setRequestHeader("Authorization", "Bearer "+this.access_token);
+        xhr.setRequestHeader("Authorization", "Bearer "+this.props.access_token);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(body))
         console.log(body)
@@ -165,6 +169,9 @@ class Delete_inventory extends React.Component {
         )
     }
 }
+
+const Delete_organization = connect(mapStateToProps)(Del_organization);
+const Delete_inventory = connect(mapStateToProps)(Del_inventory);
 
 export {Delete_organization};
 export {Delete_inventory};

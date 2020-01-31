@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import EditIcon from '@material-ui/icons/Edit';
@@ -16,6 +17,12 @@ const useStyles = theme => ({
     }
 });
 
+function mapStateToProps(state) {
+    return {
+        access_token: state.access_token,
+    }
+}
+
 class Editing_org extends React.Component {
     constructor(props) {
         super(props);
@@ -26,7 +33,6 @@ class Editing_org extends React.Component {
             desc: null
         };
         this.id_org = this.props.id_org;
-        this.access_token = this.props.access_token;
         this.url = organization_api();
     }
 
@@ -61,7 +67,7 @@ class Editing_org extends React.Component {
             }
         }
         xhr.open("PUT", url);
-        xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
+        xhr.setRequestHeader('Authorization', 'Bearer '+this.props.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
     }
@@ -106,7 +112,6 @@ class Editing_inv extends React.Component {
         };
         this.id_org = this.props.id_org;
         this.id_inv = this.props.id_inv;
-        this.access_token = this.props.access_token;
         this.url = inventory_api();
     }
 
@@ -142,7 +147,7 @@ class Editing_inv extends React.Component {
             }
         }
         xhr.open("PUT", url);
-        xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
+        xhr.setRequestHeader('Authorization', 'Bearer '+this.props.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
     }
@@ -177,7 +182,7 @@ class Editing_inv extends React.Component {
     }
 }
 
-const Edit_organization = withStyles(useStyles)(Editing_org);
-const Edit_inventory = withStyles(useStyles)(Editing_inv);
+const Edit_organization = connect(mapStateToProps)(withStyles(useStyles)(Editing_org));
+const Edit_inventory = connect(mapStateToProps)(withStyles(useStyles)(Editing_inv));
 
 export {Edit_organization, Edit_inventory};

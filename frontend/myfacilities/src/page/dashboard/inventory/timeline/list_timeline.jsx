@@ -1,33 +1,38 @@
 import React from 'react';
-import { Add_task, Add_inv } from '../../../../component/adding';
+import { Add_task } from '../../../../component/adding';
 
-function retrieveAPI(that) {
-
-}
-
-export class List_timeline extends React.Component {
+class List_timeline extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            id_org: this.props.id_org,
-            id_inv: this.props.id_inv,
-            username: this.props.username
-        }
-    }
-    componentDidUpdate() {
-        console.log(this.state.username)
+        this.username = this.props.username;
     }
     tabBody() {
         return (
             <tbody>
-                <tr>
-                    <td>bayu_aditya</td>
-                    <td>12 Januari 2019</td>
-                    <td>10:20</td>
-                    <td>13 Januari 2019</td>
-                    <td>00:20</td>
-                    <td>Some Notes</td>
-                </tr>
+                {this.props.data.map(
+                    function row(data, index) {
+                        let id = data.id_task;
+                        let username = data.username;
+                        let start = data.start.split("T");
+                        let start_date = start[0];
+                        let start_time = start[1];
+                        let finish = data.finish.split("T");
+                        let finish_date = finish[0];
+                        let finish_time = finish[1]
+                        let note = data.note;
+                        return (
+                            <tr key={index} id={id}>
+                                <td>{index + 1}</td>
+                                <td>{username}</td>
+                                <td>{start_date}</td>
+                                <td>{start_time}</td>
+                                <td>{finish_date}</td>
+                                <td>{finish_time}</td>
+                                <td>{note}</td>
+                            </tr>
+                        )
+                    }
+                )}
             </tbody>
         )
     }
@@ -35,14 +40,15 @@ export class List_timeline extends React.Component {
         return (
             <div>
                 <Add_task 
-                    id_org={this.state.id_org}
-                    id_inv={this.state.id_inv}
-                    username={this.state.username}
+                    id_org={this.id_org}
+                    id_inv={this.id_inv}
+                    username={this.username}
                 />
                 <div className="table-responsive">
                     <table className="table table-hover">
                         <thead>
                             <tr>
+                                <th rowSpan='2'>No.</th>
                                 <th rowSpan='2'>Name</th>
                                 <th colSpan='2'>Start</th>
                                 <th colSpan='2'>Finish</th>
@@ -62,3 +68,5 @@ export class List_timeline extends React.Component {
         )
     }
 }
+
+export default List_timeline;

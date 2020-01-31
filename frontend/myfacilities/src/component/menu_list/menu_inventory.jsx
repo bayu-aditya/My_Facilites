@@ -42,14 +42,14 @@ export default function Menu_row_inv(params) {
             }}
         >
             <Edit_inventory 
-            id_org={params.id_org} 
-            id_inv={params.id_inv} 
-            access_token={params.access_token} />
+                id_org={params.id_org} 
+                id_inv={params.id_inv}
+            />
             <Delete_inventory 
-            id_org={params.id_org}
-            id_inv={params.id_inv}
-            name_inv={params.name_inv}
-            access_token={params.access_token} />
+                id_org={params.id_org}
+                id_inv={params.id_inv}
+                name_inv={params.name_inv}
+            />
         </Menu>
         </div>
     );
