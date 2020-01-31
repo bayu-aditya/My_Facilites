@@ -10,7 +10,6 @@ import {
     KeyboardTimePicker } from '@material-ui/pickers';
 
 import { get_datetime } from '../tools/datetime_format.js';
-import { get_cookie } from '../action/cookie';
 import { organization_api, inventory_api } from '../api/link.js';
 import { connect } from 'react-redux';
 
@@ -25,7 +24,8 @@ const useStyles = theme => ({
 
 function mapStateToProps(state) {
     return {
-        access_token: state.access_token
+        access_token: state.access_token,
+        id_org: state.id_org,
     }
 }
 
@@ -37,7 +37,6 @@ class Adding_org extends React.Component {
             name: null,
             desc: null
         };
-        this.access_token = this.props.access_token;
         this.url = organization_api();
     }
 
@@ -71,7 +70,7 @@ class Adding_org extends React.Component {
             }
         }
         xhr.open("POST", url);
-        xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
+        xhr.setRequestHeader('Authorization', 'Bearer '+this.props.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
     }
@@ -106,11 +105,10 @@ class Adding_inv extends React.Component {
         super(props);
         this.state = {
             open: false,
-            _id_org: get_cookie("_id_org"),
             name: null,
             desc: null
         };
-        this.access_token = this.props.access_token;
+        this._id_org =  this.props.id_org;
         this.url = inventory_api();
     }
 
@@ -128,7 +126,7 @@ class Adding_inv extends React.Component {
         let url = this.url;
         let self = this;
         let body = {
-            "_id_org": this.state._id_org,
+            "_id_org": this._id_org,
             "name": this.state.name
         }
         console.log(body);
@@ -144,7 +142,7 @@ class Adding_inv extends React.Component {
             }
         }
         xhr.open("POST", url);
-        xhr.setRequestHeader('Authorization', 'Bearer '+this.access_token);
+        xhr.setRequestHeader('Authorization', 'Bearer '+this.props.access_token);
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(body))
     }
@@ -290,8 +288,8 @@ class Adding_task extends React.Component {
 }
 
 const Add_org = connect(mapStateToProps)(withStyles(useStyles)(Adding_org));
-const Add_inv = withStyles(useStyles)(Adding_inv);
+const Add_inv = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv));
 const Add_task = withStyles(useStyles)(Adding_task);
 
-export {Add_org};
-export {Add_inv, Add_task};
+export {Add_org, Add_inv};
+export {Add_task};

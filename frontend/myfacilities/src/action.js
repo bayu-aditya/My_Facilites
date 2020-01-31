@@ -88,6 +88,56 @@ export function fetchOrganizations(self) {
     }
 }
 
+export function fetchInventories(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = self.url + "?_id=" + self.id_org;
+        return fetch(url, {
+            method: "GET",
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchInventories, self));
+                }
+            })
+            .then(json => {
+                self.setState({
+                    isLoad: false,
+                    inventory: json["inventory"]
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchMemberOrganization(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = self.url + "?_id=" + self.id_org;
+        return fetch(url, {
+            method: "GET",
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchMemberOrganization, self))
+                }
+            })
+            .then(json => {
+                self.setState({
+                    isLoad: false,
+                    members: json["members"],
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
 export function tokenRefresher(func, args = null) {
     return (dispatch, getState) => {
         let refresh_token = getState().refresh_token;
