@@ -10,8 +10,9 @@ import {
     KeyboardTimePicker } from '@material-ui/pickers';
 
 import { get_datetime } from '../tools/datetime_format.js';
-import { organization_api, inventory_api } from '../api/link.js';
+import { organization_api, inventory_api, task_api } from '../api/link.js';
 import { connect } from 'react-redux';
+import { fetchAddTask } from '../action';
 
 const useStyles = theme => ({
     root: {
@@ -25,7 +26,9 @@ const useStyles = theme => ({
 function mapStateToProps(state) {
     return {
         access_token: state.access_token,
+        username: state.name,
         id_org: state.id_org,
+        id_inv: state.id_inv,
     }
 }
 
@@ -177,15 +180,16 @@ class Adding_task extends React.Component {
         super(props);
         this.state = {
             open: false,
-            id_org: this.props.id_org,
-            id_inv: this.props.id_inv,
             username: this.props.username,
             date_start: new Date(),
             date_finish: new Date(),
-            notes: null
+            notes: null,
         };
+        this.id_org =  this.props.id_org;
+        this.id_inv = this.props.id_inv;
         this.access_token = this.props.access_token;
-        this.url = inventory_api();
+        this.url = task_api();
+        this.body = {}
     }
 
     handleOpen = () => {
@@ -199,15 +203,15 @@ class Adding_task extends React.Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        let body = {
-            "_id_org": this.state.id_org,
-            "_id_inv": this.state.id_inv,
+        this.body = {
+            "id_org": this.id_org,
+            "id_inv": this.id_inv,
             "username": this.state.username,
             "start": get_datetime(this.state.date_start),
             "finish": get_datetime(this.state.date_finish),
-            "notes": this.state.notes
+            "note": this.state.notes
         }
-        console.log(body)
+        this.props.dispatch(fetchAddTask(this));
     }
     handleDateStartChange = (date) => {
         this.setState({date_start: date})
@@ -278,7 +282,7 @@ class Adding_task extends React.Component {
                                     multiline rows="5" variant="outlined" />
                                 </div>
                                 </MuiPickersUtilsProvider>
-                            <Button type="submit">submit</Button>
+                            <Button type="submit">submit task</Button>
                         </form>
                     </DialogContent>
                 </Dialog>
@@ -289,7 +293,6 @@ class Adding_task extends React.Component {
 
 const Add_org = connect(mapStateToProps)(withStyles(useStyles)(Adding_org));
 const Add_inv = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv));
-const Add_task = withStyles(useStyles)(Adding_task);
+const Add_task = connect(mapStateToProps)(withStyles(useStyles)(Adding_task));
 
-export {Add_org, Add_inv};
-export {Add_task};
+export {Add_org, Add_inv, Add_task};

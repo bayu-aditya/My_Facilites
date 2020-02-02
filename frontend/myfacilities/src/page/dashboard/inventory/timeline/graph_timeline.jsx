@@ -30,8 +30,8 @@ export class Graph_Timeline extends React.Component {
                 loader={<div>loading chart ...</div>}
                 options={{
                     hAxis: {
-                        minValue: new Date(2020, 0, 20, 0, 0, 0),
-                        maxValue: new Date(2020, 0, 22, 0, 0, 0),
+                        minValue: new Date(2020, 0, 19, 0, 0, 0),
+                        maxValue: new Date(2020, 0, 25, 0, 0, 0),
                     },
                     timeline: {
                         colorByRowLabel: true
@@ -93,11 +93,11 @@ function extractDataToInput(data_row, idx) {
 
 function tooltipHTML(username, start, finish) {
     return '<div style="padding:5px 5px 5px 5px; width:250px">' +
-        '<b>' + String(username) + '</b>' +  
+        '<b>Username: ' + String(username) + '</b>' +  
         '<table class="table table-sm">' + 
         '<tr><td><b>Start:</b></td><td>' + new Date(start).toString().slice(0,16) + '</td>' +
         '<td>' + new Date(start).toString().slice(16,24) + '</td></tr>' + 
-        '<tr><td><b>Start:</b></td><td>' + new Date(finish).toString().slice(0,16) + '</td>' +
+        '<tr><td><b>Finish:</b></td><td>' + new Date(finish).toString().slice(0,16) + '</td>' +
         '<td>' + new Date(finish).toString().slice(16,24) + '</td></tr>' + 
         '</table>' + '</div>'
 }

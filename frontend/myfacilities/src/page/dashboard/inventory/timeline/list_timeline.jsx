@@ -1,10 +1,10 @@
 import React from 'react';
 import { Add_task } from '../../../../component/adding';
+import Menu_row_task from '../../../../component/menu_list/menu_task';
 
 class List_timeline extends React.Component {
     constructor(props) {
         super(props)
-        this.username = this.props.username;
     }
     tabBody() {
         return (
@@ -29,6 +29,9 @@ class List_timeline extends React.Component {
                                 <td>{finish_date}</td>
                                 <td>{finish_time}</td>
                                 <td>{note}</td>
+                                <td className="auto-width">
+                                    <Menu_row_task id_task={id} />
+                                </td>
                             </tr>
                         )
                     }
@@ -39,11 +42,7 @@ class List_timeline extends React.Component {
     render() {
         return (
             <div>
-                <Add_task 
-                    id_org={this.id_org}
-                    id_inv={this.id_inv}
-                    username={this.username}
-                />
+                <Add_task />
                 <div className="table-responsive">
                     <table className="table table-hover">
                         <thead>
@@ -53,6 +52,7 @@ class List_timeline extends React.Component {
                                 <th colSpan='2'>Start</th>
                                 <th colSpan='2'>Finish</th>
                                 <th rowSpan='2'>Notes</th>
+                                <th rowSpan='2'></th>
                             </tr>
                             <tr>
                                 <th>Date</th>

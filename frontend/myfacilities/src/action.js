@@ -168,6 +168,54 @@ export function fetchTasks(self) {
     }
 }
 
+export function fetchAddTask(self) {
+    return (dispatch, getState) => { 
+        let access_token = getState().access_token;
+        let url = self.url;
+        return fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + access_token,
+            },
+            body: JSON.stringify(self.body),
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    self.handleClose();
+                    window.location.reload();
+                } else if (res.status == 401) {
+                    dispatch(tokenRefresher(fetchAddTask, self));
+                }
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchDelTask(self) {
+    return (dispatch, getState) => { 
+        let access_token = getState().access_token;
+        let url = self.url;
+        return fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + access_token,
+            },
+            body: JSON.stringify(self.body),
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    self.closeDeleteDialog();
+                    window.location.reload();
+                } else if (res.status == 401) {
+                    dispatch(tokenRefresher(fetchAddTask, self));
+                }
+            })
+            .catch(error => console.log(error));
+    }
+}
+
 export function tokenRefresher(func, args = null) {
     return (dispatch, getState) => {
         let refresh_token = getState().refresh_token;
