@@ -1,0 +1,63 @@
+@media (min-width: 1000px) {
+    .bg {
+        height: 100vh;
+        width: 100vw;
+        background-image: url("https://www.jakpost.travel/imgfiles/full/118/1183603/wallpaper-login.jpg");
+        background-size: cover;
+    }
+    
+    .half_right {
+        position: fixed;
+        left: 50%;
+        right: 0px;
+        min-width: 500px;
+        min-height: 100vh;
+        background-color: white;
+        padding: 20px;
+    }
+    
+    .login {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: {
+            top: -100px;
+            left: -230px;
+        };
+        min-width: 460px;
+    }
+}
+
+@media (max-width: 999px) {
+    .bg {
+        height: 50vh;
+        width: 100vw;
+        background-image: url("https://www.jakpost.travel/imgfiles/full/118/1183603/wallpaper-login.jpg");
+        background-size: cover;
+    }
+    
+    .half_right {
+        position: fixed;
+        width: 100vw;
+        height: 50vh;
+        top: 50%;
+        background-color: white;
+    }
+    
+    .login {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: {
+            top: -100px;
+            left: -115px;
+        };
+        min-width: 160px;
+    }
+}
+
+.input {
+    padding-top: 10px;
+}

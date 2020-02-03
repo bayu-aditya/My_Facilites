@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { create_access_token, create_refresh_token, get_access_token } from '../../action/cookie.js';
 import { login_api } from '../../api/link.js'
-import './login.scss';
+import styles from './login.module.scss';
 
 function mapStateToProps(state) {
     return {
@@ -97,23 +97,25 @@ class Login extends React.Component {
     }
     render() {
         return (
-            <div className="bg">
+            <div className={styles.bg}>
                 {this.toDashboard()}
                 {this.dialogHandle()}
-                <div className="container-xl login">
-                    <h4 className="header">Myfacilities Login</h4>
-                    <div className="dropdown-divider"></div>
-                    <form autoComplete="off" onSubmit={this.loginHandle}>
-                        <div>
-                            <input id="username" required className="form-control" placeholder="username" onChange={this.changeHandle}></input>
-                        </div>
-                        <div>
-                            <input id="password" required type="password" className="form-control" placeholder="password" onChange={this.changeHandle}></input>
-                        </div>
-                        <div className="right">
-                            <button type="submit" className="btn btn-primary">Login</button>
-                        </div>
-                    </form>
+                <div className={styles.half_right}>
+                    <div className={styles.login}>
+                        <h3>MyFacilities Login</h3>
+                        <div className="dropdown-divider"></div>
+                        <form autoComplete="off" onSubmit={this.loginHandle}>
+                            <div className={styles.input}>
+                                <input id="username" required className="form-control" placeholder="username" onChange={this.changeHandle}></input>
+                            </div>
+                            <div className={styles.input}>
+                                <input id="password" required type="password" className="form-control" placeholder="password" onChange={this.changeHandle}></input>
+                            </div>
+                            <div className={styles.input}>
+                                <button type="submit" className="btn btn-primary btn-block">Login</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         )
