@@ -1,8 +1,17 @@
 import React from 'react';
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar, ListSubheader } from '@material-ui/core';
+import { 
+    List, 
+    ListItem, 
+    ListItemText, 
+    ListItemAvatar, 
+    Avatar, 
+    ListSubheader, 
+    ListItemSecondaryAction, 
+    IconButton } from '@material-ui/core';
 import Loading from '../../../component/loading';
 import { members_api } from '../../../api/link.js';
 import { connect } from 'react-redux';
+import { Delete_member } from '../../../component/deleting';
 import { fetchMemberOrganization } from '../../../action';
 
 function mapStateToProps(state) {
@@ -39,12 +48,18 @@ class List_Member extends React.Component {
                             (data, index) => {
                                 let username = data;
                                 return (
-                                    <ListItem>
+                                    <ListItem key={index}>
                                         <ListItemAvatar>
                                             <Avatar 
                                             src="https://www.w3schools.com/howto/img_avatar.png" />
                                         </ListItemAvatar>
                                         <ListItemText primary={username} />
+                                        <ListItemSecondaryAction>
+                                            {/* <IconButton>
+                                                <DeleteIcon />
+                                            </IconButton> */}
+                                            <Delete_member username={username} />
+                                        </ListItemSecondaryAction>
                                     </ListItem>
                                 )
                             })}

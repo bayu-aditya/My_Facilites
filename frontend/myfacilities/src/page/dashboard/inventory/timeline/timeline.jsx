@@ -20,7 +20,6 @@ class Timeline extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            user: null,
             auth: this.props.auth,
             data: [],
         }
@@ -39,10 +38,10 @@ class Timeline extends React.Component {
             <div>
                 {this.checkAuth()}
                 <Navigation />
-                <div className="container-sm pt-3 mt-3 border col-sm-7">
+                <div className="container-sm pt-3 mt-3 border col-sm-10">
                     <Graph_Timeline data={this.state.data} />
                 </div>
-                <div className="container-sm pt-3 mt-3 border col-sm-7">
+                <div className="container-sm pt-3 mt-3 border col-sm-10">
                     <h3>Tasks</h3>
                     <List_timeline data={this.state.data} />
                 </div>

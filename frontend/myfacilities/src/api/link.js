@@ -36,6 +36,10 @@ function tasks_api() {
     return inventory_api() + "/tasks"
 }
 
+function task_api() {
+    return inventory_api() + "/task"
+}
+
 export {login_api};
 export {user_api};
 export {refresh_api};
@@ -45,3 +49,4 @@ export {inventories_api};
 export {inventory_api};
 export {members_api}
 export {tasks_api};
+export {task_api};
