@@ -100,9 +100,25 @@ class Login extends React.Component {
             <div className={styles.bg}>
                 {this.toDashboard()}
                 {this.dialogHandle()}
+                <div className={styles.half_left}>
+                    <div className={styles.quotes}>
+                        <div>
+                            <h3>Welcome Back !</h3>
+                        </div>
+                        <div>
+                            {/* <span>To keep connected with us, please login with your personal info.</span> */}
+                            <span>
+                                Enter your personal details and start journey with us   
+                            </span>
+                        </div>
+                        <div>
+                            <button><span>Sign Up </span></button>
+                        </div>
+                    </div>
+                </div>
                 <div className={styles.half_right}>
                     <div className={styles.login}>
-                        <h3>MyFacilities Login</h3>
+                        <h3>Sign In to MyFacilities</h3>
                         <div className="dropdown-divider"></div>
                         <form autoComplete="off" onSubmit={this.loginHandle}>
                             <div className={styles.input}>
