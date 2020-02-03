@@ -1,7 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Navigation from '../../component/navigation_bar';
-import Table_list_organization_new from './list_organization';
+import { 
+    TableListOrganization,
+    TableListOtherOrganization } from './list_organization';
 
 import { GoToLogin } from '../../component/redirect';
 import { fetchName } from '../../action';
@@ -33,12 +35,18 @@ class Dashboard extends React.Component{
                 {this.checkAuth()}
                 <Navigation />
                 <div className="row">
-                    <div className="container-sm pt-3 mt-3 border col-sm-7">
-                        <h3>My Organizations</h3>
-                        <Table_list_organization_new />
-                    </div>
                     <div className="container-sm pt-3 mt-3 border col-sm-3">
                         <h5>Hello {this.props.name} !</h5>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="container-sm pt-3 mt-3 border col-sm-5">
+                        <h3>My Organizations</h3>
+                        <TableListOrganization />
+                    </div>
+                    <div className="container-sm pt-3 mt-3 border col-sm-5">
+                        <h3>Other Organizations</h3>
+                        <TableListOtherOrganization />
                     </div>
                 </div>
             </div>

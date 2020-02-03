@@ -16,6 +16,10 @@ function organizations_api() {
     return domain+"/organizations"
 }
 
+function other_organizations_api() {
+    return domain+"/other_organizations"
+}
+
 function organization_api() {
     return domain+"/organization"
 }
@@ -44,6 +48,7 @@ export {login_api};
 export {user_api};
 export {refresh_api};
 export {organizations_api};
+export {other_organizations_api};
 export {organization_api};
 export {inventories_api};
 export {inventory_api};

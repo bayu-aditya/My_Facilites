@@ -94,6 +94,30 @@ export function fetchOrganizations(self) {
     }
 }
 
+export function fetchOtherOrganizations(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        return fetch(self.url, {
+            method: "GET", 
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchOtherOrganizations, self))
+                }
+            })
+            .then(json => {
+                self.setState({
+                    organization: json["organization"],
+                    isLoad: false
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
 export function fetchInventories(self) {
     return (dispatch, getState) => {
         let access_token = getState().access_token;
