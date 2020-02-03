@@ -183,7 +183,7 @@ export function fetchDelInventory(self) {
                     self.closeDeleteDialog();
                     window.location.reload();
                 } else if (res.status === 401) {
-                    dispatch(tokenRefresher(fetchInventories, self));
+                    dispatch(tokenRefresher(fetchDelInventory, self));
                 }
             })
             .catch(error => console.log(error));
@@ -328,7 +328,7 @@ export function fetchDelTask(self) {
                     self.closeDeleteDialog();
                     window.location.reload();
                 } else if (res.status == 401) {
-                    dispatch(tokenRefresher(fetchAddTask, self));
+                    dispatch(tokenRefresher(fetchDelTask, self));
                 }
             })
             .catch(error => console.log(error));
