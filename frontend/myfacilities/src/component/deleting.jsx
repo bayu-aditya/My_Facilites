@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,12 +8,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { organization_api, inventory_api, task_api } from '../api/link.js';
-import { fetchDelTask } from '../action';
+import { 
+    organization_api, 
+    inventory_api, 
+    members_api, 
+    task_api } from '../api/link.js';
+import { fetchDelMemberOrganization, fetchDelTask } from '../action';
 
 function mapStateToProps(state) {
     return {
         access_token: state.access_token,
+        id_org: state.id_org,
     }
 }
 
@@ -171,6 +176,67 @@ class Del_inventory extends React.Component {
     }
 }
 
+class Del_member extends React.Component {
+    constructor(props) {
+        super(props);
+        this.username = this.props.username;
+        this.state = {
+            dialog: false
+        };
+        this.id_org = this.props.id_org;
+        this.url = members_api();
+        this.body = {};
+    }
+    openDeleteDialog = () => {
+        this.setState({dialog: true})
+    }
+    deleteHandler = () => {
+        this.body = {
+            "_id": this.id_org,
+            "member": this.username,
+        };
+        this.props.dispatch(fetchDelMemberOrganization(this));
+    }
+    closeDeleteDialog = () => {
+        this.setState({dialog: false})
+    }
+    deleteDialog = () => (
+        <div>
+            <Dialog
+            open={this.state.dialog}
+            onClose={this.closeDeleteDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            >
+            <DialogTitle id="alert-dialog-title">Remove {this.username}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Are you sure want to remove this member ?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={this.closeDeleteDialog} color="primary">
+                Disagree
+                </Button>
+                <Button onClick={this.deleteHandler} color="primary" autoFocus>
+                Agree
+                </Button>
+            </DialogActions>
+            </Dialog>
+        </div>
+    )
+    render() {
+        return (
+            <div>
+                {this.deleteDialog()}
+                <IconButton onClick={this.openDeleteDialog}>
+                    <DeleteIcon color="secondary" />
+                </IconButton>
+            </div>
+        )
+    }
+}
+
 class Del_task extends React.Component {
     constructor(props) {
         super(props);
@@ -237,8 +303,10 @@ class Del_task extends React.Component {
 
 const Delete_organization = connect(mapStateToProps)(Del_organization);
 const Delete_inventory = connect(mapStateToProps)(Del_inventory);
+const Delete_member = connect(mapStateToProps)(Del_member);
 const Delete_task = connect(mapStateToProps)(Del_task);
 
 export {Delete_organization};
 export {Delete_inventory};
+export {Delete_member};
 export {Delete_task};

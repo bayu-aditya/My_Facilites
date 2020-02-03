@@ -10,9 +10,9 @@ import {
     KeyboardTimePicker } from '@material-ui/pickers';
 
 import { get_datetime } from '../tools/datetime_format.js';
-import { organization_api, inventory_api, task_api } from '../api/link.js';
+import { organization_api, inventory_api, members_api, task_api } from '../api/link.js';
 import { connect } from 'react-redux';
-import { fetchAddTask } from '../action';
+import { fetchAddMemberOrganization, fetchAddTask } from '../action';
 
 const useStyles = theme => ({
     root: {
@@ -175,6 +175,58 @@ class Adding_inv extends React.Component {
     }
 }
 
+class Adding_inv_member extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            member: null,
+        };
+        this._id =  this.props.id_org;
+        this.url = members_api();
+        this.body = {};
+    }
+
+    handleOpen = () => {
+        this.setState({open: true})
+    }
+    handleClose = () => {
+        this.setState({open: false})
+    }
+    changeHandler = (e) => {
+        this.setState({[e.target.id]: e.target.value})
+    }
+    submitHandler = (event) => {
+        event.preventDefault();
+        this.body = {
+            "_id": this._id,
+            "member": this.state.member,
+        }
+        this.props.dispatch(fetchAddMemberOrganization(this));
+    }
+    render() {
+        const { classes } = this.props;
+        return (
+            <div>
+                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen} disableElevation>
+                    <AddIcon />Invite
+                </Button>
+                <Dialog open={this.state.open} onClose={this.handleClose} className={classes.root}>
+                    <DialogTitle>Invite Member into this Organization</DialogTitle>
+                    <DialogContent>
+                        <form className={classes.root} autoComplete="off" onSubmit={this.submitHandler}>
+                            <div className={classes.root}>
+                                <TextField fullWidth id="member" label="username" variant="outlined" onChange={this.changeHandler} required/>
+                            </div>
+                            <Button type="submit">invite</Button>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+            </div>
+        )
+    }
+}
+
 class Adding_task extends React.Component {
     constructor(props) {
         super(props);
@@ -293,6 +345,7 @@ class Adding_task extends React.Component {
 
 const Add_org = connect(mapStateToProps)(withStyles(useStyles)(Adding_org));
 const Add_inv = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv));
+const Add_inv_member = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv_member));
 const Add_task = connect(mapStateToProps)(withStyles(useStyles)(Adding_task));
 
-export {Add_org, Add_inv, Add_task};
+export {Add_org, Add_inv, Add_inv_member, Add_task};

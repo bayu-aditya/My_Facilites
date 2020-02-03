@@ -1,5 +1,5 @@
 import React from 'react';
-import { Add_inv } from '../../../component/adding';
+import { Add_inv, Add_inv_member } from '../../../component/adding';
 import Navigation from '../../../component/navigation_bar';
 import List_Inventory from './list_inventory';
 import List_Member from './list_member';
@@ -41,6 +41,7 @@ class Inventory extends React.Component{
                     </div>
                     <div className="container-sm pt-3 mt-3 border col-sm-4">
                         <h3>People in this Organization</h3>
+                        <Add_inv_member />
                         <List_Member />
                     </div>
                 </div>
