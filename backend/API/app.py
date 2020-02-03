@@ -4,7 +4,11 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
 from src.resources.user import Login, Register, User, TokenRefresh
-from src.resources.organization import Organizations, Organization
+from src.resources.organization import (
+    Organizations, 
+    Other_Organizations, 
+    Organization
+    )
 from src.resources.inventory import Inventories, Inventory
 from src.resources.member import Members
 from src.resources.tasks import Tasks, Task
@@ -32,6 +36,7 @@ api.add_resource(Register, "/register")
 api.add_resource(User, "/user")
 api.add_resource(TokenRefresh, "/refresh")
 api.add_resource(Organizations, "/organizations")
+api.add_resource(Other_Organizations, "/other_organizations")
 api.add_resource(Organization, "/organization")
 api.add_resource(Inventories, "/organization/inventories")
 api.add_resource(Inventory, "/organization/inventory")

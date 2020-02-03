@@ -22,6 +22,23 @@ class Organizations(Resource):
             })
         return {"organization": result}, 202
 
+class Other_Organizations(Resource):
+    @jwt_required
+    def get(self):
+        username = get_jwt_identity()
+        mycol = Tools.get_collection()
+        result = list()
+        for row in mycol.find({"members": username}):
+            row = Org(row)
+            result.append({
+                "_id": row._id, 
+                "name": row.name, 
+                "admin": row.admin,
+                "num_inv": row.num_inventory,
+                "num_mem": row.num_members
+            })
+        return {"organization": result}, 202
+
 
 class Organization(Resource):
     parser_i = reqparse.RequestParser()
