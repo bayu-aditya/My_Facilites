@@ -13,12 +13,15 @@ import {
     inventory_api, 
     members_api, 
     task_api } from '../api/link.js';
-import { fetchDelMemberOrganization, fetchDelTask } from '../action';
+import { 
+    fetchDelOrganizations,
+    fetchDelMemberOrganization,
+    fetchDelInventory, 
+    fetchDelTask } from '../action';
 
 function mapStateToProps(state) {
     return {
-        access_token: state.access_token,
-        id_org: state.id_org,
+        id_org_redux: state.id_org,
     }
 }
 
@@ -31,29 +34,14 @@ class Del_organization extends React.Component {
         this.id = this.props.id_org;
         this.name = this.props.name_org;
         this.url = organization_api();
+        this.body = {};
     }
     openDeleteDialog = (e) => {
         this.setState({dialog: true})
     }
     deleteHandler = () => {
-        let url = this.url;
-        let self = this;
-        let body = {"_id": this.id};
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 202) {
-                    let resp = JSON.parse(this.responseText);
-                    console.log(resp);
-                    self.closeDeleteDialog();
-                    window.location.reload();
-                }
-            }
-        }
-        xhr.open("DELETE", url);
-        xhr.setRequestHeader("Authorization", "Bearer "+this.props.access_token);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(body))
+        this.body = {"_id": this.id};
+        this.props.dispatch(fetchDelOrganizations(this));
     }
     closeDeleteDialog = () => {
         this.setState({dialog: false})
@@ -106,34 +94,17 @@ class Del_inventory extends React.Component {
         this.id_inv = this.props.id_inv;
         this.name_inv = this.props.name_inv;
         this.url = inventory_api();
+        this.body = {};
     }
     openDeleteDialog = (e) => {
         this.setState({dialog: true})
     }
     deleteHandler = () => {
-        let url = this.url;
-        let self = this;
-        let body = {
+        this.body = {
             "_id_org": this.id_org,
             "_id": this.id_inv
         };
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                if (this.status === 202) {
-                    let resp = JSON.parse(this.responseText);
-                    console.log(resp);
-                    self.closeDeleteDialog();
-                    window.location.reload();
-                }
-            }
-        }
-        xhr.open("DELETE", url);
-        xhr.setRequestHeader("Authorization", "Bearer "+this.props.access_token);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(JSON.stringify(body))
-        console.log(body)
-        console.log(this.access_token)
+        this.props.dispatch(fetchDelInventory(this));
     }
     closeDeleteDialog = () => {
         this.setState({dialog: false})
@@ -183,7 +154,7 @@ class Del_member extends React.Component {
         this.state = {
             dialog: false
         };
-        this.id_org = this.props.id_org;
+        this.id_org = this.props.id_org_redux;
         this.url = members_api();
         this.body = {};
     }
@@ -243,8 +214,8 @@ class Del_task extends React.Component {
         this.state = {
             dialog: false
         };
-        this.id_org = this.props.id_org;
-        this.id_inv = this.props.id_inv;
+        this.id_org = this.props.id_org_redux;
+        this.id_inv = this.props.id_inv_redux;
         this.id_task = this.props.id_task;
         this.url = task_api();
         this.body = {};
@@ -301,8 +272,8 @@ class Del_task extends React.Component {
     }
 }
 
-const Delete_organization = connect(mapStateToProps)(Del_organization);
-const Delete_inventory = connect(mapStateToProps)(Del_inventory);
+const Delete_organization = connect()(Del_organization);
+const Delete_inventory = connect()(Del_inventory);
 const Delete_member = connect(mapStateToProps)(Del_member);
 const Delete_task = connect(mapStateToProps)(Del_task);
 

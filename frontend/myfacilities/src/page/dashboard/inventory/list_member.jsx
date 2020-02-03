@@ -6,8 +6,7 @@ import {
     ListItemAvatar, 
     Avatar, 
     ListSubheader, 
-    ListItemSecondaryAction, 
-    IconButton } from '@material-ui/core';
+    ListItemSecondaryAction } from '@material-ui/core';
 import Loading from '../../../component/loading';
 import { members_api } from '../../../api/link.js';
 import { connect } from 'react-redux';
@@ -55,9 +54,6 @@ class List_Member extends React.Component {
                                         </ListItemAvatar>
                                         <ListItemText primary={username} />
                                         <ListItemSecondaryAction>
-                                            {/* <IconButton>
-                                                <DeleteIcon />
-                                            </IconButton> */}
                                             <Delete_member username={username} />
                                         </ListItemSecondaryAction>
                                     </ListItem>

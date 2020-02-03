@@ -118,6 +118,29 @@ export function fetchOtherOrganizations(self) {
     }
 }
 
+export function fetchDelOrganizations(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        return fetch(self.url, {
+            method: "DELETE", 
+            headers: {
+                "Authorization": "Bearer " + access_token,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(self.body),
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    self.closeDeleteDialog();
+                    window.location.reload();
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchDelOrganizations, self))
+                }
+            })
+            .catch(error => console.log(error));
+    }
+}
+
 export function fetchInventories(self) {
     return (dispatch, getState) => {
         let access_token = getState().access_token;
@@ -138,6 +161,30 @@ export function fetchInventories(self) {
                     isLoad: false,
                     inventory: json["inventory"]
                 })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchDelInventory(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = self.url + "?_id=" + self.id_org;
+        return fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + access_token,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(self.body)
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    self.closeDeleteDialog();
+                    window.location.reload();
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchInventories, self));
+                }
             })
             .catch(error => console.log(error));
     }
