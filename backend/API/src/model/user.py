@@ -13,7 +13,7 @@ class UserModels:
         db = Database()
         try:
             result = db.execute(
-                "SELECT username, password FROM user WHERE username=%s", (username,)
+                "SELECT name, username, email, password FROM user WHERE username=%s", (username,)
                 ).fetchone()
             if result:
                 return cls(*result)
