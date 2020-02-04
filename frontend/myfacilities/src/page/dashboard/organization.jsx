@@ -35,11 +35,6 @@ class Dashboard extends React.Component{
                 {this.checkAuth()}
                 <Navigation />
                 <div className="row">
-                    <div className="container-sm pt-3 mt-3 border col-sm-3">
-                        <h5>Hello {this.props.name} !</h5>
-                    </div>
-                </div>
-                <div className="row">
                     <div className="container-sm pt-3 mt-3 border col-sm-5">
                         <h3>My Organizations</h3>
                         <TableListOrganization />

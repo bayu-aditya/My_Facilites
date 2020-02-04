@@ -26,7 +26,6 @@ const useStyles = theme => ({
 function mapStateToProps(state) {
     return {
         access_token: state.access_token,
-        username: state.name,
         id_org: state.id_org,
         id_inv: state.id_inv,
     }
@@ -232,7 +231,6 @@ class Adding_task extends React.Component {
         super(props);
         this.state = {
             open: false,
-            username: this.props.username,
             date_start: new Date(),
             date_finish: new Date(),
             notes: null,
@@ -258,7 +256,6 @@ class Adding_task extends React.Component {
         this.body = {
             "id_org": this.id_org,
             "id_inv": this.id_inv,
-            "username": this.state.username,
             "start": get_datetime(this.state.date_start),
             "finish": get_datetime(this.state.date_finish),
             "note": this.state.notes
