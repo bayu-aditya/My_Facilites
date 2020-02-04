@@ -1,6 +1,6 @@
 import React from 'react';
 import { Add_inv, Add_inv_member } from '../../../component/adding';
-import Navigation from '../../../component/navigation_bar';
+import Navigation from '../../../component/navigation/navigation_bar';
 import List_Inventory from './list_inventory';
 import List_Member from './list_member';
 import { GoToLogin } from '../../../component/redirect';

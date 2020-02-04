@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Navigation from '../../component/navigation_bar';
+import Navigation from '../../component/navigation/navigation_bar';
 import { 
     TableListOrganization,
     TableListOtherOrganization } from './list_organization';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Navigation from '../../../../component/navigation_bar';
+import Navigation from '../../../../component/navigation/navigation_bar';
 import { GoToLogin } from '../../../../component/redirect';
 import { Graph_Timeline } from './graph_timeline';
 import List_timeline from './list_timeline';

@@ -1,10 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeWorkIcon from '@material-ui/icons/HomeWork';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -12,27 +13,11 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import {delete_access_token, delete_refresh_token} from '../action/cookie.js';
+import {delete_access_token, delete_refresh_token} from '../../action/cookie.js';
 import {connect} from 'react-redux';
 import { useDispatch } from 'react-redux'
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  list: {
-      width: 250,
-  },
-  fullList: {
-      width: 'auto'
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import { Avatar, Divider, ListItemIcon } from '@material-ui/core';
+import useStyles from './style';
 
 function mapStateToProps(state) {
     return {
@@ -51,14 +36,18 @@ function Navigation(props) {
 
     const list_drawer = [
         {
-            "name": "My Organization",
+            "name": "My Organizations",
             "link": "/dashboard"
         },
-        // {
-        //     "name": "Inventory",
-        //     "link": "/dashboard/inventory"
-        // }
+        {
+            "name": "Profile",
+            "link": "/dashboard"
+        }
     ];
+    const icons_drawer = [
+        <HomeWorkIcon />,
+        <AccountBoxIcon />
+    ]
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -89,12 +78,19 @@ function Navigation(props) {
             role="presentation"
         >
             <List>
-                <h5>Header Drawer</h5>
-                {list_drawer.map((data) => {
+                <div className={classes.profile}>
+                    <Avatar src="https://www.w3schools.com/howto/img_avatar.png" className={classes.avatar} />
+                    <Typography variant="h6" component="h6" >Hello</Typography>
+                    <Typography>{props.name}</Typography>
+                    <Typography>{props.username}</Typography> 
+                </div>
+                <Divider></Divider>
+                {list_drawer.map((data, index) => {
                     let text = data.name;
                     let link = data.link;
                     return (
                         <ListItem button key={text}>
+                            <ListItemIcon>{icons_drawer[index]}</ListItemIcon>
                             <ListItemText primary={text}
                             onClick={() => redirect(link)} />
                         </ListItem>
@@ -130,7 +126,7 @@ function Navigation(props) {
                     onClick={handleMenu}
                     color="inherit"
                     >
-                    <AccountCircle />
+                    <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
                     </IconButton>
                     <Menu
                     id="menu-appbar"
