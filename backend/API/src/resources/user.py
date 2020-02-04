@@ -50,11 +50,12 @@ class Login(Resource):
         return {"message": "username not found"}, 404
 
 class User(Resource):
-    # FOR FUTURE, CHANGE RETURN ONLY NAME, NOT USERNAME
     @jwt_required
     def get(self):
-        current_name = get_jwt_identity()
-        return {"name": current_name}, 202
+        username = get_jwt_identity()
+        user = UserModels.find_by_username(username)
+        name = user.name
+        return {"name": name}, 202
         
 
 class TokenRefresh(Resource):

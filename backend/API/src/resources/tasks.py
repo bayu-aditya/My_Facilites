@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from src.model.mysql import Database
 
 class Tasks(Resource):
@@ -34,8 +35,6 @@ class Task(Resource):
     parser.add_argument(
         name="id_inv", type=str, required=True, help="id inventory cannot be blank.")
     parser.add_argument(
-        name="username", type=str, required=True, help="username cannot be blank.")
-    parser.add_argument(
         name="start", type=str, required=True, help="start date cannot be blank.")
     parser.add_argument(
         name="finish", type=str, required=True, help="finish date cannot be blank.")
@@ -46,12 +45,14 @@ class Task(Resource):
     parser_del.add_argument(
         name="id_task", type=str, required=True, help="id task cannot be blank.")
 
+    @jwt_required
     def post(self):
         inpt = self.parser.parse_args()
+        username = get_jwt_identity()
         db = Database()
         db.execute(
             "INSERT INTO timeline (id_organization, id_inventory, username, start, finish, notes) VALUES (%s, %s, %s, %s, %s, %s)",
-            (inpt["id_org"], inpt["id_inv"], inpt["username"], inpt["start"], inpt["finish"], inpt["note"])
+            (inpt["id_org"], inpt["id_inv"], username, inpt["start"], inpt["finish"], inpt["note"])
         )
         db.commit()
         return {"message": "task has been created."}, 202
