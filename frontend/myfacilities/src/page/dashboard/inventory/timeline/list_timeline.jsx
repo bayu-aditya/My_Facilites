@@ -1,5 +1,4 @@
 import React from 'react';
-import { Add_task } from '../../../../component/adding';
 import Menu_row_task from '../../../../component/menu_list/menu_task';
 
 class List_timeline extends React.Component {
@@ -41,29 +40,26 @@ class List_timeline extends React.Component {
     }
     render() {
         return (
-            <div>
-                <Add_task />
-                <div className="table-responsive">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th rowSpan='2'>No.</th>
-                                <th rowSpan='2'>Name</th>
-                                <th colSpan='2'>Start</th>
-                                <th colSpan='2'>Finish</th>
-                                <th rowSpan='2'>Notes</th>
-                                <th rowSpan='2'></th>
-                            </tr>
-                            <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        {this.tabBody()}
-                    </table>
-                </div>
+            <div className="table-responsive">
+                <table className="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th rowSpan='2'>No.</th>
+                            <th rowSpan='2'>Name</th>
+                            <th colSpan='2'>Start</th>
+                            <th colSpan='2'>Finish</th>
+                            <th rowSpan='2'>Notes</th>
+                            <th rowSpan='2'></th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    {this.tabBody()}
+                </table>
             </div>
         )
     }

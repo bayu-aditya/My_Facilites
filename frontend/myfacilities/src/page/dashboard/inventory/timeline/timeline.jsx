@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../../../../component/navigation/navigation_bar';
 import { GoToLogin } from '../../../../component/redirect';
-import { Graph_Timeline } from './graph_timeline';
+import { Add_task } from '../../../../component/adding';
 import Graph_Timeline_Apex from './graph_timeline_apex';
 import List_timeline from './list_timeline';
 import { fetchTasks } from '../../../../action';
@@ -40,11 +40,18 @@ class Timeline extends React.Component {
                 {this.checkAuth()}
                 <Navigation />
                 <div className="container-sm pt-3 mt-3 border col-sm-10">
+                {(this.state.data.length === 0) ?
+                    <h5>The timeline is not displayed because the data is empty.</h5> : 
                     <Graph_Timeline_Apex data={this.state.data} />
+                }
                 </div>
                 <div className="container-sm pt-3 mt-3 border col-sm-10">
                     <h3>Tasks</h3>
+                    <Add_task />
+                    {(this.state.data.length === 0) ?
+                    <h5>Task is empty.</h5> : 
                     <List_timeline data={this.state.data} />
+                    }
                 </div>
             </div>
         )
