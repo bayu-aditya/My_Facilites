@@ -30,8 +30,8 @@ export class Graph_Timeline extends React.Component {
                 loader={<div>loading chart ...</div>}
                 options={{
                     hAxis: {
-                        minValue: new Date(2020, 0, 19, 0, 0, 0),
-                        maxValue: new Date(2020, 0, 25, 0, 0, 0),
+                        minValue: new Date(2020, 0, 26, 0, 0, 0),
+                        maxValue: new Date(2020, 1, 2, 0, 0, 0),
                     },
                     timeline: {
                         colorByRowLabel: true
@@ -77,7 +77,7 @@ function extractDataToInput(data_row, idx) {
     let finish_time_sec = finish_time.split(":")[2];
     let row = [
         username,
-        username,
+        idx,
         tooltipHTML(username, data_row["start"], data_row["finish"]),
         new Date(
             start_date_year, start_date_month, start_date_date, 

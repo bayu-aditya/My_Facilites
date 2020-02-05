@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import { inventories_api } from '../../../api/link.js';
 import { GoToTimeline } from '../../../component/redirect';
-import '../table.scss';
 import { fetchInventories, setIdInv } from '../../../action';
+import styles from './inventory.module.scss';
 
 function mapStateToProp(state) {
     return {
@@ -21,7 +21,6 @@ class List_Inventory extends React.Component {
         this.url = inventories_api();
         this.state = {
             isLoad: true,
-            select: false,
             inventory: []
         }
     }
@@ -31,10 +30,7 @@ class List_Inventory extends React.Component {
     selectHandler = (e) => {
         console.log(e.target.parentNode.id);
         this.props.dispatch(setIdInv(e.target.parentNode.id));
-        this.setState({select: true});
-    }
-    selectRender() {
-        if (this.state.select === true) return <GoToTimeline />
+        GoToTimeline();
     }
     tabBody = () => {
         let self = this;
@@ -53,7 +49,7 @@ class List_Inventory extends React.Component {
                                 return (
                                     <tr key={index} id={id}>
                                         <td onClick={self.selectHandler}>{name}</td>
-                                        <td className="auto-width">
+                                        <td className={styles.auto_width}>
                                             <Menu_row_inv 
                                             id_org={self.id_org}
                                             id_inv={id}
@@ -71,7 +67,6 @@ class List_Inventory extends React.Component {
     render() {
         return (
                 <div>
-                    {this.selectRender()}                    
                     <table className='table table-hover'>
                         <thead>
                             <tr>

@@ -5,7 +5,11 @@ import List_Inventory from './list_inventory';
 import List_Member from './list_member';
 import { GoToLogin } from '../../../component/redirect';
 import { connect } from 'react-redux';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton } from '@material-ui/core';
 import { fetchName } from '../../../action';
+import { GoToDashboard } from '../../../component/redirect';
+import styles from './inventory.module.scss';
 
 function mapStateToProps(state) {
     return {
@@ -28,6 +32,9 @@ class Inventory extends React.Component{
     checkAuth() {
         if (this.state.auth === false) return <GoToLogin />
     }
+    backHandler = () => {
+        GoToDashboard();
+    }
     render() {
         return (
             <div>
@@ -35,8 +42,19 @@ class Inventory extends React.Component{
                 <Navigation />
                 <div className="row">
                     <div className="container-sm pt-3 mt-3 border col-sm-7">
-                        <h3>My Inventory</h3>
-                        <Add_inv />
+                        <div className={styles.header_table}>
+                            <div>
+                                <IconButton onClick={this.backHandler}>
+                                    <ArrowBackIcon />
+                                </IconButton>
+                            </div>
+                            <div>
+                                <h3>My Inventory</h3>
+                            </div>
+                            <div>
+                                <Add_inv />
+                            </div>
+                        </div>
                         <List_Inventory />
                     </div>
                     <div className="container-sm pt-3 mt-3 border col-sm-4">

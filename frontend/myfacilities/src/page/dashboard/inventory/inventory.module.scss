@@ -1,0 +1,10 @@
+.auto_width {
+    width: 1px;
+    white-space: nowrap;
+}
+
+.header_table {
+    display: grid;
+    padding: 10px;
+    grid-template-columns: 44px auto 80px;
+}

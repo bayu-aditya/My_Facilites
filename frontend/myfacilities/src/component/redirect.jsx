@@ -1,24 +1,30 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
+function GoToRegister() {
+    window.location.href = "/register";
+}
+
 function GoToLogin() {
     return (
         <Redirect to='/' />
     )
 }
 
+function GoToDashboard() {
+    window.location.href = "/dashboard";
+}
+
 function GoToInventory() {
-    return (
-        <Redirect to='/dashboard/inventory' />
-    )
+    window.location.href = "/dashboard/inventory";
 }
 
 function GoToTimeline() {
-    return (
-        <Redirect to='/dashboard/inventory/timeline' />
-    )
+    window.location.href = '/dashboard/inventory/timeline';
 }
 
+export {GoToRegister};
 export {GoToLogin};
+export {GoToDashboard};
 export {GoToInventory};
 export {GoToTimeline};

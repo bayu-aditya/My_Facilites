@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Navigation from '../../../../component/navigation/navigation_bar';
 import { GoToLogin } from '../../../../component/redirect';
 import { Graph_Timeline } from './graph_timeline';
+import Graph_Timeline_Apex from './graph_timeline_apex';
 import List_timeline from './list_timeline';
 import { fetchTasks } from '../../../../action';
 import { tasks_api } from '../../../../api/link';
@@ -39,7 +40,7 @@ class Timeline extends React.Component {
                 {this.checkAuth()}
                 <Navigation />
                 <div className="container-sm pt-3 mt-3 border col-sm-10">
-                    <Graph_Timeline data={this.state.data} />
+                    <Graph_Timeline_Apex data={this.state.data} />
                 </div>
                 <div className="container-sm pt-3 mt-3 border col-sm-10">
                     <h3>Tasks</h3>

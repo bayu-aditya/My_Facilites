@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { GoToRegister, GoToDashboard } from '../../component/redirect';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { create_access_token, create_refresh_token, get_access_token } from '../../action/cookie.js';
@@ -21,7 +21,7 @@ class Login extends React.Component {
             responseError: null,
             dialogOpen: false,
             username: null,
-            password: null
+            password: null,
         }
         console.log(this.state)
     }
@@ -68,15 +68,19 @@ class Login extends React.Component {
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify(values));
     }
-    toDashboard = () => {
-        if (this.state.authenticate || get_access_token()) {
+    componentDidMount() {
+        if (this.state.authenticate) {
             console.log("login successful, to dashboard")
-            return <Redirect to="/dashboard" />
+            GoToDashboard()
         }
+    }
+    registerHandler = () => {
+        GoToRegister();
     }
     authHandler = () => {
         this.props.dispatch({type: "LOGIN"});
-        this.setState({authenticate: this.props.auth})
+        this.setState({authenticate: this.props.auth});
+        GoToDashboard();
     }
     openDialog = () => {
         this.setState({dialogOpen: true})
@@ -98,7 +102,6 @@ class Login extends React.Component {
     render() {
         return (
             <div className={styles.bg}>
-                {this.toDashboard()}
                 {this.dialogHandle()}
                 <div className={styles.half_left}>
                     <div className={styles.quotes}>
@@ -106,13 +109,12 @@ class Login extends React.Component {
                             <h3>Welcome Back !</h3>
                         </div>
                         <div>
-                            {/* <span>To keep connected with us, please login with your personal info.</span> */}
                             <span>
                                 Enter your personal details and start journey with us   
                             </span>
                         </div>
                         <div>
-                            <button><span>Sign Up </span></button>
+                            <button onClick={this.registerHandler}><span>Sign Up </span></button>
                         </div>
                     </div>
                 </div>

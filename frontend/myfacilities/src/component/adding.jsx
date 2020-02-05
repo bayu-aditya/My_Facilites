@@ -81,7 +81,7 @@ class Adding_org extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen} disableElevation>
+                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen}>
                     <AddIcon />Adding
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} className={classes.root}>
@@ -153,7 +153,7 @@ class Adding_inv extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen} disableElevation>
+                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen}>
                     <AddIcon />Adding
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} className={classes.root}>
@@ -207,7 +207,7 @@ class Adding_inv_member extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen} disableElevation>
+                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen}>
                     <AddIcon />Invite
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} className={classes.root}>
@@ -272,7 +272,7 @@ class Adding_task extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen} disableElevation>
+                <Button size="small" color="primary" variant="contained" aria-label="add" onClick={this.handleOpen}>
                     <AddIcon />Adding
                 </Button>
                 <Dialog open={this.state.open} onClose={this.handleClose} className={classes.root}>

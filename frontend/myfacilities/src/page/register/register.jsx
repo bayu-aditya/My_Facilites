@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
 import { create_access_token, create_refresh_token, get_access_token } from '../../action/cookie.js';
-import { login_api } from '../../api/link.js'
+import { login_api } from '../../api/link.js';
+import { styles } from './register.module.scss';
 
 function mapStateToProps(state) {
     return {
