@@ -110,7 +110,7 @@ class Login extends React.Component {
                         </div>
                         <div>
                             <span>
-                                Enter your personal details and start journey with us   
+                                To keep connected with us, please login with your personal info
                             </span>
                         </div>
                         <div>
