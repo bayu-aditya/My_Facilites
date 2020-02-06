@@ -25,7 +25,10 @@ class Members(Resource):
         if result is None:
             return {"message": "organization with id {} not found.".format(inpt["_id"])}, 404
         result = Org(result)
-        return {"members": result.members}, 202
+        return {
+            "admin": result.admin,
+            "members": result.members
+            }, 202
 
     @jwt_required
     def post(self):

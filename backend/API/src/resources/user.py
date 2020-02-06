@@ -16,8 +16,18 @@ parser.add_argument(
     name="password", type=str, required=True, help="password cannot be blank")
 
 class Register(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        name="name", type=str, required=True, help="name cannot be blank")
+    parser.add_argument(
+        name="username", type=str, required=True, help="username cannot be blank")
+    parser.add_argument(
+        name="email", type=str, required=True, help="email cannot be blank")
+    parser.add_argument(
+        name="password", type=str, required=True, help="password cannot be blank")
+
     def post(self):
-        inpt = parser.parse_args()
+        inpt = self.parser.parse_args()
         user = UserModels.find_by_username(inpt["username"])
         if user:
             return {"message": "username has used, try again"}, 400
@@ -25,8 +35,8 @@ class Register(Resource):
         try:
             db = Database()
             db.execute(
-                "INSERT INTO user (username, password) VALUES (%s, %s)", 
-                (inpt["username"], inpt["password"])
+                "INSERT INTO user (name, username, email, password) VALUES (%s, %s, %s, %s)", 
+                (inpt["name"], inpt["username"], inpt["email"], inpt["password"])
                 )
             db.commit()
             return {"message": "user has been created."}, 200
