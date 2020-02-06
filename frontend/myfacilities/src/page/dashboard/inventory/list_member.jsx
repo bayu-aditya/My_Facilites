@@ -24,10 +24,10 @@ class List_Member extends React.Component {
         super(props)
         this.state = {
             isLoad: true,
+            admin: null,
             members: []
         };
         this.id_org = this.props.id_org;
-        this.admin = "admin123";
         this.image = "https://www.w3schools.com/howto/img_avatar.png";
         this.url = members_api();
     }
@@ -74,7 +74,7 @@ class List_Member extends React.Component {
                             <Avatar 
                             src="https://www.w3schools.com/howto/img_avatar.png" />
                         </ListItemAvatar>
-                        <ListItemText primary={this.admin} />
+                        <ListItemText primary={this.state.admin} />
                     </ListItem>
                 </List>
                 <List subheader={<ListSubheader>Members</ListSubheader>} >

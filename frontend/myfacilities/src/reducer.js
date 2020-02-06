@@ -11,7 +11,6 @@ const initialState = {
 }
 
 function reducers(state = initialState, action) {
-    console.log("reducers: ", state, action);
     switch (action.type) {
         case "GET_ACCESS_TOKEN":
             return {
