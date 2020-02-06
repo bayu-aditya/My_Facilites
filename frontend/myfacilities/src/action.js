@@ -208,6 +208,7 @@ export function fetchMemberOrganization(self) {
             .then(json => {
                 self.setState({
                     isLoad: false,
+                    admin: json["admin"],
                     members: json["members"],
                 })
             })

@@ -23,7 +23,6 @@ class Login extends React.Component {
             username: null,
             password: null,
         }
-        console.log(this.state)
     }
     changeHandle = (e) => {
         this.setState({[e.target.id]: e.target.value})

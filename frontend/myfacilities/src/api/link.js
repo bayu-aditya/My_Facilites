@@ -4,6 +4,10 @@ function login_api() {
     return domain+"/login"
 }
 
+function register_api() {
+    return domain+"/register"
+}
+
 function user_api() {
     return domain+"/user"
 }
@@ -45,6 +49,7 @@ function task_api() {
 }
 
 export {login_api};
+export {register_api};
 export {user_api};
 export {refresh_api};
 export {organizations_api};
