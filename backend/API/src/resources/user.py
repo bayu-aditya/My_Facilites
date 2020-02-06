@@ -39,7 +39,7 @@ class Register(Resource):
                 (inpt["name"], inpt["username"], inpt["email"], inpt["password"])
                 )
             db.commit()
-            return {"message": "user has been created."}, 200
+            return {"message": "user has been created."}, 202
         except:
             return {"message": "something wrong in server."}, 500
 
