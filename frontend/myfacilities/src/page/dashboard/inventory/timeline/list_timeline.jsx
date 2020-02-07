@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu_row_task from '../../../../component/menu_list/menu_task';
+import styles from './timeline.module.scss';
 
 class List_timeline extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class List_timeline extends React.Component {
                                 <td>{finish_date}</td>
                                 <td>{finish_time}</td>
                                 <td>{note}</td>
-                                <td className="auto-width">
+                                <td className={styles.auto_width}>
                                     <Menu_row_task id_task={id} />
                                 </td>
                             </tr>

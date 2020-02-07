@@ -6,7 +6,7 @@ import List_Member from './list_member';
 import { GoToLogin } from '../../../component/redirect';
 import { connect } from 'react-redux';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
 import { fetchName } from '../../../action';
 import { GoToDashboard } from '../../../component/redirect';
 import styles from './inventory.module.scss';
@@ -42,14 +42,14 @@ class Inventory extends React.Component{
                 <Navigation />
                 <div className="row">
                     <div className="container-sm pt-3 mt-3 border col-sm-7">
-                        <div className={styles.header_table}>
+                        <div className={styles.header_inv}>
                             <div>
                                 <IconButton onClick={this.backHandler}>
                                     <ArrowBackIcon />
                                 </IconButton>
                             </div>
                             <div>
-                                <h3>My Inventory</h3>
+                                <Typography variant="h5">My Inventory</Typography>
                             </div>
                             <div>
                                 <Add_inv />
@@ -57,9 +57,15 @@ class Inventory extends React.Component{
                         </div>
                         <List_Inventory />
                     </div>
-                    <div className="container-sm pt-3 mt-3 border col-sm-4">
-                        <h3>People in this Organization</h3>
-                        <Add_inv_member />
+                    <div className="container-sm pt-3 mt-3 border col-sm-3">
+                        <div className={styles.header_member}>
+                            <div>
+                                <Typography variant="h5">People in this Organization</Typography>
+                            </div>
+                            <div>
+                                <Add_inv_member />
+                            </div>
+                        </div>
                         <List_Member />
                     </div>
                 </div>

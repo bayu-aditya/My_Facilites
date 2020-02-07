@@ -35,53 +35,53 @@ class List_Member extends React.Component {
         this.props.dispatch(fetchMemberOrganization(this));
     }
     bodyList() {
-        if (this.state.isLoad === true) {
-            return <Loading />
+        if (this.state.members.length === 0) {
+            return <span>No members</span>
         } else {
-            if (this.state.members.length === 0) {
-                return <span>No members</span>
-            } else {
-                return (
-                    <div>
-                        {this.state.members.map(
-                            (data, index) => {
-                                let username = data;
-                                return (
-                                    <ListItem key={index}>
-                                        <ListItemAvatar>
-                                            <Avatar 
-                                            src="https://www.w3schools.com/howto/img_avatar.png" />
-                                        </ListItemAvatar>
-                                        <ListItemText primary={username} />
-                                        <ListItemSecondaryAction>
-                                            <Delete_member username={username} />
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                )
-                            })}
-                    </div>
-                )
-            }
+            return (
+                <div>
+                    {this.state.members.map(
+                        (data, index) => {
+                            let username = data;
+                            return (
+                                <ListItem key={index}>
+                                    <ListItemAvatar>
+                                        <Avatar 
+                                        src="https://www.w3schools.com/howto/img_avatar.png" />
+                                    </ListItemAvatar>
+                                    <ListItemText primary={username} />
+                                    <ListItemSecondaryAction>
+                                        <Delete_member username={username} />
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            )
+                        })}
+                </div>
+            )
         }
     }
     render() {
-        return (
-            <div>
-                <List 
-                subheader={<ListSubheader>Administrator</ListSubheader>} >
-                    <ListItem>
-                        <ListItemAvatar>
-                            <Avatar 
-                            src="https://www.w3schools.com/howto/img_avatar.png" />
-                        </ListItemAvatar>
-                        <ListItemText primary={this.state.admin} />
-                    </ListItem>
-                </List>
-                <List subheader={<ListSubheader>Members</ListSubheader>} >
-                    {this.bodyList()}
-                </List>
-            </div>
-        )
+        if (this.state.isLoad === true) {
+            return <Loading />
+        } else {
+            return (
+                <div>
+                    <List 
+                    subheader={<ListSubheader>Administrator</ListSubheader>} >
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar 
+                                src="https://www.w3schools.com/howto/img_avatar.png" />
+                            </ListItemAvatar>
+                            <ListItemText primary={this.state.admin} />
+                        </ListItem>
+                    </List>
+                    <List subheader={<ListSubheader>Members</ListSubheader>} >
+                        {this.bodyList()}
+                    </List>
+                </div>
+            )
+        }
     }
 }
 

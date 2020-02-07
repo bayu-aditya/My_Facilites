@@ -3,18 +3,6 @@
     white-space: nowrap;
 }
 
-.header_inv {
-    display: grid;
-    padding: 10px;
-    grid-template-columns: 44px auto 80px;
-    div {
-        margin: {
-            top: auto;
-            bottom: auto;
-        }
-    }
-}
-
 .header_member {
     display: grid;
     padding: 10px;

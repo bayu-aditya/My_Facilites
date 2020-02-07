@@ -7,6 +7,8 @@ import Graph_Timeline_Apex from './graph_timeline_apex';
 import List_timeline from './list_timeline';
 import { fetchTasks } from '../../../../action';
 import { tasks_api } from '../../../../api/link';
+import styles from './timeline.module.scss';
+import { Typography } from '@material-ui/core';
 
 function mapStateToProps(state) {
     return {
@@ -46,8 +48,14 @@ class Timeline extends React.Component {
                 }
                 </div>
                 <div className="container-sm pt-3 mt-3 border col-sm-10">
-                    <h3>Tasks</h3>
-                    <Add_task />
+                    <div className={styles.header_member}>
+                        <div>
+                            <Typography variant="h5"><b>Tasks</b></Typography>
+                        </div>
+                        <div>
+                            <Add_task />
+                        </div>
+                    </div>
                     {(this.state.data.length === 0) ?
                     <h5>Task is empty.</h5> : 
                     <List_timeline data={this.state.data} />

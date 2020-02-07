@@ -34,40 +34,39 @@ class List_Inventory extends React.Component {
     }
     tabBody = () => {
         let self = this;
-        if (this.state.isLoad === true) {
-            return <Loading />
+        if (this.state.inventory.length === 0) {
+            return <span>Inventory is empty.</span>
         } else {
-            if (this.state.inventory.length === 0) {
-                return <span>Inventory is empty.</span>
-            } else {
-                return (
-                    <tbody>
-                        {this.state.inventory.map(
-                            function row(data, index) {
-                                let id = data["_id"];
-                                let name = data["name"];
-                                return (
-                                    <tr key={index} id={id}>
-                                        <td onClick={self.selectHandler}>{name}</td>
-                                        <td className={styles.auto_width}>
-                                            <Menu_row_inv 
-                                            id_org={self.id_org}
-                                            id_inv={id}
-                                            name_inv={name} />
-                                        </td>
-                                    </tr>    
-                                )
-                            }
-                        )}
-                    </tbody>
-                )
-            }
+            return (
+                <tbody>
+                    {this.state.inventory.map(
+                        function row(data, index) {
+                            let id = data["_id"];
+                            let name = data["name"];
+                            return (
+                                <tr key={index} id={id}>
+                                    <td onClick={self.selectHandler}>{name}</td>
+                                    <td className={styles.auto_width}>
+                                        <Menu_row_inv 
+                                        id_org={self.id_org}
+                                        id_inv={id}
+                                        name_inv={name} />
+                                    </td>
+                                </tr>    
+                            )
+                        }
+                    )}
+                </tbody>
+            )
         }
     }
     render() {
-        return (
+        if (this.state.isLoad === true) {
+            return <Loading />
+        } else {
+            return (
                 <div>
-                    <table className='table table-hover'>
+                    <table className='table table-hover table-sm'>
                         <thead>
                             <tr>
                                 <th>Name Inventory</th>
@@ -77,7 +76,8 @@ class List_Inventory extends React.Component {
                         {this.tabBody()}
                     </table>
                 </div>
-        )
+            )
+        }
     }
 }
 

@@ -104,53 +104,53 @@ class Table_list_other_organization extends React.Component {
     }
     tabBody = () => {
         let self = this;
+        return (
+            <tbody>
+                {this.state.organization.map(
+                    function row(data, index) {
+                        let id = data["_id"];
+                        let name = data["name"];
+                        let admin = data["admin"];
+                        let num_inv = data["num_inv"];
+                        let num_mem = data["num_mem"];
+                        return (
+                            <tr key={index} id={id}>
+                                <td onClick={self.selectHandler}>{name}</td>
+                                <td onClick={self.selectHandler}>{admin}</td>
+                                <td onClick={self.selectHandler}>{num_inv}</td>
+                                <td onClick={self.selectHandler}>{num_mem}</td>
+                                <td className={styles.auto_width}>
+                                </td>
+                            </tr>    
+                        )
+                    }
+                )}
+            </tbody>
+        )
+    }
+    render() {
         if (this.state.isLoad === true) {
             return <Loading />
         } else {
             return (
-                <tbody>
-                    {this.state.organization.map(
-                        function row(data, index) {
-                            let id = data["_id"];
-                            let name = data["name"];
-                            let admin = data["admin"];
-                            let num_inv = data["num_inv"];
-                            let num_mem = data["num_mem"];
-                            return (
-                                <tr key={index} id={id}>
-                                    <td onClick={self.selectHandler}>{name}</td>
-                                    <td onClick={self.selectHandler}>{admin}</td>
-                                    <td onClick={self.selectHandler}>{num_inv}</td>
-                                    <td onClick={self.selectHandler}>{num_mem}</td>
-                                    <td className={styles.auto_width}>
-                                    </td>
-                                </tr>    
-                            )
-                        }
-                    )}
-                </tbody>
+                <div>
+                    {(this.state.organization.length === 0) ? 
+                    <div>empty another organization</div> : 
+                    <table id="tb_org" className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Admin</th>
+                                <th>Inventory</th>
+                                <th>Member</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        {this.tabBody()}
+                    </table>}
+                </div>
             )
         }
-    }
-    render() {
-        return (
-            <div>
-                {(this.state.organization.length === 0) ? 
-                <div>empty another organization</div> : 
-                <table id="tb_org" className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Admin</th>
-                            <th>Inventory</th>
-                            <th>Member</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    {this.tabBody()}
-                </table>}
-            </div>
-        )
     }
 }
 
