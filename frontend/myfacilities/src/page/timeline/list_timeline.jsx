@@ -1,5 +1,5 @@
 import React from 'react';
-import Menu_row_task from '../../../../component/menu_list/menu_task';
+import Menu_row_task from '../../component/menu_list/menu_task';
 import styles from './timeline.module.scss';
 
 class List_timeline extends React.Component {
@@ -46,7 +46,7 @@ class List_timeline extends React.Component {
                     <thead>
                         <tr>
                             <th rowSpan='2'>No.</th>
-                            <th rowSpan='2'>Name</th>
+                            <th rowSpan='2'>Username</th>
                             <th colSpan='2'>Start</th>
                             <th colSpan='2'>Finish</th>
                             <th rowSpan='2'>Notes</th>

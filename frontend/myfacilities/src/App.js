@@ -5,8 +5,8 @@ import {
     Route} from 'react-router-dom';
 
 import Dashboard from './page/dashboard/organization';
-import Inventory from './page/dashboard/inventory/inventory';
-import Timeline from './page/dashboard/inventory/timeline/timeline';
+import Inventory from './page/inventory/inventory';
+import Timeline from './page/timeline/timeline';
 import Login from './page/login/login';
 import {Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'

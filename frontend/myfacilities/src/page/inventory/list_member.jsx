@@ -7,11 +7,11 @@ import {
     Avatar, 
     ListSubheader, 
     ListItemSecondaryAction } from '@material-ui/core';
-import Loading from '../../../component/loading';
-import { members_api } from '../../../api/link.js';
+import Loading from '../../component/loading';
+import { members_api } from '../../api/link.js';
 import { connect } from 'react-redux';
-import { Delete_member } from '../../../component/deleting';
-import { fetchMemberOrganization } from '../../../action';
+import { Delete_member } from '../../component/deleting';
+import { fetchMemberOrganization } from '../../action';
 
 function mapStateToProps(state) {
     return {
