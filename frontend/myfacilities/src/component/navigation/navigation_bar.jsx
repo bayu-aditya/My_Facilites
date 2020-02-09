@@ -143,9 +143,9 @@ function Navigation(props) {
                     open={open}
                     onClose={handleClose}
                     >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
                     <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <div className="dropdown-divider"></div>
+                    <div className="dropdown-divider"></div> */}
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>

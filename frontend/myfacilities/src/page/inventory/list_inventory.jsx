@@ -1,11 +1,11 @@
 import React from 'react';
-import Menu_row_inv from '../../../component/menu_list/menu_inventory';
-import Loading from '../../../component/loading';
+import Menu_row_inv from '../../component/menu_list/menu_inventory';
+import Loading from '../../component/loading';
 import { connect } from 'react-redux';
 
-import { inventories_api } from '../../../api/link.js';
-import { GoToTimeline } from '../../../component/redirect';
-import { fetchInventories, setIdInv } from '../../../action';
+import { inventories_api } from '../../api/link.js';
+import { GoToTimeline } from '../../component/redirect';
+import { fetchInventories, setIdInv } from '../../action';
 import styles from './inventory.module.scss';
 
 function mapStateToProp(state) {

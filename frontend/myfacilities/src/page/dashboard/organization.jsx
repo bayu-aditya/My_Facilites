@@ -4,6 +4,7 @@ import Navigation from '../../component/navigation/navigation_bar';
 import { 
     TableListOrganization,
     TableListOtherOrganization } from './list_organization';
+import { Grid, Typography } from '@material-ui/core';
 import { GoToLogin } from '../../component/redirect';
 import { fetchName } from '../../action';
 import { Add_org } from '../../component/adding';
@@ -35,23 +36,29 @@ class Dashboard extends React.Component{
             <div>
                 {this.checkAuth()}
                 <Navigation />
-                <div className="row">
-                    <div className="container-sm pt-3 mt-3 border col-sm-5">
-                        <div className={styles.header_table}>
-                            <div>
-                                <h3>My Organizations</h3>
+                <Grid container spacing={5} className={styles.bg}>
+                    <Grid item xs={12} sm={6}>
+                        <div className={styles.paper}>
+                            <div className={styles.header_table}>
+                                <div>
+                                    <Typography variant="h5">My Organizations</Typography>
+                                </div>
+                                <div>
+                                    <Add_org />
+                                </div>
                             </div>
-                            <div>
-                                <Add_org />
-                            </div>
+                            <TableListOrganization />
                         </div>
-                        <TableListOrganization />
-                    </div>
-                    <div className="container-sm pt-3 mt-3 border col-sm-5">
-                        <h3>Other Organizations</h3>
-                        <TableListOtherOrganization />
-                    </div>
-                </div>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <div className={styles.paper}>
+                            <div className={styles.header_table}>
+                                <Typography variant="h5">Other Organizations</Typography>
+                            </div>
+                            <TableListOtherOrganization />
+                        </div>
+                    </Grid>
+                </Grid>
             </div>
         )
     }
