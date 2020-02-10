@@ -9,7 +9,7 @@ import {
     fetchOrganizations, 
     fetchOtherOrganizations } from '../../action';
 import { setIdOrg } from '../../action';
-import { GoToInventory } from '../../component/redirect';
+import { GoToInventory } from '../../component/Redirect';
 import styles from './organization.module.scss';
 
 class Table_list_organization extends React.Component {

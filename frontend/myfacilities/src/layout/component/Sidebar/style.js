@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0,
   },
   shiftList: {
-      paddingTop: 60,
+      marginTop: 70,
   },
   list: {
       width: 250,
