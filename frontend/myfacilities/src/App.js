@@ -4,6 +4,10 @@ import {
     Switch,
     Route} from 'react-router-dom';
 
+import { RouteWithLayout } from './component';
+import Main from './layout';
+import { Dashboard as Next_Dashboard } from './views';
+
 import Dashboard from './page/dashboard/organization';
 import Inventory from './page/inventory/inventory';
 import Timeline from './page/timeline/timeline';
@@ -22,6 +26,13 @@ class App extends React.Component {
                 <PersistGate loading={null} persistor={persistor}>
                 <Router>
                     <Switch>
+                        <RouteWithLayout
+                            layout={Main}
+                            component={Next_Dashboard}
+                            exact 
+                            path="/next_dashboard"
+                        />
+
                         <Route exact path="/" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/dashboard" component={Dashboard} />
