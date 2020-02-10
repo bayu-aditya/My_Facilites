@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Typography, Grid, IconButton } from '@material-ui/core';
 import { GoToLogin } from '../../component/redirect';
+import { GoToInventory } from '../../component/Redirect';
 import { Add_task } from '../../component/adding';
-import Graph_Timeline_Apex from './graph_timeline_apex';
+import { GraphTimeline } from './component';
 import List_timeline from './list_timeline';
 import { fetchTasks } from '../../action';
 import { tasks_api } from '../../api/link';
 import styles from './timeline.module.scss';
-import { Typography, Grid } from '@material-ui/core';
 
 function mapStateToProps(state) {
     return {
@@ -32,6 +34,9 @@ class Timeline extends React.Component {
     componentDidMount() {
         this.props.dispatch(fetchTasks(this));
     }
+    backHandler = () => {
+        GoToInventory();
+    }
     checkAuth() {
         if (this.state.auth === false) return <GoToLogin />
     }
@@ -40,17 +45,22 @@ class Timeline extends React.Component {
             <div>
                 {this.checkAuth()}
                 <Grid container spacing={5} justify="center" className={styles.bg}>
-                    <Grid item xs={12} sm={10}>
+                    <Grid item xs={12} lg={10}>
                         <div className={styles.paper}>
                         {(this.state.data.length === 0) ?
                             <h5>The timeline is not displayed because the data is empty.</h5> : 
-                            <Graph_Timeline_Apex data={this.state.data} />
+                            <GraphTimeline data={this.state.data} />
                         }
                         </div>
                     </Grid>
-                    <Grid item xs={12} sm={10}>
+                    <Grid item xs={12} lg={10}>
                         <div className={styles.paper}>
                             <div className={styles.header_member}>
+                                <div>
+                                    <IconButton onClick={this.backHandler}>
+                                        <ArrowBackIcon />
+                                    </IconButton>
+                                </div>
                                 <div>
                                     <Typography variant="h5"><b>Tasks</b></Typography>
                                 </div>
