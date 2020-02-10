@@ -6,7 +6,10 @@ import {
 
 import { RouteWithLayout } from './component';
 import Main from './layout';
-import { Dashboard as Next_Dashboard } from './views';
+import { 
+    Dashboard as Next_Dashboard,
+    Inventory as Next_Inventory,
+    Timeline as Next_Timeline } from './views';
 
 import Dashboard from './page/dashboard/organization';
 import Inventory from './page/inventory/inventory';
@@ -31,6 +34,18 @@ class App extends React.Component {
                             component={Next_Dashboard}
                             exact 
                             path="/next_dashboard"
+                        />
+                        <RouteWithLayout
+                            layout={Main}
+                            component={Next_Inventory}
+                            exact 
+                            path="/next_dashboard/next_inventory"
+                        />
+                        <RouteWithLayout
+                            layout={Main}
+                            component={Next_Timeline}
+                            exact 
+                            path="/next_dashboard/next_inventory/next_timeline"
                         />
 
                         <Route exact path="/" component={Login} />

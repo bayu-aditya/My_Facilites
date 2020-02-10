@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 import { Topbar, Sidebar } from './component';
 import useStyles from './style';

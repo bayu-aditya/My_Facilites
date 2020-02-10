@@ -1,11 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Navigation from '../../component/navigation/navigation_bar';
 import { 
     TableListOrganization,
     TableListOtherOrganization } from './list_organization';
 import { Grid, Typography } from '@material-ui/core';
-import { GoToLogin } from '../../component/redirect';
+import { GoToLogin } from '../../component/Redirect';
 import { fetchName } from '../../action';
 import { Add_org } from '../../component/adding';
 import styles from './organization.module.scss';
