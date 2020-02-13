@@ -35,7 +35,7 @@ function Sidebar(props) {
         },
         {
             "name": "Profile",
-            "link": "/next_dashboard"
+            "link": "/profile"
         }
     ];
     const icons_drawer = [

@@ -9,13 +9,11 @@ import Main from './layout';
 import { 
     Login,
     Register,
+    Profile,
     Dashboard as Next_Dashboard,
     Inventory as Next_Inventory,
     Timeline as Next_Timeline } from './views';
 
-// import Dashboard from './page/dashboard/organization';
-// import Inventory from './page/inventory/inventory';
-// import Timeline from './page/timeline/timeline';
 import {Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import storeAndPersistor from './store';
@@ -37,6 +35,12 @@ class App extends React.Component {
                             component={Register} 
                             exact 
                             path="/register" />
+                        <RouteWithLayout 
+                            layout={Main}
+                            component={Profile}
+                            exact
+                            path="/profile"
+                        />
                         <RouteWithLayout
                             layout={Main}
                             component={Next_Dashboard}
@@ -55,10 +59,6 @@ class App extends React.Component {
                             exact 
                             path="/next_dashboard/next_inventory/next_timeline"
                         />
-
-                        {/* <Route exact path="/dashboard" component={Dashboard} />
-                        <Route exact path="/dashboard/inventory" component={Inventory} />
-                        <Route exact path="/dashboard/inventory/timeline" component={Timeline} /> */}
                     </Switch>
                 </Router>
                 </PersistGate>
