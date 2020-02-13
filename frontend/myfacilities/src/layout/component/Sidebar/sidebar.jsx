@@ -31,11 +31,11 @@ function Sidebar(props) {
     const list_drawer = [
         {
             "name": "My Organizations",
-            "link": "/dashboard"
+            "link": "/next_dashboard"
         },
         {
             "name": "Profile",
-            "link": "/dashboard"
+            "link": "/profile"
         }
     ];
     const icons_drawer = [
