@@ -24,8 +24,7 @@ function Sidebar(props) {
     const classes = useStyles();
 
     function redirect(inpt) {
-        console.log(inpt);
-        window.location = inpt;
+        window.location.href = inpt;
     }
 
     const list_drawer = [
@@ -62,10 +61,9 @@ function Sidebar(props) {
                     let text = data.name;
                     let link = data.link;
                     return (
-                        <ListItem button key={text}>
+                        <ListItem button key={text} onClick={() => redirect(link)}>
                             <ListItemIcon>{icons_drawer[index]}</ListItemIcon>
-                            <ListItemText primary={text}
-                            onClick={() => redirect(link)} />
+                            <ListItemText primary={text} />
                         </ListItem>
                     )
                 })}

@@ -20,6 +20,7 @@ export default function Menu_row_org(params) {
     return (
         <div>
         <IconButton
+            size="small"
             aria-label="more"
             aria-controls="long-menu"
             aria-haspopup="true"

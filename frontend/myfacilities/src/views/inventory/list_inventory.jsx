@@ -66,7 +66,7 @@ class List_Inventory extends React.Component {
         } else {
             return (
                 <div>
-                    <table className='table table-hover table-sm'>
+                    <table className='table table-hover'>
                         <thead>
                             <tr>
                                 <th>Name Inventory</th>
