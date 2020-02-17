@@ -14,7 +14,7 @@ function mapStateToProp(state) {
     }
 }
 
-class List_Inventory extends React.Component {
+class ListInventory extends React.Component {
     constructor(props) {
         super(props);
         this.id_org = this.props.id_org;
@@ -81,4 +81,4 @@ class List_Inventory extends React.Component {
     }
 }
 
-export default connect(mapStateToProp)(List_Inventory);
+export default connect(mapStateToProp)(ListInventory);

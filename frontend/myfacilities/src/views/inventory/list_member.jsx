@@ -19,7 +19,7 @@ function mapStateToProps(state) {
     }
 }
 
-class List_Member extends React.Component {
+class ListMember extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -85,4 +85,4 @@ class List_Member extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(List_Member);
+export default connect(mapStateToProps)(ListMember);
