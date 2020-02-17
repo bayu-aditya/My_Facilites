@@ -1,14 +1,20 @@
 import React from 'react';
-import { Add_inv, Add_inv_member } from '../../component/adding';
-import List_Inventory from './list_inventory';
-import List_Member from './list_member';
+import { 
+    AddInv, 
+    AddInvMember } from '../../component/adding';
+import ListInventory from './list_inventory';
+import ListMember from './list_member';
 import { connect } from 'react-redux';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton, Typography, Grid } from '@material-ui/core';
+import { 
+    IconButton, 
+    Typography, 
+    Grid } from '@material-ui/core';
 import { fetchName } from '../../action';
 import { 
     GoToLogin, 
     GoToDashboard } from '../../component/Redirect';
+import { ColorChooser } from './component';
 import styles from './inventory.module.scss';
 
 function mapStateToProps(state) {
@@ -52,24 +58,31 @@ class Inventory extends React.Component{
                                     <Typography variant="h5">My Inventory</Typography>
                                 </div>
                                 <div>
-                                    <Add_inv />
+                                    <AddInv />
                                 </div>
                             </div>
-                            <List_Inventory />
+                            <ListInventory />
                         </div>
                     </Grid>
                     <Grid item xs={12} md={5}>
-                        <div className={styles.paper}>
-                            <div className={styles.header_member}>
-                                <div>
-                                    <Typography variant="h5">People in this Organization</Typography>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <ColorChooser />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <div className={styles.paper}>
+                                    <div className={styles.header_member}>
+                                        <div>
+                                            <Typography variant="h5">People in this Organization</Typography>
+                                        </div>
+                                        <div>
+                                            <AddInvMember />
+                                        </div>
+                                    </div>
+                                    <ListMember />
                                 </div>
-                                <div>
-                                    <Add_inv_member />
-                                </div>
-                            </div>
-                            <List_Member />
-                        </div>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>

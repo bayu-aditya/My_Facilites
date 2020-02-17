@@ -341,8 +341,8 @@ class Adding_task extends React.Component {
 }
 
 const Add_org = connect(mapStateToProps)(withStyles(useStyles)(Adding_org));
-const Add_inv = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv));
-const Add_inv_member = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv_member));
+const AddInv = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv));
+const AddInvMember = connect(mapStateToProps)(withStyles(useStyles)(Adding_inv_member));
 const Add_task = connect(mapStateToProps)(withStyles(useStyles)(Adding_task));
 
-export {Add_org, Add_inv, Add_inv_member, Add_task};
+export {Add_org, AddInv, AddInvMember, Add_task};

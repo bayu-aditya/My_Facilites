@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { register_api } from '../../api/link';
-import { GoToLogin } from '../../component/Redirect';
 import styles from './register.module.scss';
 
 function mapStateToProps(state) {
@@ -46,9 +45,11 @@ class Register extends React.Component {
             })
             .then((res) => {
                 if (res.status === 202) {
-                    let json = res.json();
-                    alert(json["message"]);
+                    return res.json();
                 }
+            })
+            .then(json => {
+                alert(json["message"]);
             })
             .catch(error => console.log(error));
         }

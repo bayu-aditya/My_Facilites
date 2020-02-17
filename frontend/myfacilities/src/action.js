@@ -59,7 +59,7 @@ export function fetchName() {
             .then((res) => {
                 if (res.status === 202) {
                     return res.json();
-                } else if (res.status == 401) {
+                } else if (res.status === 401) {
                     dispatch(tokenRefresher(fetchName));
                 }
             })
@@ -304,7 +304,7 @@ export function fetchAddTask(self) {
                 if (res.status === 202) {
                     self.handleClose();
                     window.location.reload();
-                } else if (res.status == 401) {
+                } else if (res.status === 401) {
                     dispatch(tokenRefresher(fetchAddTask, self));
                 }
             })
@@ -328,7 +328,7 @@ export function fetchDelTask(self) {
                 if (res.status === 202) {
                     self.closeDeleteDialog();
                     window.location.reload();
-                } else if (res.status == 401) {
+                } else if (res.status === 401) {
                     dispatch(tokenRefresher(fetchDelTask, self));
                 }
             })

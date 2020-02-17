@@ -3,7 +3,10 @@ import {connect} from 'react-redux';
 import { 
     TableListOrganization,
     TableListOtherOrganization } from './list_organization';
-import { Grid, Typography } from '@material-ui/core';
+import { 
+    Grid, 
+    Typography, 
+    Paper } from '@material-ui/core';
 import { GoToLogin } from '../../component/Redirect';
 import { fetchName } from '../../action';
 import { Add_org } from '../../component/adding';
@@ -34,9 +37,9 @@ class Dashboard extends React.Component{
         return (
             <div>
                 {this.checkAuth()}
-                <Grid container spacing={5} className={styles.bg}>
-                    <Grid item xs={12} md={6}>
-                        <div className={styles.paper}>
+                <Grid container className={styles.bg}>
+                    <Grid item xs={12} md={6} className={styles.item}>
+                        <Paper className={styles.paper}>
                             <div className={styles.header_table}>
                                 <div>
                                     <Typography variant="h5">My Organizations</Typography>
@@ -46,15 +49,15 @@ class Dashboard extends React.Component{
                                 </div>
                             </div>
                             <TableListOrganization />
-                        </div>
+                        </Paper>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <div className={styles.paper}>
+                    <Grid item xs={12} md={6} className={styles.item}>
+                        <Paper className={styles.paper}>
                             <div className={styles.header_table}>
                                 <Typography variant="h5">Other Organizations</Typography>
                             </div>
                             <TableListOtherOrganization />
-                        </div>
+                        </Paper>
                     </Grid>
                 </Grid>
             </div>

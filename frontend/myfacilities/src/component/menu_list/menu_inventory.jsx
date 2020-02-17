@@ -21,6 +21,7 @@ export default function Menu_row_inv(params) {
     return (
         <div>
         <IconButton
+            size="small"
             aria-label="more"
             aria-controls="long-menu"
             aria-haspopup="true"
