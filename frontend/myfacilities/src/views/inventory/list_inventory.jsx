@@ -30,7 +30,7 @@ class ListInventory extends React.Component {
     selectHandler = (e) => {
         console.log(e.target.parentNode.id);
         this.props.dispatch(setIdInv(e.target.parentNode.id));
-        GoToTimeline();
+        setTimeout(() => GoToTimeline(), 100);
     }
     tabBody = () => {
         let self = this;

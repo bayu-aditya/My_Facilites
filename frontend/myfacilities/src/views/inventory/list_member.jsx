@@ -6,17 +6,41 @@ import {
     ListItemAvatar, 
     Avatar, 
     ListSubheader, 
-    ListItemSecondaryAction } from '@material-ui/core';
+    ListItemSecondaryAction, 
+    Grid,
+    Typography } from '@material-ui/core';
 import Loading from '../../component/loading';
 import { members_api } from '../../api/link.js';
 import { connect } from 'react-redux';
-import { Delete_member } from '../../component/deleting';
+import { DeleteMember } from '../../component/deleting';
 import { fetchMemberOrganization } from '../../action';
 
 function mapStateToProps(state) {
     return {
         id_org: state.id_org,
     }
+}
+
+const MemberCaption = (props) => {
+    const { color } = props;
+    const locStyle = {
+        backgroundColor: color,
+        marginTop: '3px',
+        width: '15px',
+        height: '15px',
+        display: 'inline-block',
+        borderRadius: '10px',
+    }
+    return (
+        <Grid container spacing={1}>
+            <Grid item>
+                <div style={locStyle}></div>
+            </Grid>
+            <Grid item xs>
+                <Typography variant="caption">{color}</Typography>
+            </Grid>
+        </Grid>
+    )
 }
 
 class ListMember extends React.Component {
@@ -42,16 +66,19 @@ class ListMember extends React.Component {
                 <div>
                     {this.state.members.map(
                         (data, index) => {
-                            let username = data;
+                            let username = data["username"];
+                            let color = data["color"];
                             return (
-                                <ListItem key={index}>
+                                <ListItem dense key={index}>
                                     <ListItemAvatar>
-                                        <Avatar 
-                                        src="https://www.w3schools.com/howto/img_avatar.png" />
+                                        <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
                                     </ListItemAvatar>
-                                    <ListItemText primary={username} />
+                                    <ListItemText 
+                                        primary={<Typography>{username}</Typography>}
+                                        secondary={<MemberCaption color={color} />} 
+                                    />
                                     <ListItemSecondaryAction>
-                                        <Delete_member username={username} />
+                                        <DeleteMember username={username} />
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             )

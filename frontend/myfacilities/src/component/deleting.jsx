@@ -274,10 +274,10 @@ class Del_task extends React.Component {
 
 const Delete_organization = connect()(Del_organization);
 const Delete_inventory = connect()(Del_inventory);
-const Delete_member = connect(mapStateToProps)(Del_member);
+const DeleteMember = connect(mapStateToProps)(Del_member);
 const Delete_task = connect(mapStateToProps)(Del_task);
 
 export {Delete_organization};
 export {Delete_inventory};
-export {Delete_member};
+export {DeleteMember};
 export {Delete_task};
