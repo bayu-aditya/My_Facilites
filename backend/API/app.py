@@ -45,4 +45,4 @@ api.add_resource(Tasks, "/organization/inventory/tasks")
 api.add_resource(Task, "/organization/inventory/task")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8888)
+    app.run(host='0.0.0.0', port=8888, debug=True)

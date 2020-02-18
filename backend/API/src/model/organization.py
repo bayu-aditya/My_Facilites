@@ -1,3 +1,4 @@
+from src.variable import DEFAULT_COLOR
 import pymongo
 
 class Tools:
@@ -39,7 +40,17 @@ class Org:
 
     @property
     def members(self):
-        return self.data.get("members", [])
+        """
+            Get member of an organization. It can handle when 'color' key is not present in database.
+            Default 'value' for color key is #00E396 
+        """
+        members = list()
+        result = self.data.get("members", members)
+        for i in result:
+            if i.get("color", None) == None:
+                i["color"] = DEFAULT_COLOR
+            members.append(i)
+        return members
 
     @property
     def num_members(self):

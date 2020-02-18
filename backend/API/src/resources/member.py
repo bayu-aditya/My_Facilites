@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from bson.objectid import ObjectId
+from src.variable import DEFAULT_COLOR
 from src.model.organization import Org
 from src.model.organization import Tools
 
@@ -8,12 +9,16 @@ class Members(Resource):
     parser_i = reqparse.RequestParser()
     parser_i.add_argument(
         name="_id", type=str, required=True, help="id organization cannot be blank")
+    parser_i.add_argument(
+        name="color", type=str, default=DEFAULT_COLOR)
 
     parser_i_n = reqparse.RequestParser()
     parser_i_n.add_argument(
         name="_id", type=str, required=True, help="id organization cannot be blank")
     parser_i_n.add_argument(
         name="member", type=str, required=True, help="username member cannot be blank")
+    parser_i_n.add_argument(
+        name="color", type=str, default=DEFAULT_COLOR)
 
     @jwt_required
     def get(self):
@@ -38,7 +43,10 @@ class Members(Resource):
             x = mycol.update(
                 {"_id": ObjectId(inpt["_id"])},
                 {"$push": {
-                    "members": inpt["member"]
+                    "members": {
+                        "username": inpt["member"],
+                        "color": inpt["color"],
+                        }
                 }}
             )
             if x["nModified"]:
@@ -49,13 +57,30 @@ class Members(Resource):
             return {"message": "something wrong in server."}, 500
 
     @jwt_required
+    def put(self):
+        inpt = self.parser_i.parse_args()
+        username = get_jwt_identity()
+        mycol = Tools.get_collection()
+        try:
+            x = mycol.update(
+                {"_id": ObjectId(inpt["_id"]), "members.username": username},
+                {"$set": {"members.$.color": inpt["color"]}}
+            )
+            if x["nModified"]:
+                return {"message": "Member has been updated."}, 202
+            else:
+                return {"message": "Failed update member"}, 404
+        except:
+            return {"message": "something wrong in server."}, 500
+
+    @jwt_required
     def delete(self):
         inpt = self.parser_i_n.parse_args()
         mycol = Tools.get_collection()
         try:
             x = mycol.update(
                 {"_id": ObjectId(inpt["_id"])},
-                {"$pull": {"members": inpt["member"]}}
+                {"$pull": {"members": {"username": inpt["member"]}}}
             )
             if x["nModified"]:
                 return {"message": "member has been delete."}, 202
