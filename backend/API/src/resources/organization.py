@@ -11,7 +11,7 @@ class Organizations(Resource):
         admin = get_jwt_identity()
         mycol = Tools.get_collection()
         result = list()
-        for row in mycol.find({"admin": admin}):
+        for row in mycol.find({"administrator.username": admin}):
             row = Org(row)
             result.append({
                 "_id": row._id, 

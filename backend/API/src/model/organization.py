@@ -17,10 +17,6 @@ class Org:
     @property
     def _id(self):
         return str(self.data.get("_id", None))
-    
-    @property
-    def admin(self):
-        return self.data.get("admin", None)
 
     @property
     def name(self):
@@ -37,6 +33,20 @@ class Org:
     @property
     def num_inventory(self):
         return len(self.inventory)
+
+    @property
+    def admin(self):
+        """
+            Get administrator of an organization. It can handle when 'color' key is not present in database.
+            Default 'value' for color key is #00E396 
+        """
+        administrator = list()
+        result = self.data.get("administrator", administrator)
+        for i in result:
+            if i.get("color", None) == None:
+                i["color"] = DEFAULT_COLOR
+            administrator.append(i)
+        return administrator
 
     @property
     def members(self):
