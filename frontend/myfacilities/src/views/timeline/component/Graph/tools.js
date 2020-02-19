@@ -11,15 +11,15 @@ function getInitialWeekMonday(date) {
     }
 }
 
-function getLastWeekSunday(date) {
+function getLastWeekMonday(date) {
     let today = date;
     if (today.getDay() === 0) {
         return resetClockToZero(
-            new Date(today.setDate(today.getDate()))            // Case when today is sunday
+            new Date(today.setDate(today.getDate() + 1))        // Case when today is sunday
             ); 
     } else {
         return resetClockToZero(
-            new Date(today.setDate(today.getDate() - today.getDay() + 7))
+            new Date(today.setDate(today.getDate() - today.getDay() + 8))
             );
     }
 }
@@ -29,4 +29,4 @@ function resetClockToZero(date) {
 }
 
 export { getInitialWeekMonday };
-export { getLastWeekSunday };
+export { getLastWeekMonday };

@@ -6,7 +6,7 @@ import {
     KeyboardDatePicker } from '@material-ui/pickers';
 import { 
     getInitialWeekMonday, 
-    getLastWeekSunday } from './tools';
+    getLastWeekMonday } from './tools';
 import ReactApexChart from 'react-apexcharts'
 import { Grid } from '@material-ui/core';
 
@@ -40,7 +40,7 @@ class GraphTimeline extends React.Component {
                             height: this.height,
                         },
                         min: getInitialWeekMonday(new Date()).getTime(),
-                        max: getLastWeekSunday(new Date()).getTime(),
+                        max: getLastWeekMonday(new Date()).getTime(),
                     },
                     yaxis: {
                         labels: {
@@ -101,6 +101,7 @@ class GraphTimeline extends React.Component {
                 }
                 self.data.push(data_row);
                 usernames.push(username);
+                return null;
             }
         )
         this.state.tools.series[0].data = this.data;
