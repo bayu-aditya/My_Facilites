@@ -70,6 +70,57 @@ export function fetchName() {
     };
 }
 
+export function fetchProfile(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        return fetch(self.url, {
+            method: "GET",
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchProfile, self))
+                }
+            })
+            .then(json => {
+                self.setState({
+                    name: json["name"],
+                    username: json["username"],
+                    email: json["email"],
+                })
+            })
+            .catch(error => console.log(error))
+    }
+}
+
+export function fetchUpdateProfile(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        console.log(self.body);
+        return fetch(self.url, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + access_token,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(self.body),
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchUpdateProfile, self))
+                }
+            })
+            .then(json => {
+                console.log(json);
+            })
+            .catch(error => console.log(error))
+    }
+}
+
 export function fetchOrganizations(self) {
     return (dispatch, getState) => {
         let access_token = getState().access_token;

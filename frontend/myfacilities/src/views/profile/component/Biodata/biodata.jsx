@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { 
     Paper, 
     TextField, 
@@ -6,21 +7,41 @@ import {
     Grid, 
     Typography, 
     Divider} from '@material-ui/core';
+import { user_api } from '../../../../api/link';
+import { fetchUpdateProfile } from '../../../../action';
 import styles from './biodata.module.scss';
 
 class BiodataPaper extends React.Component {
     constructor(props) {
         super(props)
+        this.url = user_api();
         this.state = {
             username: null,
             name: null,
             email: null,
         }
+        this.body = {};
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props !== prevProps){ 
+            let { name, username, email } = this.props;
+            this.setState({
+                username: username,
+                name: name,
+                email: email
+            })
+        }
     }
     updateProfileHandler = (e) => {
         e.preventDefault();
         console.log("update profile process");
-        console.log(this.state);
+        let body = {
+            "name": this.state.name,
+            "username": this.state.username,
+            "email": this.state.email,
+        }
+        this.body = body;
+        this.props.dispatch(fetchUpdateProfile(this));
     }
     changeHandler = (e) => {
         this.setState({[e.target.id]: e.target.value});
@@ -74,7 +95,6 @@ class BiodataPaper extends React.Component {
                                 label="E-mail" 
                                 fullWidth
                                 required 
-                                disabled
                             />
                         </Grid>
                     </Grid>
@@ -97,4 +117,4 @@ class BiodataPaper extends React.Component {
     }
 }
 
-export default BiodataPaper;
+export default connect()(BiodataPaper);

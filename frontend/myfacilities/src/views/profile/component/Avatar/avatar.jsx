@@ -10,17 +10,18 @@ import useStyles from './style';
 
 
 function AvatarPaper(props) {
+    const { name, username, email } = props;
     const classes = useStyles();
 
     return (
         <Paper className={styles.paper}>
             <Grid container spacing={3} justify="flex-end">
                 <Grid item xs>
-                    <Typography variant="h4">Lorem Ipsum</Typography>
-                    <Typography variant="body">lorem_ipsum</Typography>
+                    <Typography variant="h4">{name}</Typography>
+                    <Typography variant="body">{username}</Typography>
                     <Typography variant="section">
                         <Box fontStyle="italic">
-                            lorem@gmail.com
+                            {email}
                         </Box>
                     </Typography>
                 </Grid>
