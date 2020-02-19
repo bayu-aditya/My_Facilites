@@ -5,7 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Edit_organization } from '../editing';
 import { Delete_organization } from '../deleting';
 
-export default function Menu_row_org(params) {
+export default function MenuRowOrg(params) {
     // params : {id_org, name_org, access_token}
     const ITEM_HEIGHT = 100;
     const [anchorEl, setAnchorEl] = React.useState(null);

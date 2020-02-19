@@ -2,11 +2,11 @@
     padding: 10px;
 }
 
-.paper {
+.item {
     padding: 10px;
 }
 
-.item {
+.paper {
     padding: 10px;
 }
 
@@ -19,4 +19,8 @@
     display: grid;
     padding: 10px;
     grid-template-columns: auto 80px;
+}
+
+.table {
+    overflow: auto;
 }

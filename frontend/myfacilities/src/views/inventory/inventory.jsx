@@ -9,7 +9,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { 
     IconButton, 
     Typography, 
-    Grid } from '@material-ui/core';
+    Grid, 
+    Paper} from '@material-ui/core';
 import { fetchName } from '../../action';
 import { 
     GoToLogin, 
@@ -43,11 +44,11 @@ class Inventory extends React.Component{
     }
     render() {
         return (
-            <div>
+            <React.Fragment>
                 {this.checkAuth()}
-                <Grid container spacing={5} className={styles.bg}>
-                    <Grid item xs={12} md={7}>
-                        <div className={styles.paper}>
+                <Grid container className={styles.bg}>
+                    <Grid item xs={12} md={7} className={styles.item}>
+                        <Paper className={styles.paper}>
                             <div className={styles.header_inv}>
                                 <div>
                                     <IconButton onClick={this.backHandler}>
@@ -62,15 +63,15 @@ class Inventory extends React.Component{
                                 </div>
                             </div>
                             <ListInventory />
-                        </div>
+                        </Paper>
                     </Grid>
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={12} md={5} className={styles.item}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <ColorChooser />
                             </Grid>
                             <Grid item xs={12}>
-                                <div className={styles.paper}>
+                                <Paper className={styles.paper}>
                                     <div className={styles.header_member}>
                                         <div>
                                             <Typography variant="h5">People in this Organization</Typography>
@@ -80,12 +81,12 @@ class Inventory extends React.Component{
                                         </div>
                                     </div>
                                     <ListMember />
-                                </div>
+                                </Paper>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </div>
+            </React.Fragment>
         )   
     }
 }

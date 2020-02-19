@@ -58,7 +58,7 @@ class GraphTimeline extends React.Component {
                                 style: {
                                     color: 'black',
                                 },
-                                text: 'Today'
+                                text: 'Now'
                             }
                             }
                         ]

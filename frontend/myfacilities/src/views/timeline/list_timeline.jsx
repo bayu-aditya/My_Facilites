@@ -1,14 +1,17 @@
 import React from 'react';
-import Menu_row_task from '../../component/menu_list/menu_task';
+import { 
+    Table, 
+    TableHead, 
+    TableRow,
+    TableCell, 
+    TableBody} from '@material-ui/core';
+import MenuRowTask from '../../component/menu_list/menu_task';
 import styles from './timeline.module.scss';
 
 class List_timeline extends React.Component {
-    constructor(props) {
-        super(props)
-    }
     tabBody() {
         return (
-            <tbody>
+            <TableBody>
                 {this.props.data.map(
                     function row(data, index) {
                         let id = data.id_task;
@@ -21,46 +24,46 @@ class List_timeline extends React.Component {
                         let finish_time = finish[1]
                         let note = data.note;
                         return (
-                            <tr key={index} id={id}>
-                                <td>{index + 1}</td>
-                                <td>{username}</td>
-                                <td>{start_date}</td>
-                                <td>{start_time}</td>
-                                <td>{finish_date}</td>
-                                <td>{finish_time}</td>
-                                <td>{note}</td>
-                                <td className={styles.auto_width}>
-                                    <Menu_row_task id_task={id} />
-                                </td>
-                            </tr>
+                            <TableRow key={index} id={id} hover>
+                                <TableCell>{index + 1}</TableCell>
+                                <TableCell>{username}</TableCell>
+                                <TableCell>{start_date}</TableCell>
+                                <TableCell>{start_time}</TableCell>
+                                <TableCell>{finish_date}</TableCell>
+                                <TableCell>{finish_time}</TableCell>
+                                <TableCell>{note}</TableCell>
+                                <TableCell className={styles.auto_width}>
+                                    <MenuRowTask id_task={id} />
+                                </TableCell>
+                            </TableRow>
                         )
                     }
                 )}
-            </tbody>
+            </TableBody>
         )
     }
     render() {
         return (
-            <div className="table-responsive">
-                <table className="table table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th rowSpan='2'>No.</th>
-                            <th rowSpan='2'>Username</th>
-                            <th colSpan='2'>Start</th>
-                            <th colSpan='2'>Finish</th>
-                            <th rowSpan='2'>Notes</th>
-                            <th rowSpan='2'></th>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
+            <div className={styles.table}>
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell rowSpan='2'>No.</TableCell>
+                            <TableCell rowSpan='2'>Username</TableCell>
+                            <TableCell colSpan='2'>Start</TableCell>
+                            <TableCell colSpan='2'>Finish</TableCell>
+                            <TableCell rowSpan='2'>Notes</TableCell>
+                            <TableCell rowSpan='2'></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Date</TableCell>
+                            <TableCell>Time</TableCell>
+                            <TableCell>Date</TableCell>
+                            <TableCell>Time</TableCell>
+                        </TableRow>
+                    </TableHead>
                     {this.tabBody()}
-                </table>
+                </Table>
             </div>
         )
     }

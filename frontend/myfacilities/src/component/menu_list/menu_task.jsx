@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Delete_task } from '../deleting';
 
-export default function Menu_row_task(params) {
+export default function MenuRowTask(params) {
     // params : {id_org, id_inv, id_task}
 
     const ITEM_HEIGHT = 100;

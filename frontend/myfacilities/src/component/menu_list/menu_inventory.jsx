@@ -5,7 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Edit_inventory } from '../editing';
 import { Delete_inventory } from '../deleting';
 
-export default function Menu_row_inv(params) {
+export default function MenuRowInv(params) {
     // params : {id_org, id_inv, name_inv, access_token}
 
     const ITEM_HEIGHT = 100;

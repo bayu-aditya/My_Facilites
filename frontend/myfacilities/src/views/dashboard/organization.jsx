@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 import { 
     TableListOrganization,
     TableListOtherOrganization } from './list_organization';
@@ -9,7 +10,7 @@ import {
     Paper } from '@material-ui/core';
 import { GoToLogin } from '../../component/Redirect';
 import { fetchName } from '../../action';
-import { Add_org } from '../../component/adding';
+import { AddOrg } from '../../component/adding';
 import styles from './organization.module.scss';
 
 function mapStateToProps(state) {
@@ -35,18 +36,14 @@ class Dashboard extends React.Component{
     }
     render() {
         return (
-            <div>
+            <React.Fragment>
                 {this.checkAuth()}
                 <Grid container className={styles.bg}>
                     <Grid item xs={12} md={6} className={styles.item}>
                         <Paper className={styles.paper}>
                             <div className={styles.header_table}>
-                                <div>
-                                    <Typography variant="h5">My Organizations</Typography>
-                                </div>
-                                <div>
-                                    <Add_org />
-                                </div>
+                                <Typography variant="h5">My Organizations</Typography>
+                                <AddOrg />
                             </div>
                             <TableListOrganization />
                         </Paper>
@@ -60,7 +57,7 @@ class Dashboard extends React.Component{
                         </Paper>
                     </Grid>
                 </Grid>
-            </div>
+            </React.Fragment>
         )
     }
 }

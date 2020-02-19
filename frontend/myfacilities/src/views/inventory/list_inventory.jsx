@@ -1,5 +1,11 @@
 import React from 'react';
-import Menu_row_inv from '../../component/menu_list/menu_inventory';
+import { 
+    Table, 
+    TableHead, 
+    TableRow,
+    TableCell,
+    TableBody} from '@material-ui/core';
+import MenuRowInv from '../../component/menu_list/menu_inventory';
 import Loading from '../../component/loading';
 import { connect } from 'react-redux';
 
@@ -38,25 +44,25 @@ class ListInventory extends React.Component {
             return <span>Inventory is empty.</span>
         } else {
             return (
-                <tbody>
+                <TableBody>
                     {this.state.inventory.map(
                         function row(data, index) {
                             let id = data["_id"];
                             let name = data["name"];
                             return (
-                                <tr key={index} id={id}>
-                                    <td onClick={self.selectHandler}>{name}</td>
-                                    <td className={styles.auto_width}>
-                                        <Menu_row_inv 
+                                <TableRow key={index} id={id} hover>
+                                    <TableCell onClick={self.selectHandler}>{name}</TableCell>
+                                    <TableCell className={styles.auto_width}>
+                                        <MenuRowInv 
                                         id_org={self.id_org}
                                         id_inv={id}
                                         name_inv={name} />
-                                    </td>
-                                </tr>    
+                                    </TableCell>
+                                </TableRow>    
                             )
                         }
                     )}
-                </tbody>
+                </TableBody>
             )
         }
     }
@@ -65,17 +71,19 @@ class ListInventory extends React.Component {
             return <Loading />
         } else {
             return (
-                <div>
-                    <table className='table table-hover'>
-                        <thead>
-                            <tr>
-                                <th>Name Inventory</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                <React.Fragment>
+                    <div className={styles.table}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name Inventory</TableCell>
+                                <TableCell padding="checkbox" />
+                            </TableRow>
+                        </TableHead>
                         {this.tabBody()}
-                    </table>
-                </div>
+                    </Table>
+                    </div>
+                </React.Fragment>
             )
         }
     }

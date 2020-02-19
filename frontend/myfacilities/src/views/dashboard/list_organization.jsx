@@ -1,7 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { 
+    Table, 
+    TableHead, 
+    TableRow, 
+    TableCell,
+    TableBody } from '@material-ui/core';
 import Loading from '../../component/loading';
-import Menu_row_org from '../../component/menu_list/menu_organization';
+import MenuRowOrg from '../../component/menu_list/menu_organization';
 import { 
     organizations_api, 
     other_organizations_api } from '../../api/link.js';
@@ -20,8 +26,6 @@ class Table_list_organization extends React.Component {
             isLoad: true,
             organization: [],
         }
-    }
-    componentDidMount() {
         let self = this;
         this.props.dispatch(fetchOrganizations(self));
     }
@@ -30,10 +34,10 @@ class Table_list_organization extends React.Component {
         this.props.dispatch(setIdOrg(e.target.parentNode.id))
         GoToInventory();
     }
-    tabBody = () => {
+    tabBody() {
         let self = this;
         return (
-            <tbody>
+            <TableBody>
                 {this.state.organization.map(
                     function row(data, index) {
                         let id = data["_id"];
@@ -41,47 +45,42 @@ class Table_list_organization extends React.Component {
                         let num_inv = data["num_inv"];
                         let num_mem = data["num_mem"];
                         return (
-                            <tr key={index} id={id}>
-                                <td onClick={self.selectHandler}>{name}</td>
-                                <td onClick={self.selectHandler}>{num_inv}</td>
-                                <td onClick={self.selectHandler}>{num_mem}</td>
-                                <td className={styles.auto_width}>
-                                    <Menu_row_org 
-                                    id_org={id} 
-                                    name_org={name} />
-                                </td>
-                            </tr>    
+                            <TableRow key={index} id={id} hover>
+                                <TableCell onClick={self.selectHandler}>{name}</TableCell>
+                                <TableCell onClick={self.selectHandler} className={styles.auto_width}>{num_inv}</TableCell>
+                                <TableCell onClick={self.selectHandler} className={styles.auto_width}>{num_mem}</TableCell>
+                                <TableCell >
+                                    <MenuRowOrg
+                                        id_org={id}
+                                        name_org={name}
+                                    />
+                                </TableCell>
+                            </TableRow>
                         )
                     }
                 )}
-            </tbody>
+            </TableBody>
         )
     }
     render() {
         return (
-            <div>
-                {/* {this.selectRender()} */}
+            <React.Fragment>
                 {(this.state.isLoad === true) ? <Loading /> : 
-                <div>
-                    {(this.state.organization.length === 0) ? 
-                        <div>empty organization</div> :
-                        <div className="table-responsive">
-                        <table id="tb_org" className="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Inventory</th>
-                                    <th>Member</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            {this.tabBody()}
-                        </table>
-                        </div>
-                    }
+                <div className={styles.table}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Inventory</TableCell>
+                                <TableCell>Member</TableCell>
+                                <TableCell padding="checkbox" />
+                            </TableRow>
+                        </TableHead>
+                        {this.tabBody()}
+                    </Table>
                 </div>
                 }
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -107,7 +106,7 @@ class Table_list_other_organization extends React.Component {
     tabBody = () => {
         let self = this;
         return (
-            <tbody>
+            <TableBody>
                 {this.state.organization.map(
                     function row(data, index) {
                         let id = data["_id"];
@@ -116,18 +115,16 @@ class Table_list_other_organization extends React.Component {
                         let num_inv = data["num_inv"];
                         let num_mem = data["num_mem"];
                         return (
-                            <tr key={index} id={id}>
-                                <td onClick={self.selectHandler}>{name}</td>
-                                <td onClick={self.selectHandler}>{admin}</td>
-                                <td onClick={self.selectHandler}>{num_inv}</td>
-                                <td onClick={self.selectHandler}>{num_mem}</td>
-                                <td className={styles.auto_width}>
-                                </td>
-                            </tr>    
+                            <TableRow key={index} id={id} hover>
+                                <TableCell onClick={self.selectHandler}>{name}</TableCell>
+                                <TableCell onClick={self.selectHandler}>{admin}</TableCell>
+                                <TableCell onClick={self.selectHandler} className={styles.auto_width}>{num_inv}</TableCell>
+                                <TableCell onClick={self.selectHandler} className={styles.auto_width}>{num_mem}</TableCell>
+                            </TableRow>    
                         )
                     }
                 )}
-            </tbody>
+            </TableBody>
         )
     }
     render() {
@@ -135,25 +132,24 @@ class Table_list_other_organization extends React.Component {
             return <Loading />
         } else {
             return (
-                <div>
+                <React.Fragment>
                     {(this.state.organization.length === 0) ? 
                     <div>empty another organization</div> : 
-                    <div className="table-responsive">
-                    <table id="tb_org" className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Admin</th>
-                                <th>Inventory</th>
-                                <th>Member</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        {this.tabBody()}
-                    </table>
+                    <div className={styles.table}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Admin</TableCell>
+                                    <TableCell>Inventory</TableCell>
+                                    <TableCell>Member</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            {this.tabBody()}
+                        </Table>
                     </div>
                     }
-                </div>
+                </React.Fragment>
             )
         }
     }
