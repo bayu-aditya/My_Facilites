@@ -58,6 +58,32 @@ class ListMember extends React.Component {
     componentDidMount() {
         this.props.dispatch(fetchMemberOrganization(this));
     }
+    adminList() {
+        if (this.state.admin.length === 0) {
+            return <span>No Administrator</span>
+        } else {
+            return (
+                <div>
+                    {this.state.admin.map(
+                        (data, index) => {
+                            let username = data["username"];
+                            let color = data["color"];
+                            return (
+                                <ListItem dense key={index}>
+                                    <ListItemAvatar>
+                                        <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
+                                    </ListItemAvatar>
+                                    <ListItemText 
+                                        primary={<Typography>{username}</Typography>}
+                                        secondary={<MemberCaption color={color} />} 
+                                    />
+                                </ListItem>
+                            )
+                        })}
+                </div>
+            )
+        }
+    }
     bodyList() {
         if (this.state.members.length === 0) {
             return <span>No members</span>
@@ -95,13 +121,7 @@ class ListMember extends React.Component {
                 <div>
                     <List 
                     subheader={<ListSubheader>Administrator</ListSubheader>} >
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar 
-                                src="https://www.w3schools.com/howto/img_avatar.png" />
-                            </ListItemAvatar>
-                            <ListItemText primary={this.state.admin} />
-                        </ListItem>
+                        {this.adminList()}
                     </List>
                     <List subheader={<ListSubheader>Members</ListSubheader>} >
                         {this.bodyList()}

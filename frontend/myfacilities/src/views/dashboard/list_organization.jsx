@@ -111,13 +111,11 @@ class Table_list_other_organization extends React.Component {
                     function row(data, index) {
                         let id = data["_id"];
                         let name = data["name"];
-                        let admin = data["admin"];
                         let num_inv = data["num_inv"];
                         let num_mem = data["num_mem"];
                         return (
                             <TableRow key={index} id={id} hover>
                                 <TableCell onClick={self.selectHandler}>{name}</TableCell>
-                                <TableCell onClick={self.selectHandler}>{admin}</TableCell>
                                 <TableCell onClick={self.selectHandler} className={styles.auto_width}>{num_inv}</TableCell>
                                 <TableCell onClick={self.selectHandler} className={styles.auto_width}>{num_mem}</TableCell>
                             </TableRow>    
@@ -140,7 +138,6 @@ class Table_list_other_organization extends React.Component {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    <TableCell>Admin</TableCell>
                                     <TableCell>Inventory</TableCell>
                                     <TableCell>Member</TableCell>
                                 </TableRow>
