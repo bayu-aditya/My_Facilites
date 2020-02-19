@@ -28,7 +28,7 @@ class Other_Organizations(Resource):
         username = get_jwt_identity()
         mycol = Tools.get_collection()
         result = list()
-        for row in mycol.find({"members": username}):
+        for row in mycol.find({"members.username": username}):
             row = Org(row)
             result.append({
                 "_id": row._id, 
