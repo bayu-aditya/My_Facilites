@@ -9,12 +9,6 @@ from flask_jwt_extended import (
     )
 from src.model.user import Database, UserModels
 
-parser = reqparse.RequestParser()
-parser.add_argument(
-    name="username", type=str, required=True, help="username cannot be blank")
-parser.add_argument(
-    name="password", type=str, required=True, help="password cannot be blank")
-
 class Register(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
@@ -44,8 +38,14 @@ class Register(Resource):
             return {"message": "something wrong in server."}, 500
 
 class Login(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        name="username", type=str, required=True, help="username cannot be blank")
+    parser.add_argument(
+        name="password", type=str, required=True, help="password cannot be blank")
+
     def post(self):
-        inpt = parser.parse_args()
+        inpt = self.parser.parse_args()
         user = UserModels.find_by_username(inpt["username"])        
 
         if user:
@@ -60,13 +60,36 @@ class Login(Resource):
         return {"message": "username not found"}, 404
 
 class User(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        name="name", type=str, required=True, help="name cannot be blank")
+    parser.add_argument(
+        name="email", type=str, required=True, help="email cannot be blank")
+
     @jwt_required
     def get(self):
         username = get_jwt_identity()
         user = UserModels.find_by_username(username)
-        name = user.name
-        return {"name": name}, 202
-        
+        return {
+            "name": user.name,
+            "username": user.username,
+            "email": user.email,
+            }, 202
+
+    @jwt_required
+    def put(self):
+        username = get_jwt_identity()
+        inpt = self.parser.parse_args()
+        user = UserModels.find_by_username(username)
+        data = {
+            "name": inpt["name"],
+            "email": inpt["email"],
+        }
+        try:
+            user.update_user(**data)
+            return {"message": "user has been updated."}, 202
+        except:
+            return {"message": "something wrong in server."}, 500
 
 class TokenRefresh(Resource):
     @jwt_refresh_token_required
