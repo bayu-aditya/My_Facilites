@@ -62,14 +62,20 @@ class Members(Resource):
         username = get_jwt_identity()
         mycol = Tools.get_collection()
         try:
-            x = mycol.update(
+            member = mycol.update(
                 {"_id": ObjectId(inpt["_id"]), "members.username": username},
                 {"$set": {"members.$.color": inpt["color"]}}
             )
-            if x["nModified"]:
+            if member["nModified"]:
                 return {"message": "Member has been updated."}, 202
             else:
-                return {"message": "Failed update member"}, 404
+                admin = mycol.update(
+                    {"_id": ObjectId(inpt["_id"]), "administrator.username": username},
+                    {"$set": {"administrator.$.color": inpt["color"]}}
+                )
+                if admin["nModified"]:
+                    return {"message": "Administrator has been updated."}, 202
+            return {"message": "Failed update member"}, 404
         except:
             return {"message": "something wrong in server."}, 500
 

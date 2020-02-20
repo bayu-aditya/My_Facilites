@@ -78,9 +78,13 @@ class Organization(Resource):
         inpt = self.parser_nd.parse_args()
         mycol = Tools.get_collection()
         mycol.insert_one({
-            "admin": get_jwt_identity(), 
             "name": inpt["name"],
-            "desc": inpt["desc"]
+            "desc": inpt["desc"],
+            "administrator": [ 
+                { 
+                    "username": get_jwt_identity() 
+                },
+            ],
         })
         return {"message": "Organization {} has been created.".format(inpt["name"])}, 202
 
