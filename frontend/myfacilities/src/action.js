@@ -274,6 +274,29 @@ export function fetchAddMemberOrganization(self) {
     }
 }
 
+export function fetchUpdateMemberOrganization(body) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = members_api();
+        return fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + access_token,
+            },
+            body: JSON.stringify(body),
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    window.location.reload();
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchAddMemberOrganization, body))
+                }
+            })
+            .catch(error => console.log(error));
+    }
+}
+
 export function fetchDelMemberOrganization(self) {
     return (dispatch, getState) => {
         let access_token = getState().access_token;

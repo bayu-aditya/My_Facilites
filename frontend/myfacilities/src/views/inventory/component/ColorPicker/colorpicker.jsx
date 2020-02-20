@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import {
     Button,
@@ -11,10 +12,19 @@ import {
     Divider} from '@material-ui/core';
 import ColorLensIcon from '@material-ui/icons/ColorLens';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { fetchUpdateMemberOrganization } from '../../../../action';
 import styles from './colorpicker.module.scss';
 
+function mapStateToProps(state) {
+    return {
+        id_org: state.id_org,
+    }
+}
+
 function ColorChooser(props) {
-    const { color } = props;
+    const { color, id_org } = props;
+    const dispatch = useDispatch();
+
     const [openPicker, setOpenPicker] = React.useState(false);
     const [textbtn, setTextbtn] = React.useState("Pick Color");
     const [colorbtn, setColorbtn] = React.useState("primary");
@@ -29,7 +39,11 @@ function ColorChooser(props) {
         setValue(color.hex);
     }
     const updateHandler = () => {
-        console.log(value);
+        let body = {
+            "_id": id_org,
+            "color": value,
+        }
+        dispatch(fetchUpdateMemberOrganization(body));
     }
     return (
         <ExpansionPanel>
@@ -104,4 +118,4 @@ function ColorAndText(props) {
     )
 }
 
-export default ColorChooser;
+export default connect(mapStateToProps)(ColorChooser);
