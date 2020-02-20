@@ -11,7 +11,7 @@ import {
     Typography, 
     Grid, 
     Paper} from '@material-ui/core';
-import { fetchName } from '../../action';
+import { fetchMemberOrganization } from '../../action';
 import { 
     GoToLogin, 
     GoToDashboard } from '../../component/Redirect';
@@ -30,11 +30,14 @@ class Inventory extends React.Component{
         super(props)
         this.state = {
             auth: this.props.auth,
+            admin: [],
+            members: [],
+            isLoadMember: true,
+            currentColor: "#00E390"
         }
-        console.log(this.state)
     }
     componentDidMount() {
-        this.props.dispatch(fetchName());
+        this.props.dispatch(fetchMemberOrganization(this));
     }
     checkAuth() {
         if (this.state.auth === false) return <GoToLogin />
@@ -68,7 +71,9 @@ class Inventory extends React.Component{
                     <Grid item xs={12} md={5} className={styles.item}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <ColorChooser />
+                                <ColorChooser 
+                                    color={this.state.currentColor}
+                                />
                             </Grid>
                             <Grid item xs={12}>
                                 <Paper className={styles.paper}>
@@ -80,7 +85,11 @@ class Inventory extends React.Component{
                                             <AddInvMember />
                                         </div>
                                     </div>
-                                    <ListMember />
+                                    <ListMember 
+                                        isLoad={this.state.isLoadMember}
+                                        admin={this.state.admin}
+                                        members={this.state.members}
+                                    />
                                 </Paper>
                             </Grid>
                         </Grid>

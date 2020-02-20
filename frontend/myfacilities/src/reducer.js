@@ -4,7 +4,11 @@ const initialState = {
     auth: false,
     access_token: null,
     refresh_token: null,
-    name: null,
+    profile: {
+        name: null,
+        username: null,
+        email: null,
+    },
     id_org: null,
     id_inv: null,
     error: null,
@@ -36,7 +40,14 @@ function reducers(state = initialState, action) {
         case "FETCH_NAME_BEGIN":
             return {...state, error: null}
         case "FETCH_NAME_SUCCESS":
-            return {...state, name: action.name}
+            const { name } = action;
+            return {
+                ...state, 
+                profile: {
+                    ...state.profile,
+                    name: name,
+                }
+            }
         case "FETCH_NAME_FAILED":
             return {...state, error: action.error}
         case "TOKEN_REFRESHER_BEGIN":

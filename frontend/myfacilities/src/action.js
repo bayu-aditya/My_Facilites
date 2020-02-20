@@ -1,4 +1,4 @@
-import { user_api, refresh_api } from './api/link';
+import { user_api, refresh_api, members_api } from './api/link';
 
 const SET_NAME = "SET_NAME";
 const SELECT_ORGANIZATION = "SELECT_ORGANIZATION";
@@ -28,9 +28,9 @@ export const setIdInv = (id) => ({
 export const fetchNameBegin = () => ({
     type: FETCH_NAME_BEGIN
 })
-export const fetchNameSuccess = (name) => ({
+export const fetchNameSuccess = (props) => ({
     type: FETCH_NAME_SUCCESS,
-    name: name
+    name: props.name,
 })
 export const fetchNameFailed = (error) => ({
     type: FETCH_NAME_FAILED,
@@ -64,7 +64,9 @@ export function fetchName() {
                 }
             })
             .then(json => {
-                dispatch(fetchNameSuccess(json["name"]));
+                dispatch(fetchNameSuccess({
+                    name: json["name"]
+                }));
             })
             .catch(error => dispatch(fetchNameFailed(error)));
     };
@@ -244,7 +246,8 @@ export function fetchDelInventory(self) {
 export function fetchMemberOrganization(self) {
     return (dispatch, getState) => {
         let access_token = getState().access_token;
-        let url = self.url + "?_id=" + self.id_org;
+        let id_org = getState().id_org;
+        let url = members_api() + "?_id=" + id_org;
         return fetch(url, {
             method: "GET",
             headers: {"Authorization": "Bearer " + access_token}
@@ -258,7 +261,7 @@ export function fetchMemberOrganization(self) {
             })
             .then(json => {
                 self.setState({
-                    isLoad: false,
+                    isLoadMember: false,
                     admin: json["admin"],
                     members: json["members"],
                 })

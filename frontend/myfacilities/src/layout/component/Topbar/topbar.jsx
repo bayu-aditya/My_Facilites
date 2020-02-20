@@ -15,7 +15,7 @@ import useStyles from './style';
 
 function mapStateToProps(state) {
     return {
-        name: state.name
+        name: state.profile.name
     }
 }
 

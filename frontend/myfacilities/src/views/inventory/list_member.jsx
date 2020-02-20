@@ -10,16 +10,7 @@ import {
     Grid,
     Typography } from '@material-ui/core';
 import Loading from '../../component/loading';
-import { members_api } from '../../api/link.js';
-import { connect } from 'react-redux';
 import { DeleteMember } from '../../component/deleting';
-import { fetchMemberOrganization } from '../../action';
-
-function mapStateToProps(state) {
-    return {
-        id_org: state.id_org,
-    }
-}
 
 const MemberCaption = (props) => {
     const { color } = props;
@@ -48,15 +39,21 @@ class ListMember extends React.Component {
         super(props)
         this.state = {
             isLoad: true,
-            admin: null,
-            members: []
+            admin: [],
+            members: [],
         };
         this.id_org = this.props.id_org;
         this.image = "https://www.w3schools.com/howto/img_avatar.png";
-        this.url = members_api();
     }
-    componentDidMount() {
-        this.props.dispatch(fetchMemberOrganization(this));
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            const { isLoad, admin, members } = this.props;
+            this.setState({
+                isLoad: isLoad,
+                admin: admin,
+                members: members,
+            })
+        }
     }
     adminList() {
         if (this.state.admin.length === 0) {
@@ -132,4 +129,4 @@ class ListMember extends React.Component {
     }
 }
 
-export default connect(mapStateToProps)(ListMember);
+export default ListMember;

@@ -13,19 +13,23 @@ import ColorLensIcon from '@material-ui/icons/ColorLens';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styles from './colorpicker.module.scss';
 
-function ColorChooser() {
-    const [open, setOpen] = React.useState(false);
+function ColorChooser(props) {
+    const { color } = props;
+    const [openPicker, setOpenPicker] = React.useState(false);
     const [textbtn, setTextbtn] = React.useState("Pick Color");
     const [colorbtn, setColorbtn] = React.useState("primary");
-    const [value, setValue] = React.useState("#00E396");
+    const [value, setValue] = React.useState("#000000");
 
     const setDialogHandler = () => {
-        setOpen(!open);
-        setTextbtn((open) ? "Pick color" : "Close")
-        setColorbtn((open) ? "primary" : "secondary")
+        setOpenPicker(!openPicker);
+        setTextbtn((openPicker) ? "Pick color" : "Close")
+        setColorbtn((openPicker) ? "primary" : "secondary")
     }
     const changeHandler = (color) => {
         setValue(color.hex);
+    }
+    const updateHandler = () => {
+        console.log(value);
     }
     return (
         <ExpansionPanel>
@@ -35,7 +39,7 @@ function ColorChooser() {
                         <Typography>Your color in this organization is:</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <ColorAndText value={value} />
+                        <ColorAndText value={color} />
                     </Grid>
                 </Grid>
             </ExpansionPanelSummary>
@@ -57,7 +61,7 @@ function ColorChooser() {
                             >
                                 <ColorLensIcon />{textbtn}
                             </Button>
-                            {(open) ?
+                            {(openPicker) ?
                             <div className={styles.popover}>
                                 <ChromePicker
                                     color={value}
@@ -73,8 +77,7 @@ function ColorChooser() {
             </ExpansionPanelDetails>
             <Divider />
             <ExpansionPanelActions>
-                <Button color="secondary">Cancel</Button>
-                <Button color="primary">Save</Button>
+                <Button onClick={updateHandler} color="primary">Save</Button>
             </ExpansionPanelActions>
         </ExpansionPanel>
     )
