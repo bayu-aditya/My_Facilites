@@ -5,3 +5,4 @@ flask-cors==3.0.8
 pymongo==3.10.1
 mysql-connector-python==8.0.19
 Flask-JWT-Extended==3.24.1
+google-cloud-storage==1.26.0
