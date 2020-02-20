@@ -15,22 +15,13 @@ class BiodataPaper extends React.Component {
     constructor(props) {
         super(props)
         this.url = user_api();
+        let { name, username, email } = this.props;
         this.state = {
-            username: null,
-            name: null,
-            email: null,
+            username: username,
+            name: name,
+            email: email,
         }
         this.body = {};
-    }
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props !== prevProps){ 
-            let { name, username, email } = this.props;
-            this.setState({
-                username: username,
-                name: name,
-                email: email
-            })
-        }
     }
     updateProfileHandler = (e) => {
         e.preventDefault();

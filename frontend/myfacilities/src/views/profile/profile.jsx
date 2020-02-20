@@ -6,13 +6,14 @@ import { GoToLogin } from '../../component/Redirect';
 import { 
     AvatarPaper, 
     BiodataPaper } from './component';
-import { fetchProfile } from '../../action';
-import { user_api } from '../../api/link';
 import styles from './profile.module.scss';
 
 function mapStateToProps(state) {
     return {
         auth: state.auth,
+        name: state.profile.name,
+        username: state.profile.username,
+        email: state.profile.email,
     }
 }
 
@@ -21,12 +22,10 @@ class Profile extends React.Component {
         super(props);
         this.auth = this.props.auth;
         this.state = {
-            name: null,
-            username: null, 
-            email: null,
+            name: this.props.name,
+            username: this.props.username, 
+            email: this.props.email,
         }
-        this.url = user_api();
-        this.props.dispatch(fetchProfile(this));
     }
 
     check_auth = () => {

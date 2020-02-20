@@ -3,9 +3,9 @@ import { user_api, refresh_api, members_api } from './api/link';
 const SET_NAME = "SET_NAME";
 const SELECT_ORGANIZATION = "SELECT_ORGANIZATION";
 const SELECT_INVENTORY = "SELECT_INVENTORY";
-const FETCH_NAME_BEGIN = "FETCH_NAME_BEGIN";
-const FETCH_NAME_SUCCESS = "FETCH_NAME_SUCCESS";
-const FETCH_NAME_FAILED = "FETCH_NAME_FAILED";
+const FETCH_PROFILE_BEGIN = "FETCH_PROFILE_BEGIN";
+const FETCH_PROFILE_SUCCESS = "FETCH_PROFILE_SUCCESS";
+const FETCH_PROFILE_FAILED = "FETCH_PROFILE_FAILED";
 const TOKEN_REFRESHER_BEGIN = "TOKEN_REFRESHER_BEGIN";
 const TOKEN_REFRESHER_SUCCESS = "TOKEN_REFRESHER_SUCCESS";
 const TOKEN_REFRESHER_FAILED = "TOKEN_REFRESHER_FAILED";
@@ -25,17 +25,20 @@ export const setIdInv = (id) => ({
     id_inv: id
 })
 
-export const fetchNameBegin = () => ({
-    type: FETCH_NAME_BEGIN
+export const fetchProfileBegin = () => ({
+    type: FETCH_PROFILE_BEGIN
 })
-export const fetchNameSuccess = (props) => ({
-    type: FETCH_NAME_SUCCESS,
+export const fetchProfileSuccess = (props) => ({
+    type: FETCH_PROFILE_SUCCESS,
     name: props.name,
+    username: props.username,
+    email: props.email,
 })
-export const fetchNameFailed = (error) => ({
-    type: FETCH_NAME_FAILED,
+export const fetchProfileFailed = (error) => ({
+    type: FETCH_PROFILE_FAILED,
     error: error
 })
+
 export const tokenRefresherBegin = () => ({
     type: TOKEN_REFRESHER_BEGIN
 })
@@ -48,10 +51,10 @@ export const tokenRefresherFailed = (error) => ({
     error: error
 })
 
-export function fetchName() {
+export function fetchProfile() {
     return (dispatch, getState) => {
         let access_token = getState().access_token;
-        dispatch(fetchNameBegin());
+        dispatch(fetchProfileBegin());
         return fetch(user_api(), {
             method: 'GET',
             headers: {"Authorization": "Bearer " + access_token}
@@ -60,41 +63,18 @@ export function fetchName() {
                 if (res.status === 202) {
                     return res.json();
                 } else if (res.status === 401) {
-                    dispatch(tokenRefresher(fetchName));
+                    dispatch(tokenRefresher(fetchProfile));
                 }
             })
             .then(json => {
-                dispatch(fetchNameSuccess({
-                    name: json["name"]
-                }));
-            })
-            .catch(error => dispatch(fetchNameFailed(error)));
-    };
-}
-
-export function fetchProfile(self) {
-    return (dispatch, getState) => {
-        let access_token = getState().access_token;
-        return fetch(self.url, {
-            method: "GET",
-            headers: {"Authorization": "Bearer " + access_token}
-        })
-            .then((res) => {
-                if (res.status === 202) {
-                    return res.json()
-                } else if (res.status === 401) {
-                    dispatch(tokenRefresher(fetchProfile, self))
-                }
-            })
-            .then(json => {
-                self.setState({
+                dispatch(fetchProfileSuccess({
                     name: json["name"],
                     username: json["username"],
                     email: json["email"],
-                })
+                }));
             })
-            .catch(error => console.log(error))
-    }
+            .catch(error => dispatch(fetchProfileFailed(error)));
+    };
 }
 
 export function fetchUpdateProfile(self) {

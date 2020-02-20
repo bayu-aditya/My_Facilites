@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PerfectScrollbar from 'react-perfect-scrollbar'
 import { 
     TableListOrganization,
     TableListOtherOrganization } from './list_organization';
@@ -9,7 +8,7 @@ import {
     Typography, 
     Paper } from '@material-ui/core';
 import { GoToLogin } from '../../component/Redirect';
-import { fetchName } from '../../action';
+import { fetchProfile } from '../../action';
 import { AddOrg } from '../../component/adding';
 import styles from './organization.module.scss';
 
@@ -25,11 +24,10 @@ class Dashboard extends React.Component{
         super(props)
         this.state = {
             auth: this.props.auth,
-            user: this.props.name,
         }
     }
     componentDidMount() {
-        this.props.dispatch(fetchName());
+        this.props.dispatch(fetchProfile());
     }
     checkAuth() {
         if (this.state.auth === false) return <GoToLogin />

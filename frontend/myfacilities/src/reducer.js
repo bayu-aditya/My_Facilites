@@ -1,4 +1,6 @@
-import { get_access_token, get_refresh_token } from './action/cookie';
+import { 
+    get_access_token, 
+    get_refresh_token } from './action/cookie';
 
 const initialState = {
     auth: false,
@@ -37,18 +39,20 @@ function reducers(state = initialState, action) {
             return {...initialState}
         case "SET_NAME":
             return {...state, name: action.name}
-        case "FETCH_NAME_BEGIN":
+        case "FETCH_PROFILE_BEGIN":
             return {...state, error: null}
-        case "FETCH_NAME_SUCCESS":
-            const { name } = action;
+        case "FETCH_PROFILE_SUCCESS":
+            const { name, username, email } = action;
             return {
                 ...state, 
                 profile: {
                     ...state.profile,
                     name: name,
+                    username: username,
+                    email: email
                 }
             }
-        case "FETCH_NAME_FAILED":
+        case "FETCH_PROFILE_FAILED":
             return {...state, error: action.error}
         case "TOKEN_REFRESHER_BEGIN":
             return {...state, error: null}

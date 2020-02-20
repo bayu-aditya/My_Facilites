@@ -21,8 +21,24 @@ import styles from './inventory.module.scss';
 function mapStateToProps(state) {
     return {
         auth: state.auth,
-        name: state.name,
+        username: state.profile.username,
+        name: state.profile.name,
     }
+}
+
+function getColor(username, admin_resp, members_resp) {
+    let color = null;
+    admin_resp.forEach(
+        (data) => {
+            if (data["username"] === username){ color = data["color"] }
+        }
+    );
+    members_resp.forEach(
+        (data) => {
+            if (data["username"] === username){ color = data["color"] }
+        }
+    );
+    return color;
 }
 
 class Inventory extends React.Component{
@@ -33,11 +49,19 @@ class Inventory extends React.Component{
             admin: [],
             members: [],
             isLoadMember: true,
-            currentColor: "#00E390"
+            currentColor: null,
         }
     }
     componentDidMount() {
         this.props.dispatch(fetchMemberOrganization(this));
+    }
+    componentDidUpdate(prevProps, prevState) {
+        let { username } = this.props;
+        let { admin, members } = this.state;
+        let color = getColor(username, admin, members);
+        if (color !== prevState.currentColor) {
+            this.setState({currentColor: color})
+        }
     }
     checkAuth() {
         if (this.state.auth === false) return <GoToLogin />
