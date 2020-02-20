@@ -1,11 +1,11 @@
 from src.variable import DEFAULT_COLOR
+from bson.objectid import ObjectId
 import pymongo
 
 class Tools:
     @staticmethod
     def get_collection():
         myclient = pymongo.MongoClient("mongodb://192.168.0.7:27017/")
-        # myclient = pymongo.MongoClient("mongodb://35.240.223.151:27017/")
         mydb = myclient["myfacilities"]
         return mydb["organization"]
 
@@ -13,6 +13,19 @@ class Tools:
 class Org:
     def __init__(self, row_db):
         self.data = row_db
+
+    @classmethod
+    def find_by_id(cls, id_organization):
+        mycol = Tools.get_collection()
+        row = mycol.find_one({"_id": ObjectId(id_organization)})
+        return cls(row)
+
+    def get_color_from_username(self, username):
+        data = self.admin + self.members
+        for person in data:
+            if (person.get("username") == username):
+                return person.get("color")
+        return None
 
     @property
     def _id(self):
