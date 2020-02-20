@@ -11,11 +11,15 @@ import {
     Typography, 
     Grid, 
     Paper} from '@material-ui/core';
-import { fetchMemberOrganization } from '../../action';
+import {
+    fetchOrganization, 
+    fetchMemberOrganization } from '../../action';
 import { 
     GoToLogin, 
     GoToDashboard } from '../../component/Redirect';
-import { ColorChooser } from './component';
+import { 
+    ColorChooser,
+    Information } from './component';
 import styles from './inventory.module.scss';
 
 function mapStateToProps(state) {
@@ -46,6 +50,9 @@ class Inventory extends React.Component{
         super(props)
         this.state = {
             auth: this.props.auth,
+            org_name: "Unknown",
+            org_desc: "Unknown",
+            org_load: true,
             admin: [],
             members: [],
             isLoadMember: true,
@@ -53,6 +60,7 @@ class Inventory extends React.Component{
         }
     }
     componentDidMount() {
+        this.props.dispatch(fetchOrganization(this));
         this.props.dispatch(fetchMemberOrganization(this));
     }
     componentDidUpdate(prevProps, prevState) {
@@ -75,22 +83,33 @@ class Inventory extends React.Component{
                 {this.checkAuth()}
                 <Grid container className={styles.bg}>
                     <Grid item xs={12} md={7} className={styles.item}>
-                        <Paper className={styles.paper}>
-                            <div className={styles.header_inv}>
-                                <div>
-                                    <IconButton onClick={this.backHandler}>
-                                        <ArrowBackIcon />
-                                    </IconButton>
-                                </div>
-                                <div>
-                                    <Typography variant="h5">My Inventory</Typography>
-                                </div>
-                                <div>
-                                    <AddInv />
-                                </div>
-                            </div>
-                            <ListInventory />
-                        </Paper>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Information 
+                                    name={this.state.org_name}
+                                    desc={this.state.org_desc}
+                                    isLoad={this.state.org_load}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Paper className={styles.paper}>
+                                    <div className={styles.header_inv}>
+                                        <div>
+                                            <IconButton onClick={this.backHandler}>
+                                                <ArrowBackIcon />
+                                            </IconButton>
+                                        </div>
+                                        <div>
+                                            <Typography variant="h5">My Inventory</Typography>
+                                        </div>
+                                        <div>
+                                            <AddInv />
+                                        </div>
+                                    </div>
+                                    <ListInventory />
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12} md={5} className={styles.item}>
                         <Grid container spacing={2}>

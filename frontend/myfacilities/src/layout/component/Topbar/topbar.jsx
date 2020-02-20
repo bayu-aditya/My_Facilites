@@ -41,7 +41,7 @@ function Topbar(props) {
         delete_refresh_token();
         delete_access_token();
         dispatch({type: "LOGOUT"});
-        setTimeout(() => {window.location.reload()}, 1000);
+        setTimeout(() => {window.location.reload()}, 500);
     }
 
     const buttonSidebar = () => {

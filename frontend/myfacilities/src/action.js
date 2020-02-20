@@ -1,4 +1,8 @@
-import { user_api, refresh_api, members_api } from './api/link';
+import { 
+    user_api, 
+    refresh_api, 
+    organization_api,
+    members_api } from './api/link';
 
 const SET_NAME = "SET_NAME";
 const SELECT_ORGANIZATION = "SELECT_ORGANIZATION";
@@ -121,6 +125,32 @@ export function fetchOrganizations(self) {
                 self.setState({
                     organization: json["organization"],
                     isLoad: false
+                })
+            })
+            .catch(error => console.log(error));
+    }
+}
+
+export function fetchOrganization(self) {
+    return (dispatch, getState) => {
+        let access_token = getState().access_token;
+        let url = organization_api() + "?_id=" + getState().id_org;
+        return fetch(url, {
+            method: "GET", 
+            headers: {"Authorization": "Bearer " + access_token}
+        })
+            .then((res) => {
+                if (res.status === 202) {
+                    return res.json()
+                } else if (res.status === 401) {
+                    dispatch(tokenRefresher(fetchOrganization, self))
+                }
+            })
+            .then(json => {
+                self.setState({
+                    org_name: json["organization"]["name"],
+                    org_desc: json["organization"]["desc"],
+                    org_load: false,
                 })
             })
             .catch(error => console.log(error));
