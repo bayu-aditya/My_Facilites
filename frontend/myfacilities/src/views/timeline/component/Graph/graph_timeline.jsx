@@ -88,16 +88,14 @@ class GraphTimeline extends React.Component {
         let unique_usernames = [];
         this.props.data.map(
             function(row, index) {
-                let username = row["username"];
-                let start = row["start"];
-                let finish = row["finish"];
+                let { username, color, start, finish } = row;
                 let data_row = {
                     x: username,
                     y: [
                         new Date(start).getTime(), 
                         new Date(finish).getTime()
                     ],
-                    fillColor: '#00E396'
+                    fillColor: color,
                 }
                 self.data.push(data_row);
                 usernames.push(username);
