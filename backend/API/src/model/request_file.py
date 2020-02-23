@@ -4,6 +4,16 @@ class ReqFile:
     def __init__(self, request_file):
         self.__file = request_file
 
+    @classmethod
+    def get_extension(cls, request_file):
+        reqfile = cls(request_file)
+        return reqfile.extension
+
+    @classmethod
+    def get_size_in_bytes(cls, request_file):
+        reqfile = cls(request_file)
+        return len(reqfile.data)
+
     @property
     def data(self):
         return self.__file.read()
