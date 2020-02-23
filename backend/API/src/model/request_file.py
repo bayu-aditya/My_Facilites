@@ -3,20 +3,15 @@ from src.resources.unique_id import get_avatar_id
 class ReqFile:
     def __init__(self, request_file):
         self.__file = request_file
+        self.__data = self.__file.read()
 
-    @classmethod
-    def get_extension(cls, request_file):
-        reqfile = cls(request_file)
-        return reqfile.extension
-
-    @classmethod
-    def get_size_in_bytes(cls, request_file):
-        reqfile = cls(request_file)
-        return len(reqfile.data)
+    @property
+    def size_in_bytes(self):
+        return len(self.__data)
 
     @property
     def data(self):
-        return self.__file.read()
+        return self.__data
 
     @property
     def filename(self):

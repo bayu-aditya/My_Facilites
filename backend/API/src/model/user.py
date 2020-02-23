@@ -12,16 +12,13 @@ class UserModels:
     @classmethod
     def find_by_username(cls, username):
         db = Database()
-        try:
-            result = db.execute(
-                "SELECT name, username, email, password, avatar FROM user WHERE username=%s", (username,)
-                ).fetchone()
-            if result:
-                return cls(*result)
-            else:
-                return None
-        except:
-            return {"message": "Something wrong in server."}, 500
+        result = db.execute(
+            "SELECT name, username, email, password, avatar FROM user WHERE username=%s", (username,)
+            ).fetchone()
+        if result:
+            return cls(*result)
+        else:
+            return None
     
     def update_user(self, **kwargs):
         username = self.__username

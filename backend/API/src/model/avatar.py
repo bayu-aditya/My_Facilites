@@ -1,8 +1,8 @@
 import os
 from google.cloud import storage
 
-from src.model.user import UserModels
 from src.model.mysql import Database
+from src.model.user import UserModels
 from src.model.request_file import ReqFile
 from src.secret import GOOGLE_SECRET_KEY_PATH
 from src.variable import (
@@ -11,9 +11,17 @@ from src.variable import (
     )
 from src.resources.unique_id import get_avatar_id
 
-class AvatarModels(UserModels):
-    def __init__(self, *args):
-        super().__init__(*args)
+class AvatarModels(ReqFile):
+    def __init__(self, usermodel, request_file=None):
+        if request_file is not None:
+            super().__init__(request_file)
+
+        if isinstance(usermodel, UserModels):
+            self.avatar = usermodel.avatar
+            self.update_avatar_field = usermodel.update_avatar_field
+            self.delete_avatar_field = usermodel.delete_avatar_field
+        else:
+            raise ValueError("wrong usermodel argument")
 
     def __bucket(self):
         client = storage.Client.from_service_account_json(GOOGLE_SECRET_KEY_PATH)
@@ -23,12 +31,11 @@ class AvatarModels(UserModels):
         filename = self.avatar.split("/")[-1]
         return os.path.join(GOOGLE_BUCKET_PHOTOPROFILE_PATH, filename)
 
-    def upload(self, request_file):
+    def upload(self):
         """
         Upload and replace files in google cloud storage when avatar in this username is not none.
         After that, changing the avatar field in the database.
         """
-        reqfile = ReqFile(request_file)
         bucket = self.__bucket()
 
         if self.avatar:
@@ -37,19 +44,21 @@ class AvatarModels(UserModels):
             except:
                 pass
 
-        blob = bucket.blob(GOOGLE_BUCKET_PHOTOPROFILE_PATH + reqfile.random_filename)
-        cont_type = "image/" + reqfile.extension
-        blob.upload_from_string(reqfile.data, content_type=cont_type)
+        blob = bucket.blob(GOOGLE_BUCKET_PHOTOPROFILE_PATH + self.random_filename)
+        cont_type = "image/" + self.extension
+        blob.upload_from_string(self.data, content_type=cont_type)
         blob.make_public()
         self.update_avatar_field(blob.public_url)
 
-    def delete(self):
+    @classmethod
+    def delete(cls, usermodel):
         """
         Remove files in google cloud storage. After that, changing the avatar field becomes NULL in the database.
         """
-        bucket = self.__bucket()
+        userAvatar = cls(usermodel)
+        bucket = userAvatar.__bucket()
         try:
-            bucket.delete_blob(self._get_blobname())
+            bucket.delete_blob(userAvatar._get_blobname())
         except:
             pass
-        self.delete_avatar_field()
+        userAvatar.delete_avatar_field()
