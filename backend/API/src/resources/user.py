@@ -74,6 +74,7 @@ class User(Resource):
             "name": user.name,
             "username": user.username,
             "email": user.email,
+            "avatar": user.avatar
             }, 202
 
     @jwt_required
