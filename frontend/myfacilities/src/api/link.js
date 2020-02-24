@@ -13,6 +13,10 @@ function user_api() {
     return domain+"/user"
 }
 
+function avatar_api() {
+    return domain+"/upload/avatar"
+}
+
 function refresh_api() {
     return domain+"/refresh"
 }
@@ -52,6 +56,7 @@ function task_api() {
 export {login_api};
 export {register_api};
 export {user_api};
+export {avatar_api};
 export {refresh_api};
 export {organizations_api};
 export {other_organizations_api};

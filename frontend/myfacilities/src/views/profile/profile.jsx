@@ -14,6 +14,7 @@ function mapStateToProps(state) {
         name: state.profile.name,
         username: state.profile.username,
         email: state.profile.email,
+        avatar: state.profile.avatar
     }
 }
 
@@ -25,6 +26,7 @@ class Profile extends React.Component {
             name: this.props.name,
             username: this.props.username, 
             email: this.props.email,
+            avatar: this.props.avatar
         }
     }
 
@@ -41,6 +43,7 @@ class Profile extends React.Component {
                             name={this.state.name}
                             username={this.state.username}
                             email={this.state.email}
+                            avatar={this.props.avatar}
                         />
                     </Grid>
                     <Grid item xs={12} md={7} className={styles.item}>
