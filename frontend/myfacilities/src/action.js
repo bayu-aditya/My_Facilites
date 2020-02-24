@@ -37,6 +37,7 @@ export const fetchProfileSuccess = (props) => ({
     name: props.name,
     username: props.username,
     email: props.email,
+    avatar: props.avatar,
 })
 export const fetchProfileFailed = (error) => ({
     type: FETCH_PROFILE_FAILED,
@@ -75,6 +76,7 @@ export function fetchProfile() {
                     name: json["name"],
                     username: json["username"],
                     email: json["email"],
+                    avatar: json["avatar"] ? json["avatar"] : "https://www.w3schools.com/howto/img_avatar.png"
                 }));
             })
             .catch(error => dispatch(fetchProfileFailed(error)));

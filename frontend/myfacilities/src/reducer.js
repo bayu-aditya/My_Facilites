@@ -10,6 +10,7 @@ const initialState = {
         name: null,
         username: null,
         email: null,
+        avatar: null,
     },
     id_org: null,
     id_inv: null,
@@ -42,14 +43,15 @@ function reducers(state = initialState, action) {
         case "FETCH_PROFILE_BEGIN":
             return {...state, error: null}
         case "FETCH_PROFILE_SUCCESS":
-            const { name, username, email } = action;
+            const { name, username, email, avatar } = action;
             return {
                 ...state, 
                 profile: {
                     ...state.profile,
                     name: name,
                     username: username,
-                    email: email
+                    email: email,
+                    avatar: avatar
                 }
             }
         case "FETCH_PROFILE_FAILED":
