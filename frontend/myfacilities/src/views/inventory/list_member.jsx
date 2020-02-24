@@ -56,6 +56,7 @@ class ListMember extends React.Component {
         }
     }
     adminList() {
+        let self = this;
         if (this.state.admin.length === 0) {
             return <span>No Administrator</span>
         } else {
@@ -63,12 +64,13 @@ class ListMember extends React.Component {
                 <div>
                     {this.state.admin.map(
                         (data, index) => {
+                            let avatar = data["avatar"] ? data["avatar"] : self.image;
                             let username = data["username"];
                             let color = data["color"];
                             return (
                                 <ListItem dense key={index}>
                                     <ListItemAvatar>
-                                        <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
+                                        <Avatar src={avatar} />
                                     </ListItemAvatar>
                                     <ListItemText 
                                         primary={<Typography>{username}</Typography>}
@@ -82,6 +84,7 @@ class ListMember extends React.Component {
         }
     }
     bodyList() {
+        let self = this;
         if (this.state.members.length === 0) {
             return <span>No members</span>
         } else {
@@ -89,12 +92,13 @@ class ListMember extends React.Component {
                 <div>
                     {this.state.members.map(
                         (data, index) => {
+                            let avatar = data["avatar"] ? data["avatar"] : self.image;
                             let username = data["username"];
                             let color = data["color"];
                             return (
                                 <ListItem dense key={index}>
                                     <ListItemAvatar>
-                                        <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
+                                        <Avatar src={avatar} />
                                     </ListItemAvatar>
                                     <ListItemText 
                                         primary={<Typography>{username}</Typography>}
