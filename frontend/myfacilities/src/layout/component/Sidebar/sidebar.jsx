@@ -14,7 +14,8 @@ import useStyles from './style';
 
 function mapStateToProps(state) {
     return {
-        name: state.profile.name
+        name: state.profile.name,
+        avatar: state.profile.avatar,
     }
 }
 
@@ -51,7 +52,7 @@ function Sidebar(props) {
         >
             <List>
                 <div className={classes.profile}>
-                    <Avatar src="https://www.w3schools.com/howto/img_avatar.png" className={classes.avatar} />
+                    <Avatar src={props.avatar} className={classes.avatar} />
                     <Typography variant="h6" component="h6" >Hello</Typography>
                     <Typography>{props.name}</Typography>
                     <Typography>{props.username}</Typography> 

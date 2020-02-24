@@ -15,7 +15,8 @@ import useStyles from './style';
 
 function mapStateToProps(state) {
     return {
-        name: state.profile.name
+        name: state.profile.name,
+        avatar: state.profile.avatar
     }
 }
 
@@ -41,7 +42,7 @@ function Topbar(props) {
         delete_refresh_token();
         delete_access_token();
         dispatch({type: "LOGOUT"});
-        setTimeout(() => {window.location.reload()}, 500);
+        setTimeout(() => {window.location.reload()}, 100);
     }
 
     const buttonSidebar = () => {
@@ -75,7 +76,7 @@ function Topbar(props) {
                     onClick={handleMenu}
                     color="inherit"
                     >
-                    <Avatar src="https://www.w3schools.com/howto/img_avatar.png" />
+                    <Avatar src={props.avatar} />
                     </IconButton>
                     <Menu
                     id="menu-appbar"
