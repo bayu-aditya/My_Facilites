@@ -136,7 +136,7 @@ function UploadAvatarDialog({open, onClose}) {
                     </Grid>
                 </Grid>
                 <DialogContentText color="secondary">
-                    Attention: Avatar cannot exceed 1 MB, and extension must be jpg or png.
+                    Attention: Avatar cannot exceed 5 MB, and extension must be jpeg, jpg or png.
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
