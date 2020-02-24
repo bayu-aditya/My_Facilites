@@ -1,6 +1,8 @@
-from src.variable import DEFAULT_COLOR
 from bson.objectid import ObjectId
 import pymongo
+
+from src.variable import DEFAULT_COLOR
+from src.model.user import UserModels
 
 class Tools:
     @staticmethod
@@ -50,12 +52,14 @@ class Org:
     @property
     def admin(self):
         """
-            Get administrator of an organization. It can handle when 'color' key is not present in database.
-            Default 'value' for color key is #00E396 
+        Get administrator of an organization. It can handle when 'color' key is not present in database.
+        Default 'value' for color key is #00E396 
         """
         administrator = list()
         result = self.data.get("administrator", administrator)
         for i in result:
+            user = UserModels.find_by_username(i["username"])
+            i["avatar"] = user.avatar
             if i.get("color", None) == None:
                 i["color"] = DEFAULT_COLOR
             administrator.append(i)
@@ -64,12 +68,14 @@ class Org:
     @property
     def members(self):
         """
-            Get member of an organization. It can handle when 'color' key is not present in database.
-            Default 'value' for color key is #00E396 
+        Get member of an organization. It can handle when 'color' key is not present in database.
+        Default 'value' for color key is #00E396 
         """
         members = list()
         result = self.data.get("members", members)
         for i in result:
+            user = UserModels.find_by_username(i["username"])
+            i["avatar"] = user.avatar
             if i.get("color", None) == None:
                 i["color"] = DEFAULT_COLOR
             members.append(i)

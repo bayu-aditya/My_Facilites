@@ -1,9 +1,11 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from bson.objectid import ObjectId
+
 from src.variable import DEFAULT_COLOR
-from src.model.organization import Org
-from src.model.organization import Tools
+
+from src.model.user import UserModels
+from src.model.organization import Org, Tools
 
 class Members(Resource):
     parser_i = reqparse.RequestParser()
@@ -23,23 +25,29 @@ class Members(Resource):
     @jwt_required
     def get(self):
         inpt = self.parser_i.parse_args()
-        mycol = Tools.get_collection()
-        result = mycol.find_one(
-            {"_id": ObjectId(inpt["_id"])}
-        )
-        if result is None:
-            return {"message": "organization with id {} not found.".format(inpt["_id"])}, 404
-        result = Org(result)
-        return {
-            "admin": result.admin,
-            "members": result.members
-            }, 202
+        try:
+            mycol = Tools.get_collection()
+            result = mycol.find_one(
+                {"_id": ObjectId(inpt["_id"])}
+            )
+            if result is None:
+                return {"message": "organization with id {} not found.".format(inpt["_id"])}, 404
+            result = Org(result)
+            return {
+                "admin": result.admin,
+                "members": result.members
+                }, 202
+        except:
+            return {"message": "something wrong in server."}, 500
 
     @jwt_required
     def post(self):
         inpt = self.parser_i_n.parse_args()
         mycol = Tools.get_collection()
         try:
+            if UserModels.find_by_username(inpt["member"]) is None:
+                return {"message": "Username not found"}, 404
+
             x = mycol.update(
                 {"_id": ObjectId(inpt["_id"])},
                 {"$push": {
