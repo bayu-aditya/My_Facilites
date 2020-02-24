@@ -21,7 +21,7 @@ class Avatar(Resource):
             if (avatar.extension not in AVATAR_EXTENSIONS):
                 return {"message": "file with extension {} disallowed".format(avatar.extension)}, 403
             if (avatar.size_in_bytes > AVATAR_MAX_BYTES):
-                return {'message': "photo cannot exceed 1 MB"}, 403
+                return {'message': "photo cannot exceed 5 MB"}, 403
 
             avatar.upload()
             return {"message": "Avatar has been updated"}, 202
