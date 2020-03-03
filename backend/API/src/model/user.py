@@ -19,6 +19,15 @@ class UserModels:
             return cls(*result)
         else:
             return None
+
+    @staticmethod
+    def create_google_user(name, username, email):
+        db = Database()
+        db.execute(
+            "INSERT INTO user (name, username, mode, email) VALUES (%s, %s, %s, %s)",
+            (name, username, 1, email)
+        )
+        db.commit()
     
     def update_user(self, **kwargs):
         username = self.__username

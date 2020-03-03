@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 
 from src.resources.user import (
     Login, 
+    Login_Google,
     Register, 
     User, 
     TokenRefresh
@@ -38,6 +39,7 @@ def my_expired_token_callback(expired_token):
     }), 401
 
 api.add_resource(Login, "/login")
+api.add_resource(Login_Google, "/login/google")
 api.add_resource(Register, "/register")
 api.add_resource(User, "/user")
 api.add_resource(Avatar, "/upload/avatar")

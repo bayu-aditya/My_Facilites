@@ -7,7 +7,10 @@ from flask_jwt_extended import (
     jwt_refresh_token_required,
     get_jwt_identity
     )
+from google.oauth2 import id_token
+from google.auth.transport import requests
 from src.model.user import Database, UserModels
+from src.variable import GOOGLE_CLIENT_ID
 
 class Register(Resource):
     parser = reqparse.RequestParser()
@@ -29,8 +32,8 @@ class Register(Resource):
         try:
             db = Database()
             db.execute(
-                "INSERT INTO user (name, username, email, password) VALUES (%s, %s, %s, %s)", 
-                (inpt["name"], inpt["username"], inpt["email"], inpt["password"])
+                "INSERT INTO user (name, username, mode, email, password) VALUES (%s, %s, %s, %s, %s)", 
+                (inpt["name"], inpt["username"], 0, inpt["email"], inpt["password"])
                 )
             db.commit()
             return {"message": "user has been created."}, 202
@@ -58,6 +61,38 @@ class Login(Resource):
                 }, 202
             return {"message": "invalid credentials"}, 401
         return {"message": "username not found"}, 404
+
+class Login_Google(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        name="token", type=str, required=True, help="google token cannot be blank")
+
+    def post(self):
+        inpt = self.parser.parse_args()
+        try:
+            idinfo = id_token.verify_oauth2_token(inpt["token"], requests.Request(), GOOGLE_CLIENT_ID)
+            print(idinfo)
+            if idinfo["iss"] not in ['accounts.google.com', 'https://accounts.google.com']:
+                return {"message": "Invalid google token"}, 404
+
+            username = idinfo["sub"]
+            
+            user = UserModels.find_by_username(username)
+            if user:
+                access_token = create_access_token(identity=user.username, fresh=True)
+                refresh_token = create_refresh_token(user.username)
+                return {
+                    "access_token": access_token,
+                    "refresh_token": refresh_token
+                }, 202
+            else:
+                # NEW MEMBER, Create user in database user and give access token and refresh token.
+                return {
+                    "access_token": access_token,
+                    "refresh_token": refresh_token
+                }, 202
+        except:
+            return {"message": "Invalid google token"}, 404
 
 class User(Resource):
     parser = reqparse.RequestParser()
