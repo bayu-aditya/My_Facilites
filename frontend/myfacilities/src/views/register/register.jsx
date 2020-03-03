@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import GoogleLogin from 'react-google-login';
 import { register_api } from '../../api/link';
 import styles from './register.module.scss';
 
@@ -96,6 +97,12 @@ class Register extends React.Component {
                                 <button type="submit" className="btn btn-primary btn-block">Register</button>
                             </div>
                         </form>
+                        {/* <GoogleLogin
+                            clientId="708493379865-5vddd72pls5ffrrrd3gb9g4qrhfflna7.apps.googleusercontent.com"
+                            buttonText="Register with Google"
+                            onSuccess={this.successGoogleHandler}
+                            onFailure={this.failureGoogleHandler} 
+                        /> */}
                     </div>
                 </div>
             </div>

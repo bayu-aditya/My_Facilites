@@ -71,7 +71,6 @@ class Login_Google(Resource):
         inpt = self.parser.parse_args()
         try:
             idinfo = id_token.verify_oauth2_token(inpt["token"], requests.Request(), GOOGLE_CLIENT_ID)
-            print(idinfo)
             if idinfo["iss"] not in ['accounts.google.com', 'https://accounts.google.com']:
                 return {"message": "Invalid google token"}, 404
 
@@ -87,6 +86,15 @@ class Login_Google(Resource):
                 }, 202
             else:
                 # NEW MEMBER, Create user in database user and give access token and refresh token.
+                UserModels.create_google_user(
+                    name=idinfo["name"],
+                    username=username,
+                    email=idinfo["email"]
+                )
+                user = UserModels.find_by_username(username)
+                user.update_avatar_field(idinfo["picture"])
+                access_token = create_access_token(identity=username, fresh=True)
+                refresh_token = create_refresh_token(username)
                 return {
                     "access_token": access_token,
                     "refresh_token": refresh_token

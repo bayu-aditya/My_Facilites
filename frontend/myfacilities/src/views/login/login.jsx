@@ -5,8 +5,11 @@ import {
     GoToDashboard } from '../../component/Redirect';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
+import GoogleLogin from 'react-google-login';
 import { create_access_token, create_refresh_token } from '../../action/cookie.js';
-import { login_api } from '../../api/link.js'
+import { 
+    login_api,
+    login_google_api } from '../../api/link.js'
 import styles from './login.module.scss';
 
 function mapStateToProps(state) {
@@ -89,6 +92,25 @@ class Login extends React.Component {
     closeDialog = () => {
         this.setState({dialogOpen: false})
     }
+    successGoogleHandler = (response) => {
+        let id_token = response.getAuthResponse().id_token;
+        let body = {"token": id_token};
+
+        fetch(login_google_api(), {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(resp => {return resp.json()})
+        .then(json => {
+            create_access_token(json);
+            create_refresh_token(json);
+            this.authHandler();
+        })
+    }
+    failureGoogleHandler = (response) => {
+        console.log(response)
+    }
     dialogHandle = () => {
         return (
         <Dialog open={this.state.dialogOpen} onClose={this.closeDialog}>
@@ -134,6 +156,14 @@ class Login extends React.Component {
                                 <button type="submit" className="btn btn-primary btn-block">Login</button>
                             </div>
                         </form>
+                        <div className={styles.input}>
+                            <GoogleLogin
+                                clientId="708493379865-5vddd72pls5ffrrrd3gb9g4qrhfflna7.apps.googleusercontent.com"
+                                buttonText="Login with Google"
+                                onSuccess={this.successGoogleHandler}
+                                onFailure={this.failureGoogleHandler} 
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

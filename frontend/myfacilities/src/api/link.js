@@ -1,5 +1,5 @@
-var domain = "https://myfacilities.online/api"
-// var domain = "http://0.0.0.0:8888"
+// var domain = "https://myfacilities.online/api"
+var domain = "http://0.0.0.0:8888"
 
 function login_api() {
     return domain+"/login"
