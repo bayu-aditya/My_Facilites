@@ -1,8 +1,12 @@
-var domain = "https://api.myfacilities.online"
+var domain = "https://myfacilities.online/api"
 // var domain = "http://0.0.0.0:8888"
 
 function login_api() {
     return domain+"/login"
+}
+
+function login_google_api() {
+    return domain+"/login/google"
 }
 
 function register_api() {
@@ -54,6 +58,7 @@ function task_api() {
 }
 
 export {login_api};
+export {login_google_api};
 export {register_api};
 export {user_api};
 export {avatar_api};
