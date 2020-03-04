@@ -1,34 +1,41 @@
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token
+)
+
 from src.model.mysql import Database
 
 
 class UserModels:
-    def __init__(self, name, username, email, password, avatar):
+    def __init__(self, name, username, mode, email, password, avatar):
         self.__name = name
         self.__username = username
+        self.__mode = mode
         self.__email = email
         self.__password = password
         self.__avatar = avatar
+        self.__access_token = None
+        self.__refresh_token = None
 
     @classmethod
     def find_by_username(cls, username):
         db = Database()
         result = db.execute(
-            "SELECT name, username, email, password, avatar FROM user WHERE username=%s", (username,)
+            "SELECT name, username, mode, email, password, avatar FROM user WHERE username=%s", (username,)
             ).fetchone()
         if result:
             return cls(*result)
         else:
             return None
 
-    @staticmethod
-    def create_google_user(name, username, email):
+    def create_user(self):
         db = Database()
         db.execute(
-            "INSERT INTO user (name, username, mode, email) VALUES (%s, %s, %s, %s)",
-            (name, username, 1, email)
-        )
+            "INSERT INTO user (name, username, mode, email, password) VALUES (%s, %s, %s, %s, %s)", 
+            (self.name, self.username, 0, self.email, self.password)
+            )
         db.commit()
-    
+
     def update_user(self, **kwargs):
         username = self.__username
         name = kwargs.get("name")
@@ -42,20 +49,18 @@ class UserModels:
         db.commit()
 
     def update_avatar_field(self, link_avatar):
-        username = self.__username
         db = Database()
         db.execute(
             "UPDATE user SET avatar=%s WHERE username=%s",
-            (link_avatar, username)
+            (link_avatar, self.__username)
         )
         db.commit()
 
     def delete_avatar_field(self):
-        username = self.__username
         db = Database()
         db.execute(
             "UPDATE user SET avatar = NULL WHERE username=%s",
-            (username,)
+            (self.__username,)
         )
         db.commit()
 
@@ -68,6 +73,10 @@ class UserModels:
         return self.__username
 
     @property
+    def mode(self):
+        return self.__mode
+
+    @property
     def email(self):
         return self.__email
 
@@ -78,3 +87,38 @@ class UserModels:
     @property
     def avatar(self):
         return self.__avatar
+
+    @property
+    def access_token(self):
+        return create_access_token(identity = self.__username, fresh = True)
+
+    @property
+    def access_token_refresher(self):
+        return create_access_token(identity = self.__username, fresh = False)
+
+    @property
+    def refresh_token(self):
+        return create_refresh_token(identity = self.__username)
+
+class GoogleUser(UserModels):
+    def __init__(self, name, username, email, avatar):
+        super().__init__(name, username, 1, email, None, avatar)
+
+    @classmethod
+    def find_by_username(cls, username):
+        db = Database()
+        result = db.execute(
+            "SELECT name, username, email, avatar FROM user WHERE username=%s", (username,)
+            ).fetchone()
+        if result:
+            return cls(*result)
+        else:
+            return None
+
+    def create_user(self):
+        db = Database()
+        db.execute(
+            "INSERT INTO user (name, username, mode, email, avatar) VALUES (%s, %s, %s, %s, %s)",
+            (self.name, self.username, self.mode, self.email, self.avatar)
+        )
+        db.commit()
