@@ -28,6 +28,17 @@ class UserModels:
         else:
             return None
 
+    @classmethod
+    def find_by_email(cls, email):
+        db = Database()
+        result = db.execute(
+            "SELECT name, username, mode, email, password, avatar FROM user WHERE email=%s", (email,)
+            ).fetchone()
+        if result:
+            return cls(*result)
+        else:
+            return None
+
     def create_user(self):
         db = Database()
         db.execute(

@@ -40,14 +40,17 @@ class Members(Resource):
         inpt = self.parser_i_n.parse_args()
         mycol = Tools.get_collection()
         try:
-            if UserModels.find_by_username(inpt["member"]) is None:
-                return {"message": "Username not found"}, 404
+            user = UserModels.find_by_email(inpt["member"])
+            if user is None:
+                user = UserModels.find_by_username(inpt["member"])
+                if user is None:
+                    return {"message": "username or email not found"}, 404
 
             x = mycol.update(
                 {"_id": ObjectId(inpt["_id"])},
                 {"$push": {
                     "members": {
-                        "username": inpt["member"],
+                        "username": user.username,
                         "color": inpt["color"],
                         }
                 }}
