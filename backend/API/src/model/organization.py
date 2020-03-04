@@ -59,6 +59,8 @@ class Org:
         result = self.data.get("administrator", administrator)
         for i in result:
             user = UserModels.find_by_username(i["username"])
+            i["name"] = user.name
+            i["email"] = user.email
             i["avatar"] = user.avatar
             if i.get("color", None) == None:
                 i["color"] = DEFAULT_COLOR
@@ -75,6 +77,8 @@ class Org:
         result = self.data.get("members", members)
         for i in result:
             user = UserModels.find_by_username(i["username"])
+            i["name"] = user.name
+            i["email"] = user.email
             i["avatar"] = user.avatar
             if i.get("color", None) == None:
                 i["color"] = DEFAULT_COLOR

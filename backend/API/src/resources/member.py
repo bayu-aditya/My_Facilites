@@ -9,18 +9,13 @@ from src.model.organization import Org, Tools
 
 class Members(Resource):
     parser_i = reqparse.RequestParser()
-    parser_i.add_argument(
-        name="_id", type=str, required=True, help="id organization cannot be blank")
-    parser_i.add_argument(
-        name="color", type=str, default=DEFAULT_COLOR)
+    parser_i.add_argument(name="_id", type=str, required=True, help="id organization cannot be blank")
+    parser_i.add_argument(name="color", type=str, default=DEFAULT_COLOR)
 
     parser_i_n = reqparse.RequestParser()
-    parser_i_n.add_argument(
-        name="_id", type=str, required=True, help="id organization cannot be blank")
-    parser_i_n.add_argument(
-        name="member", type=str, required=True, help="username member cannot be blank")
-    parser_i_n.add_argument(
-        name="color", type=str, default=DEFAULT_COLOR)
+    parser_i_n.add_argument(name="_id", type=str, required=True, help="id organization cannot be blank")
+    parser_i_n.add_argument(name="member", type=str, required=True, help="username member cannot be blank")
+    parser_i_n.add_argument(name="color", type=str, default=DEFAULT_COLOR)
 
     @jwt_required
     def get(self):
