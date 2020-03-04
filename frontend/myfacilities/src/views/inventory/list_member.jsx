@@ -10,7 +10,7 @@ import {
     Grid,
     Typography } from '@material-ui/core';
 import Loading from '../../component/loading';
-import { DeleteMember } from '../../component/deleting';
+import { DeleteMember } from './component';
 
 const MemberCaption = (props) => {
     const { color } = props;
@@ -65,6 +65,7 @@ class ListMember extends React.Component {
                     {this.state.admin.map(
                         (data, index) => {
                             let avatar = data["avatar"] ? data["avatar"] : self.image;
+                            let name = data["name"];
                             let username = data["username"];
                             let color = data["color"];
                             return (
@@ -73,7 +74,7 @@ class ListMember extends React.Component {
                                         <Avatar src={avatar} />
                                     </ListItemAvatar>
                                     <ListItemText 
-                                        primary={<Typography>{username}</Typography>}
+                                        primary={<Typography>{name}</Typography>}
                                         secondary={<MemberCaption color={color} />} 
                                     />
                                 </ListItem>
@@ -93,6 +94,7 @@ class ListMember extends React.Component {
                     {this.state.members.map(
                         (data, index) => {
                             let avatar = data["avatar"] ? data["avatar"] : self.image;
+                            let name = data["name"];
                             let username = data["username"];
                             let color = data["color"];
                             return (
@@ -101,7 +103,7 @@ class ListMember extends React.Component {
                                         <Avatar src={avatar} />
                                     </ListItemAvatar>
                                     <ListItemText 
-                                        primary={<Typography>{username}</Typography>}
+                                        primary={<Typography>{name}</Typography>}
                                         secondary={<MemberCaption color={color} />} 
                                     />
                                     <ListItemSecondaryAction>

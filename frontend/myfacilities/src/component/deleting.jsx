@@ -11,11 +11,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { 
     organization_api, 
     inventory_api, 
-    members_api, 
     task_api } from '../api/link.js';
 import { 
     fetchDelOrganizations,
-    fetchDelMemberOrganization,
     fetchDelInventory, 
     fetchDelTask } from '../action';
 
@@ -147,67 +145,6 @@ class Del_inventory extends React.Component {
     }
 }
 
-class Del_member extends React.Component {
-    constructor(props) {
-        super(props);
-        this.username = this.props.username;
-        this.state = {
-            dialog: false
-        };
-        this.id_org = this.props.id_org_redux;
-        this.url = members_api();
-        this.body = {};
-    }
-    openDeleteDialog = () => {
-        this.setState({dialog: true})
-    }
-    deleteHandler = () => {
-        this.body = {
-            "_id": this.id_org,
-            "member": this.username,
-        };
-        this.props.dispatch(fetchDelMemberOrganization(this));
-    }
-    closeDeleteDialog = () => {
-        this.setState({dialog: false})
-    }
-    deleteDialog = () => (
-        <div>
-            <Dialog
-            open={this.state.dialog}
-            onClose={this.closeDeleteDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            >
-            <DialogTitle id="alert-dialog-title">Remove {this.username}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Are you sure want to remove this member ?
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={this.closeDeleteDialog} color="primary">
-                Disagree
-                </Button>
-                <Button onClick={this.deleteHandler} color="primary" autoFocus>
-                Agree
-                </Button>
-            </DialogActions>
-            </Dialog>
-        </div>
-    )
-    render() {
-        return (
-            <div>
-                {this.deleteDialog()}
-                <IconButton onClick={this.openDeleteDialog}>
-                    <DeleteIcon color="secondary" />
-                </IconButton>
-            </div>
-        )
-    }
-}
-
 class Del_task extends React.Component {
     constructor(props) {
         super(props);
@@ -274,10 +211,8 @@ class Del_task extends React.Component {
 
 const Delete_organization = connect()(Del_organization);
 const Delete_inventory = connect()(Del_inventory);
-const DeleteMember = connect(mapStateToProps)(Del_member);
 const Delete_task = connect(mapStateToProps)(Del_task);
 
 export {Delete_organization};
 export {Delete_inventory};
-export {DeleteMember};
 export {Delete_task};
