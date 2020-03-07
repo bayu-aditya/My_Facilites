@@ -13,7 +13,7 @@ import Loading from '../../component/loading';
 import { DeleteMember } from './component';
 
 const MemberCaption = (props) => {
-    const { color } = props;
+    const { color, email } = props;
     const locStyle = {
         backgroundColor: color,
         marginTop: '3px',
@@ -28,7 +28,7 @@ const MemberCaption = (props) => {
                 <div style={locStyle}></div>
             </Grid>
             <Grid item xs>
-                <Typography variant="caption">{color}</Typography>
+                <Typography variant="caption">{email}</Typography>
             </Grid>
         </Grid>
     )
@@ -66,7 +66,7 @@ class ListMember extends React.Component {
                         (data, index) => {
                             let avatar = data["avatar"] ? data["avatar"] : self.image;
                             let name = data["name"];
-                            let username = data["username"];
+                            let email = data["email"];
                             let color = data["color"];
                             return (
                                 <ListItem dense key={index}>
@@ -75,7 +75,7 @@ class ListMember extends React.Component {
                                     </ListItemAvatar>
                                     <ListItemText 
                                         primary={<Typography>{name}</Typography>}
-                                        secondary={<MemberCaption color={color} />} 
+                                        secondary={<MemberCaption color={color} email={email} />} 
                                     />
                                 </ListItem>
                             )
@@ -95,6 +95,7 @@ class ListMember extends React.Component {
                         (data, index) => {
                             let avatar = data["avatar"] ? data["avatar"] : self.image;
                             let name = data["name"];
+                            let email = data["email"];
                             let username = data["username"];
                             let color = data["color"];
                             return (
@@ -104,7 +105,7 @@ class ListMember extends React.Component {
                                     </ListItemAvatar>
                                     <ListItemText 
                                         primary={<Typography>{name}</Typography>}
-                                        secondary={<MemberCaption color={color} />} 
+                                        secondary={<MemberCaption color={color} email={email} />} 
                                     />
                                     <ListItemSecondaryAction>
                                         <DeleteMember username={username} />

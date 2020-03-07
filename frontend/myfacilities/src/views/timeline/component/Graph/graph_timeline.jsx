@@ -6,13 +6,15 @@ import {
     KeyboardDatePicker } from '@material-ui/pickers';
 import { 
     getInitialWeekMonday, 
-    getLastWeekMonday } from './tools';
+    getLastWeekMonday,
+    getNameFromUsername } from './tools';
 import ReactApexChart from 'react-apexcharts'
 import { Grid } from '@material-ui/core';
 
 class GraphTimeline extends React.Component {
     constructor(props) {
         super(props)
+        let self = this;
         this.state = {
             tools: {
                 series: [
@@ -44,6 +46,9 @@ class GraphTimeline extends React.Component {
                     },
                     yaxis: {
                         labels: {
+                            formatter: function (value) {
+                                return getNameFromUsername(value, self.props.admin, self.props.members);    // ATTENTION: this may cause slow response, instead using class for input list of admin and member.
+                            },
                             style: {
                                 fontSize: '12px'
                             }
@@ -67,10 +72,11 @@ class GraphTimeline extends React.Component {
                         custom: function({series, seriesIndex, dataPointIndex, w}) {
                             let idx = dataPointIndex;
                             let username = w.globals.seriesX[0][idx];
+                            let name = getNameFromUsername(username, self.props.admin, self.props.members);     // ATTENTION: this may cause slow response, instead using class for input list of admin and member.
                             let start_date = new Date(w.globals.seriesRangeStart[0][[idx]]).toString().slice(0,24);
                             let finish_date = new Date(w.globals.seriesRangeEnd[0][[idx]]).toString().slice(0,24);
                             return '<div class="arrow_box">' +
-                            '<span><b>' + username + '</b></span><br/>' +
+                            '<span><b>' + name + '</b></span><br/>' +
                             '<span><b>Start:</b> ' + start_date + '</span><br/>' +
                             '<span><b>Finish:</b> ' + finish_date + '</span>' +
                             '</div>'
@@ -87,8 +93,8 @@ class GraphTimeline extends React.Component {
         let usernames = [];
         let unique_usernames = [];
         this.props.data.map(
-            function(row, index) {
-                let { username, color, start, finish } = row;
+            function(row) {
+                let { username, name, color, start, finish } = row;
                 let data_row = {
                     x: username,
                     y: [
@@ -104,8 +110,7 @@ class GraphTimeline extends React.Component {
         )
         this.state.tools.series[0].data = this.data;
         unique_usernames = [...new Set(usernames)];
-        this.height = unique_usernames.length * 50 + 70;
-        console.log(this.height)
+        this.height = unique_usernames.length * 30 + 70;
     }
     handleFromDateChange = date => {
         this.setState(prevState => ({

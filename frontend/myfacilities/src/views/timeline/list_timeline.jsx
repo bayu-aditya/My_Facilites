@@ -8,28 +8,24 @@ import {
 import MenuRowTask from '../../component/menu_list/menu_task';
 import styles from './timeline.module.scss';
 
-class List_timeline extends React.Component {
+class ListTimeline extends React.Component {
     tabBody() {
         return (
             <TableBody>
                 {this.props.data.map(
                     function row(data, index) {
                         let id = data.id_task;
-                        let username = data.username;
-                        let start = data.start.split("T");
-                        let start_date = start[0];
-                        let start_time = start[1];
-                        let finish = data.finish.split("T");
-                        let finish_date = finish[0];
-                        let finish_time = finish[1]
-                        let note = data.note;
+                        let name = data.name;
+                        let start = new Date(data.start);
+                        let start_time = start.toString().slice(0,24);
+                        let finish = new Date(data.finish);
+                        let finish_time = finish.toString().slice(0,24);
+                        let note = (data.note) ? data.note : "-";
                         return (
                             <TableRow key={index} id={id} hover>
                                 <TableCell>{index + 1}</TableCell>
-                                <TableCell>{username}</TableCell>
-                                <TableCell>{start_date}</TableCell>
+                                <TableCell>{name}</TableCell>
                                 <TableCell>{start_time}</TableCell>
-                                <TableCell>{finish_date}</TableCell>
                                 <TableCell>{finish_time}</TableCell>
                                 <TableCell>{note}</TableCell>
                                 <TableCell className={styles.auto_width}>
@@ -48,18 +44,12 @@ class List_timeline extends React.Component {
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell rowSpan='2'>No.</TableCell>
-                            <TableCell rowSpan='2'>Username</TableCell>
-                            <TableCell colSpan='2'>Start</TableCell>
-                            <TableCell colSpan='2'>Finish</TableCell>
-                            <TableCell rowSpan='2'>Notes</TableCell>
-                            <TableCell rowSpan='2'></TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Time</TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Time</TableCell>
+                            <TableCell>No.</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Start</TableCell>
+                            <TableCell>Finish</TableCell>
+                            <TableCell>Notes</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     {this.tabBody()}
@@ -69,4 +59,4 @@ class List_timeline extends React.Component {
     }
 }
 
-export default List_timeline;
+export default ListTimeline;

@@ -10,8 +10,10 @@ import { GoToLogin } from '../../component/redirect';
 import { GoToInventory } from '../../component/Redirect';
 import { Add_task } from '../../component/adding';
 import { GraphTimeline } from './component';
-import List_timeline from './list_timeline';
-import { fetchTasks } from '../../action';
+import ListTimeline from './list_timeline';
+import { 
+    fetchTasks,
+    fetchMemberOrganization } from '../../action';
 import { tasks_api } from '../../api/link';
 import styles from './timeline.module.scss';
 
@@ -30,6 +32,8 @@ class Timeline extends React.Component {
         this.state = {
             auth: this.props.auth,
             data: [],
+            admin: [],
+            members: [],
         }
         this.id_org = this.props.id_org;
         this.id_inv = this.props.id_inv;
@@ -37,6 +41,7 @@ class Timeline extends React.Component {
     }
     componentDidMount() {
         this.props.dispatch(fetchTasks(this));
+        this.props.dispatch(fetchMemberOrganization(this));
     }
     backHandler = () => {
         GoToInventory();
@@ -53,7 +58,11 @@ class Timeline extends React.Component {
                         <Paper className={styles.paper}>
                         {(this.state.data.length === 0) ?
                             <h5>The timeline is not displayed because the data is empty.</h5> : 
-                            <GraphTimeline data={this.state.data} />
+                            <GraphTimeline 
+                                data={this.state.data}
+                                admin={this.state.admin}
+                                members={this.state.members}  
+                            />
                         }
                         </Paper>
                     </Grid>
@@ -74,7 +83,7 @@ class Timeline extends React.Component {
                             </div>
                             {(this.state.data.length === 0) ?
                             <h5>Task is empty.</h5> : 
-                            <List_timeline data={this.state.data} />
+                            <ListTimeline data={this.state.data}/>
                             }
                         </Paper>
                     </Grid>

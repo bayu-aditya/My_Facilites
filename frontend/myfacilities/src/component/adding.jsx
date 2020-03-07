@@ -256,8 +256,10 @@ class Adding_task extends React.Component {
         this.body = {
             "id_org": this.id_org,
             "id_inv": this.id_inv,
-            "start": get_datetime(this.state.date_start),
-            "finish": get_datetime(this.state.date_finish),
+            // "start": get_datetime(this.state.date_start),
+            // "finish": get_datetime(this.state.date_finish),
+            "start": this.state.date_start.getTime(),
+            "finish": this.state.date_finish.getTime(),
             "note": this.state.notes
         }
         this.props.dispatch(fetchAddTask(this));
